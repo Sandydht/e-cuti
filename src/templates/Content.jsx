@@ -17,6 +17,9 @@ import {
   NavLink
 } from "react-router-dom";
 
+// Redux
+import { connect } from "react-redux";
+
 // Styles
 const styles = (theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -53,10 +56,12 @@ const CutiAlasanPenting = lazy(() => import("../pages/CutiAlasanPenting"));
 const CLTN = lazy(() => import("../pages/CLTN"));
 const DataPNS = lazy(() => import("../pages/DataPNS"));
 const DataCuti = lazy(() => import("../pages/DataCuti"));
+const DetailPNS = lazy(() => import("../pages/DetailPNS"));
+const EditPNS = lazy(() => import("../pages/EditPNS"));
 
 class Content extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, role } = this.props;
 
     return (
       <main className={classes.content}>
@@ -74,6 +79,10 @@ class Content extends Component {
                       {pathnames.map((value, index) => {
                         const last = index === pathnames.length - 1;
                         const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+                        const detail = `/${pathnames.slice(2, 3).join('/')}`;
+
+                        breadcrumbNameMap[`/beranda/data_pns${detail}`] = "Detail PNS";
+                        breadcrumbNameMap[`/beranda/data_pns${detail}/edit`] = "Edit Data PNS";
 
                         return last ? (
                           <Typography color="textPrimary" key={to}>
@@ -93,43 +102,113 @@ class Content extends Component {
             <Grid item xs={12} md={12}>
               <Switch>
                 <Route
+                  path="/beranda/data_pns/:dataIndex/edit"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <EditPNS {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
+                />
+
+                <Route
+                  path="/beranda/data_pns/:dataIndex"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <DetailPNS {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
+                />
+
+                <Route
                   path="/beranda/data_cuti"
-                  component={DataCuti}
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <DataCuti {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
                 />
 
                 <Route
                   path="/beranda/data_pns"
-                  component={DataPNS}
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <DataPNS {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
                 />
 
                 <Route
                   path="/beranda/cltn"
-                  component={CLTN}
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <CLTN {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
                 />
 
                 <Route
                   path="/beranda/cuti_alasan_penting"
-                  component={CutiAlasanPenting}
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <CutiAlasanPenting {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
                 />
 
                 <Route
                   path="/beranda/cuti_bersalin"
-                  component={CutiBersalin}
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <CutiBersalin {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
                 />
 
                 <Route
                   path="/beranda/cuti_sakit"
-                  component={CutiSakit}
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <CutiSakit {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
                 />
 
                 <Route
                   path="/beranda/cuti_besar"
-                  component={CutiBesar}
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <CutiBesar {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
                 />
 
                 <Route
                   path="/beranda/cuti_tahunan"
-                  component={CutiTahunan}
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <CutiTahunan {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
                 />
 
                 <Route
@@ -159,4 +238,9 @@ class Content extends Component {
     );
   }
 }
-export default withStyles(styles)(Content); 
+
+const mapStateToProps = ({ session }) => ({
+  role: session.user.role
+});
+
+export default connect(mapStateToProps, null)(withStyles(styles)(Content)); 

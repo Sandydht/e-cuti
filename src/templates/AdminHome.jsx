@@ -37,14 +37,14 @@ class AdminHome extends Component {
           {/* Konten */}
           <Grid item xs={12} md={12}>
             <Grid container spacing={2}>
-              <Grid item md={4} xs={12}>
+              <Grid item md={6} xs={12}>
                 <CardActionArea component={NavLink} to="/beranda/data_pns">
                   <Card className={classes.card} style={{ backgroundColor: "#212121", color: "white" }}>
                     <CardHeader title="Data PNS" />
                   </Card>
                 </CardActionArea>
               </Grid>
-              <Grid item md={4} xs={12}>
+              <Grid item md={6} xs={12}>
                 <CardActionArea component={NavLink} to="/beranda/data_cuti">
                   <Card className={classes.card} style={{ backgroundColor: "#9e9e9e", color: "white" }}>
                     <CardHeader title="Data Cuti" />

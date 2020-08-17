@@ -10,6 +10,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
 
 // React router dom
 import {
@@ -89,13 +90,15 @@ class AccountMenu extends Component {
         </Dialog>
 
 
-        <IconButton
-          color="inherit"
-          aria-label="open account"
-          onClick={this.handleOpenAccountMenu}
-        >
-          <AccountCircleIcon />
-        </IconButton>
+        <Tooltip title="Profil">
+          <IconButton
+            color="inherit"
+            aria-label="open account"
+            onClick={this.handleOpenAccountMenu}
+          >
+            <AccountCircleIcon />
+          </IconButton>
+        </Tooltip>
 
         <Menu
           id="open account"
