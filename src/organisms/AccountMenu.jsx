@@ -6,11 +6,19 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 // React router dom
 import {
   NavLink
 } from "react-router-dom";
+
+// Redux
+import { connect } from "react-redux";
+import { logoutAPI } from "../api/Redux/actions";
 
 // Styles
 const styles = (theme) => ({
@@ -23,7 +31,8 @@ class AccountMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      anchorEl: null
+      anchorEl: null,
+      openDialog: false
     };
   }
 
@@ -39,12 +48,47 @@ class AccountMenu extends Component {
     });
   };
 
+  handleOpenDialog = () => {
+    this.setState({
+      openDialog: true
+    });
+  };
+
+  handleCloseDialog = () => {
+    this.setState({
+      openDialog: false
+    });
+  };
+
+  handleLogout = () => {
+    const { history, logoutAPI } = this.props;
+
+    logoutAPI()
+      .then(() => {
+        history.push("/");
+      });
+  };
+
   render() {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
+    const { anchorEl, openDialog } = this.state;
 
     return (
       <Fragment>
+        <Dialog
+          open={openDialog}
+          onClose={this.handleCloseDialog}
+          fullWidth
+          maxWidth="xs"
+        >
+          <DialogTitle>Keluar E-Cuti ?</DialogTitle>
+          <DialogActions>
+            <Button color="primary" variant="outlined" onClick={this.handleCloseDialog}>Batal</Button>
+            <Button color="primary" variant="contained" onClick={this.handleLogout}>Keluar</Button>
+          </DialogActions>
+        </Dialog>
+
+
         <IconButton
           color="inherit"
           aria-label="open account"
@@ -70,10 +114,18 @@ class AccountMenu extends Component {
           }}
         >
           <MenuItem onClick={this.handleCloseAccountMenu} component={NavLink} to="/profil" activeClassName={classes.activeLink}>Profil</MenuItem>
-          <MenuItem onClick={this.handleCloseAccountMenu}>Keluar</MenuItem>
+          <MenuItem onClick={() => {
+            this.handleCloseAccountMenu();
+            this.handleOpenDialog();
+          }}>Keluar</MenuItem>
         </Menu>
       </Fragment>
     );
   }
 }
-export default withStyles(styles)(AccountMenu); 
+
+const mapDispatchToProps = (dispatch) => ({
+  logoutAPI: () => dispatch(logoutAPI())
+});
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(AccountMenu)); 

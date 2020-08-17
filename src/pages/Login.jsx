@@ -24,6 +24,13 @@ import {
   NavLink
 } from "react-router-dom";
 
+// Redux
+import { connect } from "react-redux";
+import { loginAPI } from "../api/Redux/actions";
+
+// Notistack
+import { withSnackbar } from "notistack";
+
 // Formik & Yup
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -92,8 +99,18 @@ class Login extends Component {
               password: ""
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
+            onSubmit={({ email, password }, { setSubmitting }) => {
+              const { loginAPI, enqueueSnackbar, location, history } = this.props;
+              loginAPI(email, password)
+                .then(() => {
+                  const { from } = location.state || { from: "/" };
+                  setSubmitting(false);
+                  history.replace(from);
+                })
+                .catch(() => {
+                  setSubmitting(false);
+                  enqueueSnackbar("Periksa kembali email & kata sandi anda", { variant: "error" });
+                });
             }}
           >
             {({
@@ -175,4 +192,9 @@ class Login extends Component {
     );
   }
 }
-export default withStyles(styles)(Login); 
+
+const mapDispatchToProps = (dispatch) => ({
+  loginAPI: (email, password) => dispatch(loginAPI(email, password))
+});
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(withSnackbar(Login))); 

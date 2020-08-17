@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import CssBaseline from "@material-ui/core/CssBaseline";
 
+// React router dom
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
+
+// Redux
+import { connect } from "react-redux";
 
 // Pages
 import Dashboard from "./pages/Dashboard";
@@ -14,28 +19,49 @@ import Register from "./pages/Register";
 
 class App extends Component {
   render() {
+    const { checked, authenticated } = this.props;
+
     return (
       <Router>
         <CssBaseline />
-        <Switch>
-          <Route
-            path="/register"
-            component={Register}
-          />
+        {
+          checked &&
+          <Switch>
+            <Route
+              path="/register"
+              component={Register}
+            />
 
-          <Route
-            path="/login"
-            component={Login}
-          />
+            <Route
+              path="/login"
+              component={Login}
+            />
 
-          <Route
-            path="/"
-            component={Dashboard}
-          />
-        </Switch>
+            <Route
+              path="/"
+              render={(routeProps) =>
+                authenticated ? (
+                  <Dashboard {...routeProps} />
+                ) : (
+                    <Redirect
+                      to={{
+                        pathname: "/login",
+                        state: { from: routeProps.location }
+                      }}
+                    />
+                  )
+              }
+            />
+          </Switch>
+        }
       </Router>
     );
   }
 }
 
-export default App; 
+const mapStateToProps = ({ session }) => ({
+  checked: session.checked,
+  authenticated: session.authenticated
+});
+
+export default connect(mapStateToProps, null)(App); 

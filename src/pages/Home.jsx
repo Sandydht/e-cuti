@@ -6,20 +6,16 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 
+// Redux
+import { connect } from "react-redux";
+
 // Templates 
 import AdminHome from "../templates/AdminHome";
 import UserHome from "../templates/UserHome";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      role: "admin"
-    };
-  }
-
   render() {
-    const { role } = this.state;
+    const { role } = this.props;
 
     return (
       <Card>
@@ -46,4 +42,8 @@ class Home extends Component {
   }
 }
 
-export default Home; 
+const mapStateToProps = ({ session }) => ({
+  role: session.user.role
+});
+
+export default connect(mapStateToProps, null)(Home); 

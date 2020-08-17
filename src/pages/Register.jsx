@@ -28,6 +28,13 @@ import {
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
+// Redux
+import { connect } from "react-redux";
+import { registerAPI } from "../api/Redux/actions";
+
+// Notistack
+import { withSnackbar } from "notistack";
+
 // Templates
 import AuthHeader from "../templates/AuthHeader";
 import AuthFooter from "../templates/AuthFooter";
@@ -100,8 +107,19 @@ class Register extends Component {
               password: ""
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
+            onSubmit={({ nip, nik, email, password }, { setSubmitting }) => {
+              const { registerAPI, enqueueSnackbar, history } = this.props;
+
+              registerAPI(nip, nik, email, password)
+                .then(() => {
+                  setSubmitting(false);
+                  enqueueSnackbar("Registrasi akun berhasil", { variant: "success" });
+                  history.push("/login");
+                })
+                .catch(() => {
+                  setSubmitting(false);
+                  enqueueSnackbar("Registrasi akun gagal", { variant: "error" });
+                });
             }}
           >
             {({
@@ -213,4 +231,9 @@ class Register extends Component {
     );
   }
 }
-export default withStyles(styles)(Register); 
+
+const mapDispatchToProps = (dispatch) => ({
+  registerAPI: (nip, nik, email, password) => dispatch(registerAPI(nip, nik, email, password))
+});
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(withSnackbar(Register))); 
