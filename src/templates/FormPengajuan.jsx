@@ -16,13 +16,37 @@ import firebase from "../api/Firebase";
 // Redux
 import { connect } from "react-redux";
 
+// Notistack
+import { withSnackbar } from "notistack";
+
 // Formik & Yup
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 // Validation schema
 const validationSchema = Yup.object().shape({
-
+  nip: Yup
+    .string()
+    .required("Harap isi form nip")
+    .matches(/^((?!(0))[0-9]{18})$/, "NIP setidaknya 18 digit angka"),
+  nama: Yup
+    .string()
+    .required("Harap isi form nama"),
+  golongan: Yup
+    .string()
+    .required("Harap isi form golongan"),
+  tglMulai: Yup
+    .date()
+    .required("Harap isi form tanggal mulai"),
+  tglSelesai: Yup
+    .date()
+    .required("Harap isi form tanggal selesai"),
+  alasanCuti: Yup
+    .string()
+    .required("Harap isi form alasan cuti"),
+  alamatSelamaCuti: Yup
+    .string()
+    .required("Harap isi form alamat selama cuti")
 });
 
 class FormPengajuan extends Component {
@@ -51,8 +75,12 @@ class FormPengajuan extends Component {
       });
   }
 
+  componentWillUnmount() {
+    firebase.firestore();
+  }
+
   render() {
-    const { open, title, onClose, jenisCuti } = this.props;
+    const { open, title, onClose, jenisCuti, uid } = this.props;
     const { isLoading, dataPNS } = this.state;
 
     return (
@@ -82,12 +110,58 @@ class FormPengajuan extends Component {
                     unitKerja: dataPNS.unitKerja,
                     tglMulai: "",
                     tglSelesai: "",
+                    jenisCuti: jenisCuti,
                     alasanCuti: "",
                     alamatSelamaCuti: ""
                   }}
                   validationSchema={validationSchema}
-                  onSubmit={(values) => {
-                    console.log(values);
+                  onSubmit={({ nip, tglMulai, tglSelesai, jenisCuti, alasanCuti, alamatSelamaCuti }, { setSubmitting }) => {
+                    const ref = firebase.firestore().collection("cuti");
+                    const { enqueueSnackbar } = this.props;
+                    // Menghitung lama hari
+                    const date1 = Date.parse(tglMulai);
+                    const date2 = Date.parse(tglSelesai);
+                    const lamaHari = (date2 - date1) / (1000 * 3600 * 24);
+
+                    // Mencari tanggal hari ini
+                    let today = new Date();
+                    let yyyy = today.getFullYear();
+                    let mm = today.getMonth() + 1;
+                    let dd = today.getDate();
+                    if (mm < 10) {
+                      mm = `0${mm}`;
+                    }
+                    today = `${yyyy}-${mm}-${dd}`;
+
+                    if (Date.parse(tglMulai) <= Date.parse(today)) {
+                      setSubmitting(false);
+                      enqueueSnackbar("Mohon untuk mengajukan cuti minimal h-1", { variant: "error" });
+                    } else if (date2 <= date1) {
+                      setSubmitting(false);
+                      enqueueSnackbar("Periksa kembali tanggal pengajuan anda", { variant: "error" });
+                    } else {
+                      ref
+                        .add({
+                          uid: uid,
+                          tglPengajuan: today,
+                          tglMulai: tglMulai,
+                          tglSelesai: tglSelesai,
+                          lamaCuti: `${lamaHari} hari`,
+                          jenisCuti: jenisCuti,
+                          alasanCuti: alasanCuti,
+                          alamatSelamaCuti: alamatSelamaCuti,
+                          status: "Menunggu"
+                        })
+                        .then(() => {
+                          setSubmitting(false);
+                          enqueueSnackbar("Cuti telah diajukan", { variant: "success" });
+                          onClose();
+                        })
+                        .catch(() => {
+                          setSubmitting(false);
+                          enqueueSnackbar("Cuti gagal diajukan", { variant: "error" });
+                        });
+                    }
                   }}
                 >
                   {({
@@ -256,4 +330,4 @@ const mapStateToProps = ({ session }) => ({
   uid: session.user.uid
 });
 
-export default connect(mapStateToProps, null)(FormPengajuan); 
+export default connect(mapStateToProps, null)(withSnackbar(FormPengajuan)); 

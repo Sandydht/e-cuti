@@ -30,6 +30,7 @@ const onClickDismiss = key => () => {
 ReactDOM.render(
   <Provider store={store}>
     <SnackbarProvider
+      maxSnack={1}
       ref={notistackRef}
       action={(key) => (
         <IconButton
