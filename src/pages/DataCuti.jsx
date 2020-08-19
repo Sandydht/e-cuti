@@ -1,18 +1,12 @@
-import React, { Component, Fragment } from 'react';
-
-// Templates
-import DataTable from "../templates/DataTable";
+import React, { Component } from 'react';
 
 class DataCuti extends Component {
   render() {
     return (
-      <Fragment>
-        <DataTable
-          title="Data Cuti"
-        />
-      </Fragment>
+      <div>
+        DataCuti
+      </div>
     );
   }
 }
-
 export default DataCuti; 

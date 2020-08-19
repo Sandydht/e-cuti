@@ -55,9 +55,9 @@ const CutiBersalin = lazy(() => import("../pages/CutiBersalin"));
 const CutiAlasanPenting = lazy(() => import("../pages/CutiAlasanPenting"));
 const CLTN = lazy(() => import("../pages/CLTN"));
 const DataPNS = lazy(() => import("../pages/DataPNS"));
-const DataCuti = lazy(() => import("../pages/DataCuti"));
 const DetailPNS = lazy(() => import("../pages/DetailPNS"));
 const EditPNS = lazy(() => import("../pages/EditPNS"));
+const DataCuti = lazy(() => import("../pages/DataCuti"));
 
 class Content extends Component {
   render() {
@@ -102,6 +102,17 @@ class Content extends Component {
             <Grid item xs={12} md={12}>
               <Switch>
                 <Route
+                  path="/beranda/data_cuti"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <DataCuti {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
+                />
+
+                <Route
                   path="/beranda/data_pns/:dataIndex/edit"
                   render={(routeProps) =>
                     role === "admin" ? (
@@ -117,17 +128,6 @@ class Content extends Component {
                   render={(routeProps) =>
                     role === "admin" ? (
                       <DetailPNS {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )
-                  }
-                />
-
-                <Route
-                  path="/beranda/data_cuti"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <DataCuti {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
                       )
@@ -152,19 +152,17 @@ class Content extends Component {
                       <CLTN {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
-                      )
-                  }
+                      )}
                 />
 
                 <Route
                   path="/beranda/cuti_alasan_penting"
                   render={(routeProps) =>
                     role === "user" ? (
-                      <CutiAlasanPenting {...routeProps} />
+                      <CutiAlasanPenting  {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
-                      )
-                  }
+                      )}
                 />
 
                 <Route
@@ -174,8 +172,7 @@ class Content extends Component {
                       <CutiBersalin {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
-                      )
-                  }
+                      )}
                 />
 
                 <Route
@@ -185,8 +182,7 @@ class Content extends Component {
                       <CutiSakit {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
-                      )
-                  }
+                      )}
                 />
 
                 <Route
@@ -196,8 +192,7 @@ class Content extends Component {
                       <CutiBesar {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
-                      )
-                  }
+                      )}
                 />
 
                 <Route
@@ -207,8 +202,7 @@ class Content extends Component {
                       <CutiTahunan {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
-                      )
-                  }
+                      )}
                 />
 
                 <Route
