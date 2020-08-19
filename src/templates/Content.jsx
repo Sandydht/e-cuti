@@ -159,7 +159,7 @@ class Content extends Component {
                   path="/beranda/cuti_alasan_penting"
                   render={(routeProps) =>
                     role === "user" ? (
-                      <CutiAlasanPenting  {...routeProps} />
+                      <CutiAlasanPenting {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
                       )}
