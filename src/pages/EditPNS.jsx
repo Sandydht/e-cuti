@@ -9,7 +9,6 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MenuItem from '@material-ui/core/MenuItem';
-import LinearProgress from "@material-ui/core/LinearProgress";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Formik & Yup
@@ -154,7 +153,13 @@ class EditPNS extends Component {
         <CardContent>
           {
             isLoading ? (
-              <LinearProgress />
+              <Box p={5}>
+                <Grid container justify="center">
+                  <Grid item>
+                    <CircularProgress />
+                  </Grid>
+                </Grid>
+              </Box>
             ) : (
                 <Formik
                   initialValues={{

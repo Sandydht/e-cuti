@@ -15,7 +15,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Alert from "@material-ui/lab/Alert";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -53,23 +52,36 @@ class DetailPNS extends Component {
     super(props);
     this.state = {
       id: "",
+      fotoPNS: "",
       dataPNS: "",
       isLoading: true,
       openDialog: false,
-      buttonLoading: false
+      buttonLoading: false,
     };
   }
 
   componentDidMount() {
     const { match } = this.props;
     const ref = firebase.firestore().collection("pns").doc(match.params.id);
+    const storage = firebase.storage().ref();
     ref
       .get()
       .then((querySnapshot) => {
-        this.setState({
-          dataPNS: querySnapshot.data(),
-          isLoading: false
-        });
+        storage
+          .child(`fotoPNS/${querySnapshot.data().nip}`)
+          .getDownloadURL()
+          .then((url) => {
+            this.setState({
+              fotoPNS: url,
+              dataPNS: querySnapshot.data(),
+              isLoading: false
+            });
+          })
+          .catch(() => {
+            this.setState({
+              isLoading: false
+            });
+          });
       });
   }
 
@@ -114,7 +126,7 @@ class DetailPNS extends Component {
 
   render() {
     const { classes, match } = this.props;
-    const { isLoading, dataPNS, openDialog, buttonLoading } = this.state;
+    const { isLoading, dataPNS, fotoPNS, openDialog, buttonLoading } = this.state;
 
     return (
       <Fragment>
@@ -144,11 +156,17 @@ class DetailPNS extends Component {
               <CardContent>
                 {
                   isLoading ? (
-                    <LinearProgress />
+                    <Box p={5}>
+                      <Grid container justify="center">
+                        <Grid item>
+                          <CircularProgress />
+                        </Grid>
+                      </Grid>
+                    </Box>
                   ) : (
                       <Grid container justify="center">
                         <Grid item>
-                          <Avatar alt="foto-pns" className={classes.avatar} />
+                          <Avatar alt="foto-pns" className={classes.avatar} src={fotoPNS} />
                         </Grid>
                       </Grid>
                     )
@@ -163,7 +181,13 @@ class DetailPNS extends Component {
               <CardContent>
                 {
                   isLoading ? (
-                    <LinearProgress />
+                    <Box p={5}>
+                      <Grid container justify="center">
+                        <Grid item>
+                          <CircularProgress />
+                        </Grid>
+                      </Grid>
+                    </Box>
                   ) : (
                       <Fragment>
                         <Table>
