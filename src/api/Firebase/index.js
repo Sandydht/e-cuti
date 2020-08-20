@@ -3,14 +3,14 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyChNWeZMhy1cZ_RPcjzBYgoV_5fbA1vEX8",
-  authDomain: "e-cuti-db056.firebaseapp.com",
-  databaseURL: "https://e-cuti-db056.firebaseio.com",
-  projectId: "e-cuti-db056",
-  storageBucket: "e-cuti-db056.appspot.com",
-  messagingSenderId: "355851861029",
-  appId: "1:355851861029:web:574aee2dab2c5c185c93cc",
-  measurementId: "G-FNT37820VH"
+  apiKey: "AIzaSyCBlrpmeUV2DckBfbZiEKqGzy43OlQY-vc",
+  authDomain: "e-cuti-53b10.firebaseapp.com",
+  databaseURL: "https://e-cuti-53b10.firebaseio.com",
+  projectId: "e-cuti-53b10",
+  storageBucket: "e-cuti-53b10.appspot.com",
+  messagingSenderId: "830315545153",
+  appId: "1:830315545153:web:b2fdb92b097dd8d81f3cc0",
+  measurementId: "G-FEPZ48V8RK"
 };
 
 export default firebase.initializeApp(firebaseConfig);
