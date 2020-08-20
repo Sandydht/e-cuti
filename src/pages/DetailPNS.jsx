@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
 // Material UI
-import withStyles from "@material-ui/core/styles/withStyles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
@@ -11,7 +10,6 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import CardContent from "@material-ui/core/CardContent";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Alert from "@material-ui/lab/Alert";
@@ -33,26 +31,11 @@ import {
 // Notistack
 import { withSnackbar } from "notistack";
 
-// Styles
-const styles = (theme) => ({
-  title: {
-    fontSize: 23
-  },
-  body: {
-    fontSize: 16
-  },
-  avatar: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
-  }
-});
-
 class DetailPNS extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: "",
-      fotoPNS: "",
       dataPNS: "",
       isLoading: true,
       openDialog: false,
@@ -63,25 +46,14 @@ class DetailPNS extends Component {
   componentDidMount() {
     const { match } = this.props;
     const ref = firebase.firestore().collection("pns").doc(match.params.id);
-    const storage = firebase.storage().ref();
+
     ref
       .get()
       .then((querySnapshot) => {
-        storage
-          .child(`fotoPNS/${querySnapshot.data().nip}`)
-          .getDownloadURL()
-          .then((url) => {
-            this.setState({
-              fotoPNS: url,
-              dataPNS: querySnapshot.data(),
-              isLoading: false
-            });
-          })
-          .catch(() => {
-            this.setState({
-              isLoading: false
-            });
-          });
+        this.setState({
+          dataPNS: querySnapshot.data(),
+          isLoading: false
+        });
       });
   }
 
@@ -125,8 +97,8 @@ class DetailPNS extends Component {
   };
 
   render() {
-    const { classes, match } = this.props;
-    const { isLoading, dataPNS, fotoPNS, openDialog, buttonLoading } = this.state;
+    const { match } = this.props;
+    const { isLoading, dataPNS, openDialog, buttonLoading } = this.state;
 
     return (
       <Fragment>
@@ -148,104 +120,76 @@ class DetailPNS extends Component {
           </DialogActions>
         </Dialog>
 
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardHeader title="Foto PNS" />
-              <Divider />
-              <CardContent>
-                {
-                  isLoading ? (
-                    <Box p={5}>
-                      <Grid container justify="center">
-                        <Grid item>
-                          <CircularProgress />
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  ) : (
-                      <Grid container justify="center">
-                        <Grid item>
-                          <Avatar alt="foto-pns" className={classes.avatar} src={fotoPNS} />
-                        </Grid>
-                      </Grid>
-                    )
-                }
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Card>
-              <CardHeader title="Detail PNS" />
-              <Divider />
-              <CardContent>
-                {
-                  isLoading ? (
-                    <Box p={5}>
-                      <Grid container justify="center">
-                        <Grid item>
-                          <CircularProgress />
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  ) : (
-                      <Fragment>
-                        <Table>
-                          <TableBody>
-                            <TableRow>
-                              <TableCell>NIP</TableCell>
-                              <TableCell>{dataPNS.nip}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell>NIK</TableCell>
-                              <TableCell>{dataPNS.nik}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell>Nama</TableCell>
-                              <TableCell>{dataPNS.nama}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell>Golongan</TableCell>
-                              <TableCell>{dataPNS.golongan}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell>Unit Kerja</TableCell>
-                              <TableCell>{dataPNS.unitKerja}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell>Status Akun</TableCell>
-                              <TableCell>
-                                {
-                                  dataPNS.uid ? (
-                                    <Alert icon={false} severity="success">Teregistrasi</Alert>
-                                  ) : (
-                                      <Alert icon={false} severity="error">Belum teregistrasi</Alert>
-                                    )
-                                }
-                              </TableCell>
-                            </TableRow>
-                          </TableBody>
-                        </Table>
+        <Card>
+          <CardHeader title="Detail PNS" />
+          <Divider />
+          <CardContent>
+            {
+              isLoading ? (
+                <Box p={5}>
+                  <Grid container justify="center">
+                    <Grid item>
+                      <CircularProgress />
+                    </Grid>
+                  </Grid>
+                </Box>
+              ) : (
+                  <Fragment>
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>NIP</TableCell>
+                          <TableCell>{dataPNS.nip}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>NIK</TableCell>
+                          <TableCell>{dataPNS.nik}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Nama</TableCell>
+                          <TableCell>{dataPNS.nama}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Golongan</TableCell>
+                          <TableCell>{dataPNS.golongan}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Unit Kerja</TableCell>
+                          <TableCell>{dataPNS.unitKerja}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Status Akun</TableCell>
+                          <TableCell>
+                            {
+                              dataPNS.uid ? (
+                                <Alert icon={false} severity="success">Teregistrasi</Alert>
+                              ) : (
+                                  <Alert icon={false} severity="error">Belum teregistrasi</Alert>
+                                )
+                            }
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
 
-                        <Box mt={2}>
-                          <Grid container spacing={1}>
-                            <Grid item xs={12} md={12}>
-                              <Button startIcon={<EditIcon />} color="primary" variant="contained" fullWidth component={NavLink} to={`/beranda/data_pns/${match.params.id}/edit`}>Edit</Button>
-                            </Grid>
-                            <Grid item xs={12} md={12}>
-                              <Button startIcon={<DeleteIcon />} color="secondary" variant="contained" fullWidth disabled={Boolean(dataPNS.uid)} onClick={this.handleOpenDialog}>Hapus</Button>
-                            </Grid>
-                          </Grid>
-                        </Box>
-                      </Fragment>
-                    )
-                }
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+                    <Box mt={2}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} md={12}>
+                          <Button startIcon={<EditIcon />} color="primary" variant="contained" fullWidth component={NavLink} to={`/beranda/data_pns/${match.params.id}/edit`}>Edit</Button>
+                        </Grid>
+                        <Grid item xs={12} md={12}>
+                          <Button startIcon={<DeleteIcon />} color="secondary" variant="contained" fullWidth disabled={Boolean(dataPNS.uid)} onClick={this.handleOpenDialog}>Hapus</Button>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Fragment>
+                )
+            }
+          </CardContent>
+        </Card>
+
       </Fragment>
     );
   }
 }
-export default withStyles(styles)(withSnackbar(DetailPNS)); 
+export default withSnackbar(DetailPNS); 

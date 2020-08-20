@@ -10,7 +10,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Avatar from "@material-ui/core/Avatar";
 
 // Formik & Yup
 import { Formik, Form } from "formik";
@@ -130,7 +129,6 @@ class TambahDataPNS extends Component {
         <DialogContent>
           <Formik
             initialValues={{
-              foto: null,
               nip: "",
               nik: "",
               nama: "",
@@ -138,10 +136,9 @@ class TambahDataPNS extends Component {
               unitKerja: "Badan Kepegawai Daerah"
             }}
             validationSchema={validationSchema}
-            onSubmit={({ foto, nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
+            onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
               const { enqueueSnackbar } = this.props;
               const ref = firebase.firestore().collection("pns");
-              const storage = firebase.storage().ref().child(`fotoPNS/${nip}`);
 
               ref
                 .where("nip", "==", nip)
@@ -163,22 +160,18 @@ class TambahDataPNS extends Component {
                           setSubmitting(false);
                           enqueueSnackbar("Data telah tersedia", { variant: "error" });
                         } else {
-                          storage
-                            .put(foto)
-                            .then(() => {
-                              ref
-                                .add({
-                                  nip: nip,
-                                  nik: nik,
-                                  nama: nama,
-                                  golongan: golongan,
-                                  unitKerja: unitKerja
-                                })
-                                .then((res) => {
-                                  setSubmitting(false);
-                                  enqueueSnackbar("Data tersimpan", { variant: "success" });
-                                  onClose();
-                                });
+                          ref
+                            .add({
+                              nip: nip,
+                              nik: nik,
+                              nama: nama,
+                              golongan: golongan,
+                              unitKerja: unitKerja
+                            })
+                            .then((res) => {
+                              setSubmitting(false);
+                              enqueueSnackbar("Data tersimpan", { variant: "success" });
+                              onClose();
                             })
                             .catch(() => {
                               setSubmitting(false);
@@ -200,33 +193,6 @@ class TambahDataPNS extends Component {
               isSubmitting
             }) => (
                 <Form>
-                  <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={3} md={3}>
-                      <Grid container justify="center" alignItems="center">
-                        <Grid item>
-                          <Avatar variant="rounded" src={new FileReader().result} style={{ width: "100%", height: "auto" }} />
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={9} md={9}>
-                      <TextField
-                        id="foto"
-                        name="foto"
-                        label="Foto PNS"
-                        fullWidth
-                        type="file"
-                        margin="normal"
-                        variant="outlined"
-                        error={Boolean(touched.foto && errors.foto)}
-                        helperText={touched.foto && errors.foto ? errors.foto : null}
-                        onChange={(event) => setFieldValue("foto", event.currentTarget.files[0])}
-                        onBlur={handleBlur}
-                        InputLabelProps={{
-                          shrink: true
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
                   <TextField
                     id="nip"
                     name="nip"
