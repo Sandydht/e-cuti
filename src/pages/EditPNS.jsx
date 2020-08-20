@@ -271,7 +271,7 @@ class EditPNS extends Component {
                         <Box mt={2}>
                           <Grid container spacing={2} justify="flex-end">
                             <Grid item>
-                              <Button color="primary" variant="outlined" component={NavLink} to={`/beranda/data_pns/${match.params.dataIndex}`}>Batal</Button>
+                              <Button color="primary" variant="outlined" component={NavLink} to={`/beranda/data_pns/${match.params.id}`}>Batal</Button>
                             </Grid>
                             <Grid item>
                               <Button type="submit" color="primary" variant="contained" disabled={isSubmitting} >{isSubmitting ? <CircularProgress size={25} /> : "Simpan"}</Button>
