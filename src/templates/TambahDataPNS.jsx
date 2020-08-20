@@ -133,7 +133,7 @@ class TambahDataPNS extends Component {
               nik: "",
               nama: "",
               golongan: "",
-              unitKerja: ""
+              unitKerja: "Badan Kepegawai Daerah"
             }}
             validationSchema={validationSchema}
             onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
@@ -263,6 +263,9 @@ class TambahDataPNS extends Component {
                     value={values.unitKerja}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    InputProps={{
+                      readOnly: true,
+                    }}
                   />
                   <Box mt={2} mb={2}>
                     <Grid container spacing={2} justify="flex-end">

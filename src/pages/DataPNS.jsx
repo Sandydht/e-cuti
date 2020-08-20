@@ -13,9 +13,6 @@ import TambahDataPNS from "../templates/TambahDataPNS";
 // Firebase
 import firebase from "../api/Firebase";
 
-// React router dom
-import { NavLink } from "react-router-dom";
-
 class DataPNS extends Component {
   constructor(props) {
     super(props);
@@ -24,23 +21,32 @@ class DataPNS extends Component {
       isLoading: true,
       openDialog: false
     };
+
+    this.ref = firebase.firestore().collection("pns");
+    this.unsubscribe = null;
   }
 
-  componentDidMount() {
-    const ref = firebase.firestore().collection("pns");
-    ref
-      .onSnapshot((querySnapshot) => {
-        let data = [];
-        querySnapshot.forEach(doc => data.push(doc.data()));
-        this.setState({
-          dataPNS: data,
-          isLoading: false
-        });
+  collectionOnSnapshot = (querySnapshot) => {
+    let data = [];
+    querySnapshot.forEach(doc => {
+      data.push({
+        id: doc.id,
+        data: doc.data()
       });
+    });
+
+    this.setState({
+      isLoading: false,
+      dataPNS: data
+    });
+  };
+
+  componentDidMount() {
+    this.unsubscribe = this.ref.onSnapshot(this.collectionOnSnapshot);
   }
 
   componentWillUnmount() {
-    firebase.firestore().collection("pns");
+    this.unsubscribe();
   }
 
   handleOpenDialog = () => {
@@ -72,7 +78,7 @@ class DataPNS extends Component {
             data={dataPNS}
             columns={[
               {
-                name: "nip",
+                name: "data.nip",
                 label: "NIP",
                 options: {
                   filter: true,
@@ -80,7 +86,7 @@ class DataPNS extends Component {
                 }
               },
               {
-                name: "nik",
+                name: "data.nik",
                 label: "NIK",
                 options: {
                   filter: true,
@@ -88,7 +94,7 @@ class DataPNS extends Component {
                 }
               },
               {
-                name: "nama",
+                name: "data.nama",
                 label: "Nama",
                 options: {
                   filter: true,
@@ -96,7 +102,7 @@ class DataPNS extends Component {
                 }
               },
               {
-                name: "golongan",
+                name: "data.golongan",
                 label: "Golongan",
                 options: {
                   filter: true,
@@ -104,7 +110,7 @@ class DataPNS extends Component {
                 }
               },
               {
-                name: "unitKerja",
+                name: "data.unitKerja",
                 label: "Unit Kerja",
                 options: {
                   filter: true,
@@ -119,7 +125,14 @@ class DataPNS extends Component {
                   sort: false,
                   customBodyRenderLite: (dataIndex) => {
                     return (
-                      <Button startIcon={<PageviewIcon />} color="primary" variant="contained" size="small" component={NavLink} to={`/beranda/data_pns/${dataIndex}`}>Detail</Button>
+                      <Button
+                        startIcon={<PageviewIcon />}
+                        color="primary"
+                        variant="contained"
+                        size="small"
+                        onClick={() => {
+                          this.props.history.push(`/beranda/data_pns/${dataPNS[dataIndex].id}`);
+                        }}>Detail</Button>
                     );
                   }
                 }

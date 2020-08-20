@@ -45,6 +45,7 @@ class DataTable extends Component {
           columns={columns}
           options={{
             responsive: "simple",
+            enableNestedDataAccess: ".",
             selectableRows: "none",
             fixedHeader: false,
             rowsPerPageOptions: [5, 10, 15],

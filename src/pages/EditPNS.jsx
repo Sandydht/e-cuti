@@ -123,41 +123,30 @@ class EditPNS extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "",
-      dataPNS: "",
+      dataPNS: {},
       isLoading: true
     };
   }
 
   componentDidMount() {
-    const ref = firebase.firestore().collection("pns");
+    const { match } = this.props;
+    const ref = firebase.firestore().collection("pns").doc(match.params.id);
 
     ref
       .get()
       .then((querySnapshot) => {
-        let data = [];
-        querySnapshot.forEach(doc => {
-          data.push({
-            id: doc.id,
-            data: doc.data()
+        if (querySnapshot.exists) {
+          this.setState({
+            dataPNS: querySnapshot.data(),
+            isLoading: false
           });
-        });
-
-        this.setState((state, props) => ({
-          id: data[props.match.params.dataIndex].id,
-          dataPNS: data[props.match.params.dataIndex].data,
-          isLoading: false
-        }));
+        }
       });
-  }
-
-  componentWillUnmount() {
-    firebase.firestore().collection("pns");
   }
 
   render() {
     const { match } = this.props;
-    const { id, dataPNS, isLoading } = this.state;
+    const { dataPNS, isLoading } = this.state;
 
     return (
       <Card>
@@ -177,10 +166,9 @@ class EditPNS extends Component {
                   }}
                   validationSchema={validationSchema}
                   onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
-                    const ref = firebase.firestore().collection("pns");
+                    const ref = firebase.firestore().collection("pns").doc(match.params.id);
                     const { history, enqueueSnackbar } = this.props;
                     ref
-                      .doc(id)
                       .update({
                         nip: nip,
                         nik: nik,
@@ -191,7 +179,7 @@ class EditPNS extends Component {
                       .then(() => {
                         setSubmitting(false);
                         enqueueSnackbar("Data berhasil diperbarui", { variant: "success" });
-                        history.push(`/beranda/data_pns/${match.params.dataIndex}`);
+                        history.push(`/beranda/data_pns/${match.params.id}`);
                       })
                       .catch(() => {
                         setSubmitting(false);

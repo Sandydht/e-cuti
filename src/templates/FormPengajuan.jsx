@@ -115,13 +115,14 @@ class FormPengajuan extends Component {
                     alamatSelamaCuti: ""
                   }}
                   validationSchema={validationSchema}
-                  onSubmit={({ nip, tglMulai, tglSelesai, jenisCuti, alasanCuti, alamatSelamaCuti }, { setSubmitting }) => {
+                  onSubmit={({ tglMulai, tglSelesai, jenisCuti, alasanCuti, alamatSelamaCuti }, { setSubmitting }) => {
                     const ref = firebase.firestore().collection("cuti");
                     const { enqueueSnackbar } = this.props;
                     // Menghitung lama hari
                     const date1 = Date.parse(tglMulai);
                     const date2 = Date.parse(tglSelesai);
-                    const lamaHari = (date2 - date1) / (1000 * 3600 * 24);
+                    const lamaHari = (((date2 - date1) / (1000 * 3600 * 24)) + 1);
+                    const hari = lamaHari - (parseInt(lamaHari / 7) * 2);
 
                     // Mencari tanggal hari ini
                     let today = new Date();
@@ -136,7 +137,7 @@ class FormPengajuan extends Component {
                     if (Date.parse(tglMulai) <= Date.parse(today)) {
                       setSubmitting(false);
                       enqueueSnackbar("Mohon untuk mengajukan cuti minimal h-1", { variant: "error" });
-                    } else if (date2 <= date1) {
+                    } else if (date2 < date1) {
                       setSubmitting(false);
                       enqueueSnackbar("Periksa kembali tanggal pengajuan anda", { variant: "error" });
                     } else {
@@ -146,7 +147,7 @@ class FormPengajuan extends Component {
                           tglPengajuan: today,
                           tglMulai: tglMulai,
                           tglSelesai: tglSelesai,
-                          lamaCuti: `${lamaHari} hari`,
+                          lamaCuti: `${hari} hari`,
                           jenisCuti: jenisCuti,
                           alasanCuti: alasanCuti,
                           alamatSelamaCuti: alamatSelamaCuti,

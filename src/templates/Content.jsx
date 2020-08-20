@@ -113,7 +113,7 @@ class Content extends Component {
                 />
 
                 <Route
-                  path="/beranda/data_pns/:dataIndex/edit"
+                  path="/beranda/data_pns/:id/edit"
                   render={(routeProps) =>
                     role === "admin" ? (
                       <EditPNS {...routeProps} />
@@ -124,7 +124,7 @@ class Content extends Component {
                 />
 
                 <Route
-                  path="/beranda/data_pns/:dataIndex"
+                  path="/beranda/data_pns/:id"
                   render={(routeProps) =>
                     role === "admin" ? (
                       <DetailPNS {...routeProps} />
