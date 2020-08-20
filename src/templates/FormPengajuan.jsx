@@ -111,11 +111,10 @@ class FormPengajuan extends Component {
                     tglMulai: "",
                     tglSelesai: "",
                     jenisCuti: jenisCuti,
-                    alasanCuti: "",
                     alamatSelamaCuti: ""
                   }}
                   validationSchema={validationSchema}
-                  onSubmit={({ tglMulai, tglSelesai, jenisCuti, alasanCuti, alamatSelamaCuti }, { setSubmitting }) => {
+                  onSubmit={({ tglMulai, tglSelesai, jenisCuti, alamatSelamaCuti }, { setSubmitting }) => {
                     const ref = firebase.firestore().collection("cuti");
                     const { enqueueSnackbar } = this.props;
                     // Menghitung lama hari
@@ -149,7 +148,6 @@ class FormPengajuan extends Component {
                           tglSelesai: tglSelesai,
                           lamaCuti: `${hari} hari`,
                           jenisCuti: jenisCuti,
-                          alasanCuti: alasanCuti,
                           alamatSelamaCuti: alamatSelamaCuti,
                           status: "Menunggu"
                         })
@@ -271,20 +269,6 @@ class FormPengajuan extends Component {
                           InputLabelProps={{
                             shrink: true,
                           }}
-                        />
-                        <TextField
-                          id="alasanCuti"
-                          label="Alasan Cuti"
-                          multiline
-                          fullWidth
-                          margin="normal"
-                          rows={4}
-                          variant="outlined"
-                          error={Boolean(touched.alasanCuti && errors.alasanCuti)}
-                          helperText={touched.alasanCuti && errors.alasanCuti ? errors.alasanCuti : null}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.alasanCuti}
                         />
                         <TextField
                           id="alamatSelamaCuti"

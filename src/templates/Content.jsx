@@ -40,8 +40,7 @@ const breadcrumbNameMap = {
   '/beranda/cuti_bersalin': 'Cuti Bersalin',
   '/beranda/cuti_alasan_penting': 'Cuti Alasan Penting',
   '/beranda/cltn': 'CLTN',
-  '/beranda/data_pns': 'Data PNS',
-  '/beranda/data_cuti': 'Data Cuti',
+  '/beranda/data_pns': 'Data PNS'
 };
 
 // Pages
@@ -57,7 +56,6 @@ const CLTN = lazy(() => import("../pages/CLTN"));
 const DataPNS = lazy(() => import("../pages/DataPNS"));
 const DetailPNS = lazy(() => import("../pages/DetailPNS"));
 const EditPNS = lazy(() => import("../pages/EditPNS"));
-const DataCuti = lazy(() => import("../pages/DataCuti"));
 
 class Content extends Component {
   render() {
@@ -102,17 +100,6 @@ class Content extends Component {
             <Grid item xs={12} md={12}>
               <Switch>
                 <Route
-                  path="/beranda/data_cuti"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <DataCuti {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )
-                  }
-                />
-
-                <Route
                   path="/beranda/data_pns/:id/edit"
                   render={(routeProps) =>
                     role === "admin" ? (
@@ -147,62 +134,32 @@ class Content extends Component {
 
                 <Route
                   path="/beranda/cltn"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <CLTN {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
+                  component={CLTN}
                 />
 
                 <Route
                   path="/beranda/cuti_alasan_penting"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <CutiAlasanPenting {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
+                  component={CutiAlasanPenting}
                 />
 
                 <Route
                   path="/beranda/cuti_bersalin"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <CutiBersalin {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
+                  component={CutiBersalin}
                 />
 
                 <Route
                   path="/beranda/cuti_sakit"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <CutiSakit {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
+                  component={CutiSakit}
                 />
 
                 <Route
                   path="/beranda/cuti_besar"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <CutiBesar {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
+                  component={CutiBesar}
                 />
 
                 <Route
                   path="/beranda/cuti_tahunan"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <CutiTahunan {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
+                  component={CutiTahunan}
                 />
 
                 <Route
