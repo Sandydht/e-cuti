@@ -7,9 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 
-// Organisms
-import Logo from "../organisms/Logo";
-import AccountMenu from "../organisms/AccountMenu";
+// Molecules
+import Logo from "../molecules/Logo";
+import AccountMenu from "../molecules/AccountMenu";
 
 // Styles
 const styles = (theme) => ({

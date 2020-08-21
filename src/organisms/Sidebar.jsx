@@ -8,9 +8,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-// Organisms
-import DrawerList from "../organisms/DrawerList";
-import Logo from "../organisms/Logo";
+// Molecules
+import DrawerList from "../molecules/DrawerList";
+import Logo from "../molecules/Logo";
 
 // Styles
 const drawerWidth = 240;

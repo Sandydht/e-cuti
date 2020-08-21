@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
 
-// Templates
-import Topbar from "../templates/Topbar";
-import Sidebar from "../templates/Sidebar";
-import Content from "../templates/Content";
+// Organisms
+import Topbar from "../organisms/Topbar";
+import Sidebar from "../organisms/Sidebar";
+import Content from "../organisms/Content";
 
 // Styles
 const styles = (theme) => ({

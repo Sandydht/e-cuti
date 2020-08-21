@@ -6,9 +6,9 @@ import Button from "@material-ui/core/Button";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PageviewIcon from '@material-ui/icons/Pageview';
 
-// Templates
-import DataTable from "../templates/DataTable";
-import TambahDataPNS from "../templates/TambahDataPNS";
+// Organisms
+import DataTable from "../molecules/DataTable";
+import TambahDataPNS from "../molecules/TambahDataPNS";
 
 // Firebase
 import { pns } from "../api/Firebase";

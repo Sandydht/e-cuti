@@ -21,8 +21,8 @@ import { pns, fotoPNS } from "../api/Firebase";
 // Notistack
 import { withSnackbar } from "notistack";
 
-// Organisms
-import Thumb from "../organisms/Thumb";
+// molecules
+import Thumb from "../molecules/Thumb";
 
 // Validation schema
 const validationSchema = Yup.object().shape({

@@ -35,9 +35,9 @@ import { registerAPI } from "../api/Redux/actions";
 // Notistack
 import { withSnackbar } from "notistack";
 
-// Templates
-import AuthHeader from "../templates/AuthHeader";
-import AuthFooter from "../templates/AuthFooter";
+// Organisms
+import AuthHeader from "../organisms/AuthHeader";
+import AuthFooter from "../organisms/AuthFooter";
 
 // Styles
 const styles = (theme) => ({

@@ -1,12 +1,30 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+
+// Redux
+import { connect } from "react-redux";
+
+// Templates
+import AdminCutiTahunan from "../templates/AdminCutiTahunan";
 
 class CutiTahunan extends Component {
   render() {
+    const { role } = this.props;
     return (
-      <div>
-        CutiTahunan
-      </div>
+      <Fragment>
+        {
+          role === "admin" ? (
+            <AdminCutiTahunan />
+          ) : (
+              <div>User</div>
+            )
+        }
+      </Fragment>
     );
   }
 }
-export default CutiTahunan; 
+
+const mapStateToProps = ({ session }) => ({
+  role: session.user.role
+});
+
+export default connect(mapStateToProps, null)(CutiTahunan); 
