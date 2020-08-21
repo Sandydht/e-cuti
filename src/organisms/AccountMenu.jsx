@@ -30,8 +30,8 @@ const styles = (theme) => ({
     backgroundColor: "#eeeeee"
   },
   avatar: {
-    width: theme.spacing(4),
-    height: theme.spacing(4)
+    width: theme.spacing(3),
+    height: theme.spacing(3)
   }
 });
 
