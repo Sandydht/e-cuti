@@ -19,9 +19,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Avatar from "@material-ui/core/Avatar";
 
 // Firebase 
-import firebase from "../api/Firebase";
+import { pns } from "../api/Firebase";
 
 // React router dom
 import {
@@ -45,9 +46,8 @@ class DetailPNS extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    const ref = firebase.firestore().collection("pns").doc(match.params.id);
-
-    ref
+    pns
+      .doc(match.params.id)
       .get()
       .then((querySnapshot) => {
         this.setState({
@@ -71,14 +71,10 @@ class DetailPNS extends Component {
 
   handleDelete = () => {
     const { history, enqueueSnackbar, match } = this.props;
-
     this.setState({
       buttonLoading: true
     });
-
-    firebase
-      .firestore()
-      .collection("pns")
+    pns
       .doc(match.params.id)
       .delete()
       .then(() => {
@@ -120,74 +116,102 @@ class DetailPNS extends Component {
           </DialogActions>
         </Dialog>
 
-        <Card>
-          <CardHeader title="Detail PNS" />
-          <Divider />
-          <CardContent>
-            {
-              isLoading ? (
-                <Box p={5}>
-                  <Grid container justify="center">
-                    <Grid item>
-                      <CircularProgress />
-                    </Grid>
-                  </Grid>
-                </Box>
-              ) : (
-                  <Fragment>
-                    <Table>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell>NIP</TableCell>
-                          <TableCell>{dataPNS.nip}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>NIK</TableCell>
-                          <TableCell>{dataPNS.nik}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Nama</TableCell>
-                          <TableCell>{dataPNS.nama}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Golongan</TableCell>
-                          <TableCell>{dataPNS.golongan}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Unit Kerja</TableCell>
-                          <TableCell>{dataPNS.unitKerja}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Status Akun</TableCell>
-                          <TableCell>
-                            {
-                              dataPNS.uid ? (
-                                <Alert icon={false} severity="success">Teregistrasi</Alert>
-                              ) : (
-                                  <Alert icon={false} severity="error">Belum teregistrasi</Alert>
-                                )
-                            }
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-
-                    <Box mt={2}>
-                      <Grid container spacing={1}>
-                        <Grid item xs={12} md={12}>
-                          <Button startIcon={<EditIcon />} color="primary" variant="contained" fullWidth component={NavLink} to={`/beranda/data_pns/${match.params.id}/edit`}>Edit</Button>
-                        </Grid>
-                        <Grid item xs={12} md={12}>
-                          <Button startIcon={<DeleteIcon />} color="secondary" variant="contained" fullWidth disabled={Boolean(dataPNS.uid)} onClick={this.handleOpenDialog}>Hapus</Button>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={4}>
+            <Card>
+              <CardHeader title="Foto PNS" />
+              <Divider />
+              <CardContent>
+                {
+                  isLoading ? (
+                    <Box p={5}>
+                      <Grid container justify="center">
+                        <Grid item>
+                          <CircularProgress />
                         </Grid>
                       </Grid>
                     </Box>
-                  </Fragment>
-                )
-            }
-          </CardContent>
-        </Card>
+                  ) : (
+                      <Grid container justify="center" alignItems="center">
+                        <Grid item>
+                          <Avatar src={dataPNS.fotoUrl} style={{ width: "120px", height: "120px" }} />
+                        </Grid>
+                      </Grid>
+                    )
+                }
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Card>
+              <CardHeader title="Detail PNS" />
+              <Divider />
+              <CardContent>
+                {
+                  isLoading ? (
+                    <Box p={5}>
+                      <Grid container justify="center">
+                        <Grid item>
+                          <CircularProgress />
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  ) : (
+                      <Fragment>
+                        <Table>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>NIP</TableCell>
+                              <TableCell>{dataPNS.nip}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>NIK</TableCell>
+                              <TableCell>{dataPNS.nik}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>Nama</TableCell>
+                              <TableCell>{dataPNS.nama}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>Golongan</TableCell>
+                              <TableCell>{dataPNS.golongan}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>Unit Kerja</TableCell>
+                              <TableCell>{dataPNS.unitKerja}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>Status Akun</TableCell>
+                              <TableCell>
+                                {
+                                  dataPNS.uid ? (
+                                    <Alert icon={false} severity="success">Teregistrasi</Alert>
+                                  ) : (
+                                      <Alert icon={false} severity="error">Belum teregistrasi</Alert>
+                                    )
+                                }
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
 
+                        <Box mt={2}>
+                          <Grid container spacing={1}>
+                            <Grid item xs={12} md={12}>
+                              <Button startIcon={<EditIcon />} color="primary" variant="contained" fullWidth component={NavLink} to={`/beranda/data_pns/${match.params.id}/edit`}>Edit</Button>
+                            </Grid>
+                            <Grid item xs={12} md={12}>
+                              <Button startIcon={<DeleteIcon />} color="secondary" variant="contained" fullWidth disabled={Boolean(dataPNS.uid)} onClick={this.handleOpenDialog}>Hapus</Button>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                      </Fragment>
+                    )
+                }
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
       </Fragment>
     );
   }

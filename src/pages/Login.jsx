@@ -86,7 +86,7 @@ class Login extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, loginAPI, enqueueSnackbar, location, history } = this.props;
     const { showPassword } = this.state;
 
     return (
@@ -100,7 +100,6 @@ class Login extends Component {
             }}
             validationSchema={validationSchema}
             onSubmit={({ email, password }, { setSubmitting }) => {
-              const { loginAPI, enqueueSnackbar, location, history } = this.props;
               loginAPI(email, password)
                 .then(() => {
                   const { from } = location.state || { from: "/" };

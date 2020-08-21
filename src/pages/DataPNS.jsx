@@ -11,7 +11,7 @@ import DataTable from "../templates/DataTable";
 import TambahDataPNS from "../templates/TambahDataPNS";
 
 // Firebase
-import firebase from "../api/Firebase";
+import { pns } from "../api/Firebase";
 
 class DataPNS extends Component {
   constructor(props) {
@@ -22,7 +22,6 @@ class DataPNS extends Component {
       openDialog: false
     };
 
-    this.ref = firebase.firestore().collection("pns");
     this.unsubscribe = null;
   }
 
@@ -42,7 +41,7 @@ class DataPNS extends Component {
   };
 
   componentDidMount() {
-    this.unsubscribe = this.ref.onSnapshot(this.collectionOnSnapshot);
+    this.unsubscribe = pns.onSnapshot(this.collectionOnSnapshot);
   }
 
   componentWillUnmount() {

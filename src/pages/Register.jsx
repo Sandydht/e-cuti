@@ -94,7 +94,7 @@ class Register extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, registerAPI, enqueueSnackbar, history } = this.props;
     const { showPassword } = this.state;
 
     return (
@@ -110,8 +110,6 @@ class Register extends Component {
             }}
             validationSchema={validationSchema}
             onSubmit={({ nip, nik, email, password }, { setSubmitting }) => {
-              const { registerAPI, enqueueSnackbar, history } = this.props;
-
               registerAPI(nip, nik, email, password)
                 .then(() => {
                   setSubmitting(false);

@@ -1,9 +1,5 @@
 import { sessionService } from "redux-react-session";
-import firebase from "../../Firebase";
-
-// Ref
-const auth = firebase.auth();
-const pns = firebase.firestore().collection("pns");
+import { auth, pns } from "../../Firebase";
 
 export const loginAPI = (email, password) => (dispatch) => {
   return new Promise((resolve, reject) => {

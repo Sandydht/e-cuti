@@ -16,7 +16,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 // Firebase 
-import firebase from "../api/Firebase";
+import { pns } from "../api/Firebase";
 
 // React router dom
 import {
@@ -129,9 +129,9 @@ class EditPNS extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    const ref = firebase.firestore().collection("pns").doc(match.params.id);
 
-    ref
+    pns
+      .doc(match.params.id)
       .get()
       .then((querySnapshot) => {
         if (querySnapshot.exists) {
@@ -171,9 +171,10 @@ class EditPNS extends Component {
                   }}
                   validationSchema={validationSchema}
                   onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
-                    const ref = firebase.firestore().collection("pns").doc(match.params.id);
                     const { history, enqueueSnackbar } = this.props;
-                    ref
+
+                    pns
+                      .doc(match.params.id)
                       .update({
                         nip: nip,
                         nik: nik,

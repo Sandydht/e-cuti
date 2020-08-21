@@ -16,13 +16,15 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 // Firebase
-import firebase from "../api/Firebase";
+import { pns, fotoPNS } from "../api/Firebase";
 
 // Notistack
 import { withSnackbar } from "notistack";
 
 // Validation schema
 const validationSchema = Yup.object().shape({
+  foto: Yup
+    .mixed(),
   nip: Yup
     .string()
     .required("Harap isi form nip")
@@ -116,7 +118,7 @@ const golongan = [
 
 class TambahDataPNS extends Component {
   render() {
-    const { open, onClose } = this.props;
+    const { open, onClose, enqueueSnackbar } = this.props;
 
     return (
       <Dialog
@@ -129,6 +131,7 @@ class TambahDataPNS extends Component {
         <DialogContent>
           <Formik
             initialValues={{
+              foto: null,
               nip: "",
               nik: "",
               nama: "",
@@ -136,11 +139,8 @@ class TambahDataPNS extends Component {
               unitKerja: "Badan Kepegawai Daerah"
             }}
             validationSchema={validationSchema}
-            onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
-              const { enqueueSnackbar } = this.props;
-              const ref = firebase.firestore().collection("pns");
-
-              ref
+            onSubmit={({ foto, nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
+              pns
                 .where("nip", "==", nip)
                 .get()
                 .then((nipSnapshot) => {
@@ -150,7 +150,7 @@ class TambahDataPNS extends Component {
                     setSubmitting(false);
                     enqueueSnackbar("Data telah tersedia", { variant: "error" });
                   } else {
-                    ref
+                    pns
                       .where("nik", "==", nik)
                       .get()
                       .then((nikSnapshot) => {
@@ -160,18 +160,41 @@ class TambahDataPNS extends Component {
                           setSubmitting(false);
                           enqueueSnackbar("Data telah tersedia", { variant: "error" });
                         } else {
-                          ref
+                          pns
                             .add({
-                              nip: nip,
-                              nik: nik,
-                              nama: nama,
-                              golongan: golongan,
-                              unitKerja: unitKerja
+                              nip,
+                              nik,
+                              nama,
+                              golongan,
+                              unitKerja
                             })
                             .then((res) => {
-                              setSubmitting(false);
-                              enqueueSnackbar("Data tersimpan", { variant: "success" });
-                              onClose();
+                              if (foto !== null) {
+                                fotoPNS
+                                  .child(foto.name)
+                                  .put(foto)
+                                  .then(() => {
+                                    fotoPNS
+                                      .child(foto.name)
+                                      .getDownloadURL()
+                                      .then(fotoUrl => {
+                                        pns
+                                          .doc(res.id)
+                                          .update({
+                                            fotoUrl
+                                          })
+                                          .then(() => {
+                                            setSubmitting(false);
+                                            enqueueSnackbar("Data tersimpan", { variant: "success" });
+                                            onClose();
+                                          });
+                                      });
+                                  });
+                              } else {
+                                setSubmitting(false);
+                                enqueueSnackbar("Data tersimpan", { variant: "success" });
+                                onClose();
+                              }
                             })
                             .catch(() => {
                               setSubmitting(false);
@@ -181,7 +204,8 @@ class TambahDataPNS extends Component {
                       });
                   }
                 });
-            }}
+            }
+            }
           >
             {({
               errors,
@@ -193,6 +217,25 @@ class TambahDataPNS extends Component {
               isSubmitting
             }) => (
                 <Form>
+                  <TextField
+                    id="foto"
+                    name="foto"
+                    label="Foto PNS"
+                    type="file"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    error={Boolean(touched.foto && errors.foto)}
+                    helperText={touched.foto && errors.foto ? errors.foto : null}
+                    onChange={(event) => {
+                      setFieldValue("foto", event.currentTarget.files[0]);
+                    }}
+                    onBlur={handleBlur}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+
                   <TextField
                     id="nip"
                     name="nip"
