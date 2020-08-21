@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 // Material Ui
+import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -21,10 +22,19 @@ import { pns, fotoPNS } from "../api/Firebase";
 // Notistack
 import { withSnackbar } from "notistack";
 
+// Organisms
+import Thumb from "../organisms/Thumb";
+
+// Styles
+const styles = (theme) => ({
+  avatar: {
+    width: theme.spacing(10),
+    height: theme.spacing(10)
+  }
+});
+
 // Validation schema
 const validationSchema = Yup.object().shape({
-  foto: Yup
-    .mixed(),
   nip: Yup
     .string()
     .required("Harap isi form nip")
@@ -117,8 +127,15 @@ const golongan = [
 ];
 
 class TambahDataPNS extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: undefined
+    };
+  }
+
   render() {
-    const { open, onClose, enqueueSnackbar } = this.props;
+    const { open, onClose, enqueueSnackbar, classes } = this.props;
 
     return (
       <Dialog
@@ -136,7 +153,7 @@ class TambahDataPNS extends Component {
               nik: "",
               nama: "",
               golongan: "",
-              unitKerja: "Badan Kepegawai Daerah"
+              unitKerja: "Badan Kepegawaian Daerah"
             }}
             validationSchema={validationSchema}
             onSubmit={({ foto, nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
@@ -171,11 +188,11 @@ class TambahDataPNS extends Component {
                             .then((res) => {
                               if (foto !== null) {
                                 fotoPNS
-                                  .child(foto.name)
+                                  .child(res.id)
                                   .put(foto)
                                   .then(() => {
                                     fotoPNS
-                                      .child(foto.name)
+                                      .child(res.id)
                                       .getDownloadURL()
                                       .then(fotoUrl => {
                                         pns
@@ -217,24 +234,36 @@ class TambahDataPNS extends Component {
               isSubmitting
             }) => (
                 <Form>
-                  <TextField
-                    id="foto"
-                    name="foto"
-                    label="Foto PNS"
-                    type="file"
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
-                    error={Boolean(touched.foto && errors.foto)}
-                    helperText={touched.foto && errors.foto ? errors.foto : null}
-                    onChange={(event) => {
-                      setFieldValue("foto", event.currentTarget.files[0]);
-                    }}
-                    onBlur={handleBlur}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  />
+                  <Grid container spacing={2} justify="center" alignItems="center">
+                    <Grid item xs={3} md={3}>
+                      <Grid container justify="center" alignItems="center">
+                        <Grid item>
+                          <Thumb file={values.foto} className={classes.avatar} />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={9} md={9}>
+                      <TextField
+                        id="foto"
+                        name="foto"
+                        label="Foto PNS"
+                        type="file"
+                        fullWidth
+                        margin="normal"
+                        variant="outlined"
+                        placeholder="Hello world"
+                        error={Boolean(touched.foto && errors.foto)}
+                        helperText={touched.foto && errors.foto ? errors.foto : null}
+                        onChange={(event) => {
+                          setFieldValue("foto", event.currentTarget.files[0]);
+                        }}
+                        onBlur={handleBlur}
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
 
                   <TextField
                     id="nip"
@@ -325,9 +354,9 @@ class TambahDataPNS extends Component {
               )}
           </Formik>
         </DialogContent>
-      </Dialog>
+      </Dialog >
     );
   }
 }
 
-export default withSnackbar(TambahDataPNS); 
+export default withStyles(styles)(withSnackbar(TambahDataPNS)); 

@@ -22,7 +22,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Avatar from "@material-ui/core/Avatar";
 
 // Firebase 
-import { pns } from "../api/Firebase";
+import { pns, fotoPNS } from "../api/Firebase";
 
 // React router dom
 import {
@@ -78,11 +78,16 @@ class DetailPNS extends Component {
       .doc(match.params.id)
       .delete()
       .then(() => {
-        this.setState({
-          buttonLoading: false
-        });
-        enqueueSnackbar("Data berhasil dihapus", { variant: "success" });
-        history.replace("/beranda/data_pns");
+        fotoPNS
+          .child(match.params.id)
+          .delete()
+          .then(() => {
+            this.setState({
+              buttonLoading: false
+            });
+            enqueueSnackbar("Data berhasil dihapus", { variant: "success" });
+            history.replace("/beranda/data_pns");
+          });
       })
       .catch(() => {
         this.setState({
