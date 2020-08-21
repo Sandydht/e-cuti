@@ -5,12 +5,15 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
+import Avatar from "@material-ui/core/Avatar";
+
+// Firebase
+import { pns } from "../api/Firebase";
 
 // React router dom
 import {
@@ -25,6 +28,10 @@ import { logoutAPI } from "../api/Redux/actions";
 const styles = (theme) => ({
   activeLink: {
     backgroundColor: "#eeeeee"
+  },
+  avatar: {
+    width: theme.spacing(4),
+    height: theme.spacing(4)
   }
 });
 
@@ -33,8 +40,11 @@ class AccountMenu extends Component {
     super(props);
     this.state = {
       anchorEl: null,
-      openDialog: false
+      openDialog: false,
+      fotoUrl: ""
     };
+
+    this.unsubscribe = null;
   }
 
   handleOpenAccountMenu = (event) => {
@@ -70,9 +80,27 @@ class AccountMenu extends Component {
       });
   };
 
+  collectionOnSnapshot = (querySnapshot) => {
+    let fotoUrl = "";
+    querySnapshot.forEach(doc => {
+      fotoUrl = doc.data().fotoUrl;
+    });
+    this.setState({
+      fotoUrl
+    });
+  };
+
+  UNSAFE_componentWillMount() {
+    this.unsubscribe = pns.onSnapshot(this.collectionOnSnapshot);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   render() {
     const { classes } = this.props;
-    const { anchorEl, openDialog } = this.state;
+    const { anchorEl, openDialog, fotoUrl } = this.state;
 
     return (
       <Fragment>
@@ -96,7 +124,7 @@ class AccountMenu extends Component {
             aria-label="open account"
             onClick={this.handleOpenAccountMenu}
           >
-            <AccountCircleIcon />
+            <Avatar src={fotoUrl} className={classes.avatar} />
           </IconButton>
         </Tooltip>
 
