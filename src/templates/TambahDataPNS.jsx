@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 // Material Ui
-import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -24,14 +23,6 @@ import { withSnackbar } from "notistack";
 
 // Organisms
 import Thumb from "../organisms/Thumb";
-
-// Styles
-const styles = (theme) => ({
-  avatar: {
-    width: theme.spacing(10),
-    height: theme.spacing(10)
-  }
-});
 
 // Validation schema
 const validationSchema = Yup.object().shape({
@@ -135,7 +126,7 @@ class TambahDataPNS extends Component {
   }
 
   render() {
-    const { open, onClose, enqueueSnackbar, classes } = this.props;
+    const { open, onClose, enqueueSnackbar } = this.props;
 
     return (
       <Dialog
@@ -235,14 +226,14 @@ class TambahDataPNS extends Component {
             }) => (
                 <Form>
                   <Grid container spacing={2} justify="center" alignItems="center">
-                    <Grid item xs={3} md={3}>
+                    <Grid item xs={4} md={3}>
                       <Grid container justify="center" alignItems="center">
                         <Grid item>
-                          <Thumb file={values.foto} className={classes.avatar} />
+                          <Thumb file={values.foto} />
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item xs={9} md={9}>
+                    <Grid item xs={8} md={9}>
                       <TextField
                         id="foto"
                         name="foto"
@@ -359,4 +350,4 @@ class TambahDataPNS extends Component {
   }
 }
 
-export default withStyles(styles)(withSnackbar(TambahDataPNS)); 
+export default withSnackbar(TambahDataPNS); 

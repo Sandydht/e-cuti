@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 
 // Material UI
+import withStyles from "@material-ui/core/styles/withStyles";
 import Avatar from "@material-ui/core/Avatar";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
+// Styles
+const styles = (theme) => ({
+  avatar: {
+    width: theme.spacing(10),
+    height: theme.spacing(10)
+  }
+});
 
 class Thumb extends Component {
   state = {
@@ -10,30 +19,30 @@ class Thumb extends Component {
     thumb: undefined,
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (!nextProps.file) { return; }
+  UNSAFE_componentWillReceiveProps(nextProps, nextState) {
+    if (!nextProps.file) return;
 
-    this.setState({ loading: true }, () => {
+    this.setState({
+      loading: true
+    }, () => {
       let reader = new FileReader();
-
       reader.onloadend = () => {
-        this.setState({ loading: false, thumb: reader.result });
+        this.setState({
+          loading: false,
+          thumb: reader.result
+        });
       };
-
       reader.readAsDataURL(nextProps.file);
     });
+
   };
 
   render() {
-    const { file, className } = this.props;
+    const { file, classes } = this.props;
     const { loading, thumb } = this.state;
 
     if (!file) {
-      return (
-        <Avatar src={thumb}
-          className={className}
-        />
-      );
+      return <Avatar className={classes.avatar} />;
     }
 
     if (loading) {
@@ -44,9 +53,9 @@ class Thumb extends Component {
       <Avatar
         src={thumb}
         alt={file.name}
-        className={className}
+        className={classes.avatar}
       />
     );
   }
 }
-export default Thumb;
+export default withStyles(styles)(Thumb);

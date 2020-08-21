@@ -44,7 +44,7 @@ class DetailPNS extends Component {
     };
   }
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     const { match } = this.props;
     pns
       .doc(match.params.id)

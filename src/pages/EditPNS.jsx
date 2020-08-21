@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 // Material UI
+import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,13 +11,14 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Avatar from "@material-ui/core/Avatar";
 
 // Formik & Yup
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 // Firebase 
-import { pns } from "../api/Firebase";
+import { pns, fotoPNS } from "../api/Firebase";
 
 // React router dom
 import {
@@ -25,6 +27,14 @@ import {
 
 // Notistack
 import { withSnackbar } from "notistack";
+
+// Styles
+const styles = (theme) => ({
+  avatar: {
+    width: theme.spacing(10),
+    height: theme.spacing(10)
+  }
+});
 
 // Validation schema
 const validationSchema = Yup.object().shape({
@@ -117,7 +127,6 @@ const golongan = [
   },
 ];
 
-
 class EditPNS extends Component {
   constructor(props) {
     super(props);
@@ -125,11 +134,12 @@ class EditPNS extends Component {
       dataPNS: {},
       isLoading: true
     };
+
+    this.unsubscribe = null;
   }
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     const { match } = this.props;
-
     pns
       .doc(match.params.id)
       .get()
@@ -144,7 +154,7 @@ class EditPNS extends Component {
   }
 
   render() {
-    const { match } = this.props;
+    const { match, classes } = this.props;
     const { dataPNS, isLoading } = this.state;
 
     return (
@@ -163,6 +173,7 @@ class EditPNS extends Component {
             ) : (
                 <Formik
                   initialValues={{
+                    foto: null,
                     nip: dataPNS.nip,
                     nik: dataPNS.nik,
                     nama: dataPNS.nama,
@@ -170,7 +181,7 @@ class EditPNS extends Component {
                     unitKerja: dataPNS.unitKerja
                   }}
                   validationSchema={validationSchema}
-                  onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
+                  onSubmit={({ foto, nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
                     const { history, enqueueSnackbar } = this.props;
 
                     pns
@@ -183,9 +194,32 @@ class EditPNS extends Component {
                         unitKerja: unitKerja
                       })
                       .then(() => {
-                        setSubmitting(false);
-                        enqueueSnackbar("Data berhasil diperbarui", { variant: "success" });
-                        history.push(`/beranda/data_pns/${match.params.id}`);
+                        if (foto !== null) {
+                          fotoPNS
+                            .child(match.params.id)
+                            .put(foto)
+                            .then(() => {
+                              fotoPNS
+                                .child(match.params.id)
+                                .getDownloadURL()
+                                .then((fotoUrl) => {
+                                  pns
+                                    .doc(match.params.id)
+                                    .update({
+                                      fotoUrl
+                                    })
+                                    .then(() => {
+                                      setSubmitting(false);
+                                      enqueueSnackbar("Data berhasil diperbarui", { variant: "success" });
+                                      history.push(`/beranda/data_pns/${match.params.id}`);
+                                    });
+                                });
+                            });
+                        } else {
+                          setSubmitting(false);
+                          enqueueSnackbar("Data berhasil diperbarui", { variant: "success" });
+                          history.push(`/beranda/data_pns/${match.params.id}`);
+                        }
                       })
                       .catch(() => {
                         setSubmitting(false);
@@ -199,9 +233,40 @@ class EditPNS extends Component {
                     values,
                     handleChange,
                     handleBlur,
+                    setFieldValue,
                     isSubmitting
                   }) => (
                       <Form>
+                        <Grid container spacing={2} justify="center" alignItems="center">
+                          <Grid item xs={4} md={2}>
+                            <Grid container justify="center" alignItems="center">
+                              <Grid item>
+                                <Avatar src={dataPNS.fotoUrl} className={classes.avatar} />
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Grid item xs={8} md={10}>
+                            <TextField
+                              id="foto"
+                              name="foto"
+                              label="Foto PNS"
+                              type="file"
+                              fullWidth
+                              margin="normal"
+                              variant="outlined"
+                              placeholder="Hello world"
+                              error={Boolean(touched.foto && errors.foto)}
+                              helperText={touched.foto && errors.foto ? errors.foto : null}
+                              onChange={(event) => {
+                                setFieldValue("foto", event.currentTarget.files[0]);
+                              }}
+                              onBlur={handleBlur}
+                              InputLabelProps={{
+                                shrink: true
+                              }}
+                            />
+                          </Grid>
+                        </Grid>
                         <TextField
                           id="nip"
                           name="nip"
@@ -295,4 +360,4 @@ class EditPNS extends Component {
   }
 }
 
-export default withSnackbar(EditPNS);
+export default withStyles(styles)(withSnackbar(EditPNS));

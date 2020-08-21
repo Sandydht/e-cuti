@@ -40,9 +40,9 @@ class DataPNS extends Component {
     });
   };
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.unsubscribe = pns.onSnapshot(this.collectionOnSnapshot);
-  }
+  };
 
   componentWillUnmount() {
     this.unsubscribe();
