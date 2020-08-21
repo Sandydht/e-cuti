@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 
-// Material UI
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
+// Molecules
+import DataTable from "../molecules/DataTable";
 
 class AdminCutiTahunan extends Component {
   render() {
     return (
-      <Card>
-        <CardHeader title="Data Cuti Tahunan PNS" />
-        <CardContent>
-          Konten
-        </CardContent>
-      </Card>
+      <DataTable
+        title="Data Pengajuan Cuti Tahunan"
+      />
     );
   }
 }

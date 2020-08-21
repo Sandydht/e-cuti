@@ -18,4 +18,5 @@ firebase.initializeApp(firebaseConfig);
 // Reference
 export const auth = firebase.auth();
 export const pns = firebase.firestore().collection("pns");
+export const cuti = firebase.firestore().collection("cuti");
 export const fotoPNS = firebase.storage().ref("fotoPNS");

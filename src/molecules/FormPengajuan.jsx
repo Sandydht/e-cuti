@@ -11,7 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 
 // Firebase
-import firebase from "../api/Firebase";
+import { pns, cuti } from "../api/Firebase";
 
 // Redux
 import { connect } from "react-redux";
@@ -41,9 +41,6 @@ const validationSchema = Yup.object().shape({
   tglSelesai: Yup
     .date()
     .required("Harap isi form tanggal selesai"),
-  alasanCuti: Yup
-    .string()
-    .required("Harap isi form alasan cuti"),
   alamatSelamaCuti: Yup
     .string()
     .required("Harap isi form alamat selama cuti")
@@ -58,11 +55,9 @@ class FormPengajuan extends Component {
     };
   }
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     const { uid } = this.props;
-    const ref = firebase.firestore().collection("pns");
-
-    ref
+    pns
       .where("uid", "==", uid)
       .get()
       .then((querySnapshot) => {
@@ -73,10 +68,6 @@ class FormPengajuan extends Component {
           isLoading: false
         });
       });
-  }
-
-  componentWillUnmount() {
-    firebase.firestore();
   }
 
   render() {
@@ -115,8 +106,8 @@ class FormPengajuan extends Component {
                   }}
                   validationSchema={validationSchema}
                   onSubmit={({ tglMulai, tglSelesai, jenisCuti, alamatSelamaCuti }, { setSubmitting }) => {
-                    const ref = firebase.firestore().collection("cuti");
                     const { enqueueSnackbar } = this.props;
+
                     // Menghitung lama hari
                     const date1 = Date.parse(tglMulai);
                     const date2 = Date.parse(tglSelesai);
@@ -140,7 +131,7 @@ class FormPengajuan extends Component {
                       setSubmitting(false);
                       enqueueSnackbar("Periksa kembali tanggal pengajuan anda", { variant: "error" });
                     } else {
-                      ref
+                      cuti
                         .add({
                           uid: uid,
                           tglPengajuan: today,

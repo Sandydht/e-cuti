@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 // Templates
 import AdminCutiTahunan from "../templates/AdminCutiTahunan";
+import UserCutiTahunan from "../templates/UserCutiTahunan";
 
 class CutiTahunan extends Component {
   render() {
@@ -15,7 +16,7 @@ class CutiTahunan extends Component {
           role === "admin" ? (
             <AdminCutiTahunan />
           ) : (
-              <div>User</div>
+              <UserCutiTahunan />
             )
         }
       </Fragment>
