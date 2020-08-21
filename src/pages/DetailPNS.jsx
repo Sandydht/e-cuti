@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 // Material UI
+import withStyles from "@material-ui/core/styles/withStyles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
@@ -32,12 +33,20 @@ import {
 // Notistack
 import { withSnackbar } from "notistack";
 
+// Styles
+const styles = (theme) => ({
+  avatar: {
+    width: theme.spacing(12),
+    height: theme.spacing(12),
+  }
+});
+
 class DetailPNS extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: "",
-      dataPNS: "",
+      dataPNS: {},
       isLoading: true,
       openDialog: false,
       buttonLoading: false,
@@ -98,7 +107,7 @@ class DetailPNS extends Component {
   };
 
   render() {
-    const { match } = this.props;
+    const { match, classes } = this.props;
     const { isLoading, dataPNS, openDialog, buttonLoading } = this.state;
 
     return (
@@ -139,7 +148,7 @@ class DetailPNS extends Component {
                   ) : (
                       <Grid container justify="center" alignItems="center">
                         <Grid item>
-                          <Avatar src={dataPNS.fotoUrl} style={{ width: "120px", height: "120px" }} />
+                          <Avatar src={dataPNS.fotoUrl} className={classes.avatar} />
                         </Grid>
                       </Grid>
                     )
@@ -221,4 +230,4 @@ class DetailPNS extends Component {
     );
   }
 }
-export default withSnackbar(DetailPNS); 
+export default withStyles(styles)(withSnackbar(DetailPNS)); 
