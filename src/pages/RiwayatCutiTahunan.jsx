@@ -1,12 +1,16 @@
 import React, { Component, Fragment } from 'react';
 
+// Material UI
+import Button from "@material-ui/core/Button";
+import PageviewIcon from '@material-ui/icons/Pageview';
+
 // Molecules
 import DataTable from "../molecules/DataTable";
 
 // Firebase
 import { pns, cuti } from "../api/Firebase";
 
-class DetailCutiTahunan extends Component {
+class RiwayatCutiTahunan extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,37 +23,9 @@ class DetailCutiTahunan extends Component {
   UNSAFE_componentWillMount() {
     const { match } = this.props;
     pns
-      .doc(match.params.id)
-      .get()
-      .then((querySnapshot) => {
-        let uid;
-        uid = querySnapshot.data().uid;
-        this.setState({
-          nama: querySnapshot.data().nama
-        });
-
-        cuti
-          .where("uid", "==", uid)
-          .where("jenisCuti", "==", "Cuti Tahunan")
-          .onSnapshot((snapshot) => {
-            let data = [];
-            snapshot.forEach(doc => {
-              data.push({
-                id: doc.id,
-                data: doc.data()
-              });
-            });
-
-            this.setState({
-              dataCuti: data,
-              isLoading: false
-            });
-          });
-      })
-      .catch((error) => {
-        this.setState({
-          isLoading: false
-        });
+      .where("nip", "==", match.params.id)
+      .onSnapshot((pnsSnapshot) => {
+        pnsSnapshot.forEach(doc => console.log(doc.data()));
       });
   }
 
@@ -59,7 +35,7 @@ class DetailCutiTahunan extends Component {
     return (
       <Fragment>
         <DataTable
-          title={`Detail Cuti Tahunan: ${nama}`}
+          title={`Riwayat Cuti Tahunan: ${nama}`}
           isLoading={isLoading}
           data={dataCuti}
           columns={[
@@ -104,21 +80,26 @@ class DetailCutiTahunan extends Component {
               }
             },
             {
-              name: "terima",
-              label: "Terima",
+              name: "detailCuti",
+              label: "Detail Cuti",
               options: {
                 filter: true,
                 sort: false,
+                customBodyRenderLite: (dataIndex) => {
+                  return (
+                    <Button
+                      startIcon={<PageviewIcon />}
+                      color="primary"
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        this.props.history.push(`/beranda/cuti_tahunan/${dataCuti[dataIndex].id}/detail`);
+                      }}
+                    >Detail</Button>
+                  );
+                }
               }
-            },
-            {
-              name: "tolak",
-              label: "Tolak",
-              options: {
-                filter: true,
-                sort: false,
-              }
-            },
+            }
           ]}
         />
       </Fragment>
@@ -126,4 +107,4 @@ class DetailCutiTahunan extends Component {
   }
 }
 
-export default DetailCutiTahunan;
+export default RiwayatCutiTahunan;

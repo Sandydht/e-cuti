@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import PostAddIcon from '@material-ui/icons/PostAdd';
-import PageviewIcon from '@material-ui/icons/Pageview';
+import InfoIcon from '@material-ui/icons/Info';
 
 // Molecules
 import DataTable from "../molecules/DataTable";
@@ -14,7 +14,7 @@ import FormPengajuan from "../molecules/FormPengajuan";
 import { connect } from "react-redux";
 
 // Firebase
-import { cuti } from "../api/Firebase";
+import { pns, cuti } from "../api/Firebase";
 
 class UserCutiTahunan extends Component {
   constructor(props) {
@@ -24,35 +24,40 @@ class UserCutiTahunan extends Component {
       isLoading: true,
       openDialog: false
     };
-
-    this.unsubscribe = null;
   }
-
-  collectionOnSnapshot = (querySnapshot) => {
-    let data = [];
-    querySnapshot.forEach(doc => {
-      data.push({
-        id: doc.id,
-        data: doc.data()
-      });
-    });
-    this.setState({
-      dataCuti: data,
-      isLoading: false
-    });
-  };
 
   UNSAFE_componentWillMount() {
     const { uid } = this.props;
-
-    this.unsubscribe = cuti
+    pns
       .where("uid", "==", uid)
-      .where("jenisCuti", "==", "Cuti Tahunan")
-      .onSnapshot(this.collectionOnSnapshot);
-  }
+      .get()
+      .then((snapshot) => {
+        let nip;
+        snapshot.forEach(doc => nip = doc.data().nip);
+        cuti
+          .where("nip", "==", nip)
+          .where("jenisCuti", "==", "Cuti Tahunan")
+          .onSnapshot((querySnapshot) => {
+            let data = [];
+            querySnapshot.forEach(doc => {
+              data.push({
+                id: doc.id,
+                data: doc.data()
+              });
+            });
+            this.setState({
+              dataCuti: data,
+              isLoading: false
+            });
+          });
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false
+        });
+      });
 
-  componentWillUnmount() {
-    this.unsubscribe();
+
   }
 
   handleOpenDialog = () => {
@@ -129,11 +134,21 @@ class UserCutiTahunan extends Component {
                 }
               },
               {
-                name: "keterangan",
-                label: "Keterangan",
+                name: "info",
+                label: "Informasi",
                 options: {
                   filter: true,
                   sort: false,
+                  customBodyRenderLite: (dataIndex) => {
+                    return (
+                      <Button
+                        startIcon={<InfoIcon />}
+                        color="primary"
+                        variant="contained"
+                        size="small"
+                      >Informasi</Button>
+                    );
+                  }
                 }
               },
             ]}

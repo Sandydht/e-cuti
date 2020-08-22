@@ -38,7 +38,8 @@ const CLTN = lazy(() => import("../pages/CLTN"));
 const DataPNS = lazy(() => import("../pages/DataPNS"));
 const DetailPNS = lazy(() => import("../pages/DetailPNS"));
 const EditPNS = lazy(() => import("../pages/EditPNS"));
-const DetailCutiTahunan = lazy(() => import("../pages/DetailCutiTahunan"));
+const RiwayatCutiTahunan = lazy(() => import("../pages/RiwayatCutiTahunan"));
+const DetailCuti = lazy(() => import("../pages/DetailCuti"));
 
 // Molecules
 const BreadCrumbs = lazy(() => import("../molecules/BreadCrumbs"));
@@ -58,10 +59,20 @@ class Content extends Component {
             <Grid item xs={12} md={12}>
               <Switch>
                 <Route
+                  path="/beranda/cuti_tahunan/:id/detail"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <DetailCuti {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )
+                  }
+                />
+                <Route
                   path="/beranda/cuti_tahunan/:id"
                   render={(routeProps) =>
                     role === "admin" ? (
-                      <DetailCutiTahunan {...routeProps} />
+                      <RiwayatCutiTahunan {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
                       )

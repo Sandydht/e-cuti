@@ -17,32 +17,21 @@ class DataPNS extends Component {
       dataPNS: [],
       isLoading: true
     };
-
-    this.unsubscribe = null;
   }
-
-  collectionOnSnapshot = (querySnapshot) => {
-    let data = [];
-    querySnapshot.forEach(doc => {
-      data.push({
-        id: doc.id,
-        data: doc.data()
-      });
-    });
-
-    this.setState({
-      isLoading: false,
-      dataPNS: data
-    });
-  };
 
   UNSAFE_componentWillMount() {
-    this.unsubscribe = pns.onSnapshot(this.collectionOnSnapshot);
-  };
+    pns.onSnapshot((querySnapshot) => {
+      let data = [];
+      querySnapshot.forEach(doc => {
+        data.push(doc.data());
+      });
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
+      this.setState({
+        isLoading: false,
+        dataPNS: data
+      });
+    });
+  };
 
   render() {
     const { dataPNS, isLoading } = this.state;
@@ -50,12 +39,12 @@ class DataPNS extends Component {
     return (
 
       <DataTable
-        title="Data Pengajuan Cuti Tahunan PNS"
+        title="Data PNS"
         isLoading={isLoading}
         data={dataPNS}
         columns={[
           {
-            name: "data.nip",
+            name: "nip",
             label: "NIP",
             options: {
               filter: true,
@@ -63,15 +52,7 @@ class DataPNS extends Component {
             }
           },
           {
-            name: "data.nik",
-            label: "NIK",
-            options: {
-              filter: true,
-              sort: false,
-            }
-          },
-          {
-            name: "data.nama",
+            name: "nama",
             label: "Nama",
             options: {
               filter: true,
@@ -79,7 +60,7 @@ class DataPNS extends Component {
             }
           },
           {
-            name: "data.golongan",
+            name: "golongan",
             label: "Golongan",
             options: {
               filter: true,
@@ -87,7 +68,7 @@ class DataPNS extends Component {
             }
           },
           {
-            name: "data.unitKerja",
+            name: "unitKerja",
             label: "Unit Kerja",
             options: {
               filter: true,
@@ -95,8 +76,8 @@ class DataPNS extends Component {
             }
           },
           {
-            name: "detail",
-            label: "Detail",
+            name: "riwayatCuti",
+            label: "Riwayat Cuti",
             options: {
               filter: true,
               sort: false,
@@ -108,8 +89,8 @@ class DataPNS extends Component {
                     variant="contained"
                     size="small"
                     onClick={() => {
-                      this.props.history.push(`/beranda/cuti_tahunan/${dataPNS[dataIndex].id}`);
-                    }}>Detail</Button>
+                      this.props.history.push(`/beranda/cuti_tahunan/${dataPNS[dataIndex].nip}`);
+                    }}>Riwayat Cuti</Button>
                 );
               }
             }

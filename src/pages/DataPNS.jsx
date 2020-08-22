@@ -21,32 +21,24 @@ class DataPNS extends Component {
       isLoading: true,
       openDialog: false
     };
-
-    this.unsubscribe = null;
   }
-
-  collectionOnSnapshot = (querySnapshot) => {
-    let data = [];
-    querySnapshot.forEach(doc => {
-      data.push({
-        id: doc.id,
-        data: doc.data()
-      });
-    });
-
-    this.setState({
-      isLoading: false,
-      dataPNS: data
-    });
-  };
 
   UNSAFE_componentWillMount() {
-    this.unsubscribe = pns.onSnapshot(this.collectionOnSnapshot);
-  };
+    pns.onSnapshot((querySnapshot) => {
+      let data = [];
+      querySnapshot.forEach(doc => {
+        data.push({
+          id: doc.id,
+          data: doc.data()
+        });
+      });
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
+      this.setState({
+        isLoading: false,
+        dataPNS: data
+      });
+    });
+  };
 
   handleOpenDialog = () => {
     this.setState({
@@ -117,8 +109,8 @@ class DataPNS extends Component {
                 }
               },
               {
-                name: "detail",
-                label: "Detail",
+                name: "detailPNS",
+                label: "Detail PNS",
                 options: {
                   filter: true,
                   sort: false,

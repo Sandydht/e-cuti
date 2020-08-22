@@ -71,7 +71,7 @@ class FormPengajuan extends Component {
   }
 
   render() {
-    const { open, title, onClose, jenisCuti, uid } = this.props;
+    const { open, title, onClose, jenisCuti } = this.props;
     const { isLoading, dataPNS } = this.state;
 
     return (
@@ -133,7 +133,7 @@ class FormPengajuan extends Component {
                     } else {
                       cuti
                         .add({
-                          uid,
+                          nip,
                           tglPengajuan: today,
                           tglMulai: tglMulai,
                           tglSelesai: tglSelesai,
