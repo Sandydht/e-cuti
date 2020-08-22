@@ -69,6 +69,7 @@ class Content extends Component {
                       )
                   }
                 />
+
                 <Route
                   path="/beranda/cuti_tahunan/:id"
                   render={(routeProps) =>
