@@ -40,9 +40,11 @@ class BreadCrumbs extends Component {
                 const last = index === pathnames.length - 1;
                 const to = `/${pathnames.slice(0, index + 1).join('/')}`;
                 const detail = `/${pathnames.slice(2, 3).join('/')}`;
+                const detailCutiTahunan = `/${pathnames.slice(2, 3).join('/')}`;
 
                 breadcrumbNameMap[`/beranda/data_pns${detail}`] = "Detail PNS";
                 breadcrumbNameMap[`/beranda/data_pns${detail}/edit`] = "Edit Data PNS";
+                breadcrumbNameMap[`/beranda/cuti_tahunan${detailCutiTahunan}`] = "Detail";
 
                 return last ? (
                   <Typography color="textPrimary" key={to}>

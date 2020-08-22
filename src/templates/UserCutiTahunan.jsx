@@ -97,14 +97,6 @@ class UserCutiTahunan extends Component {
                 }
               },
               {
-                name: "data.jenisCuti",
-                label: "Jenis Cuti",
-                options: {
-                  filter: true,
-                  sort: false,
-                }
-              },
-              {
                 name: "data.tglMulai",
                 label: "Tanggal Mulai",
                 options: {
@@ -129,23 +121,21 @@ class UserCutiTahunan extends Component {
                 }
               },
               {
-                name: "detail",
-                label: "Detail",
+                name: "data.status",
+                label: "Status Persetujuan",
                 options: {
                   filter: true,
                   sort: false,
-                  customBodyRenderLite: (dataIndex) => {
-                    return (
-                      <Button
-                        startIcon={<PageviewIcon />}
-                        color="primary"
-                        variant="contained"
-                        size="small"
-                      >Detail</Button>
-                    );
-                  }
                 }
-              }
+              },
+              {
+                name: "keterangan",
+                label: "Keterangan",
+                options: {
+                  filter: true,
+                  sort: false,
+                }
+              },
             ]}
           />
         </Grid>

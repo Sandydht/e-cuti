@@ -105,7 +105,7 @@ class FormPengajuan extends Component {
                     alamatSelamaCuti: ""
                   }}
                   validationSchema={validationSchema}
-                  onSubmit={({ tglMulai, tglSelesai, jenisCuti, alamatSelamaCuti }, { setSubmitting }) => {
+                  onSubmit={({ nip, tglMulai, tglSelesai, jenisCuti, alamatSelamaCuti }, { setSubmitting }) => {
                     const { enqueueSnackbar } = this.props;
 
                     // Menghitung lama hari
@@ -133,7 +133,7 @@ class FormPengajuan extends Component {
                     } else {
                       cuti
                         .add({
-                          uid: uid,
+                          uid,
                           tglPengajuan: today,
                           tglMulai: tglMulai,
                           tglSelesai: tglSelesai,

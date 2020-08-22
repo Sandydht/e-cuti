@@ -9,12 +9,12 @@ import UserCutiTahunan from "../templates/UserCutiTahunan";
 
 class CutiTahunan extends Component {
   render() {
-    const { role } = this.props;
+    const { role, ...rest } = this.props;
     return (
       <Fragment>
         {
           role === "admin" ? (
-            <AdminCutiTahunan />
+            <AdminCutiTahunan {...rest} />
           ) : (
               <UserCutiTahunan />
             )
