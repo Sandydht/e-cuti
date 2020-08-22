@@ -7,7 +7,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import InfoIcon from '@material-ui/icons/Info';
 
 // Molecules
-import DataTable from "../molecules/DataTable";
+import DataTable from "../atoms/DataTable";
 import FormPengajuan from "../molecules/FormPengajuan";
 
 // Redux

@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import PageviewIcon from '@material-ui/icons/Pageview';
 
 // Molecules
-import DataTable from "../molecules/DataTable";
+import DataTable from "../atoms/DataTable";
 
 // Firebase
 import { pns, cuti } from "../api/Firebase";

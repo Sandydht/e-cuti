@@ -45,7 +45,6 @@ class DetailPNS extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "",
       dataPNS: {},
       isLoading: true,
       openDialog: false,

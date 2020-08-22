@@ -51,7 +51,7 @@ class DataTable extends Component {
             rowsPerPageOptions: [5, 10, 15],
             download: false,
             print: false,
-            tableBodyMaxHeight: "500px",
+            tableBodyMaxHeight: "800px",
             setRowProps: (row, dataIndex, rowIndex) => {
               return {
                 className: clsx({
