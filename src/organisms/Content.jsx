@@ -26,21 +26,21 @@ const styles = (theme) => ({
   },
 });
 
-// Pages
-const Home = lazy(() => import("../pages/Home"));
-const Settings = lazy(() => import("../pages/Settings"));
-const Profile = lazy(() => import("../pages/Profile"));
-const CutiTahunan = lazy(() => import("../pages/CutiTahunan"));
-const CutiBesar = lazy(() => import("../pages/CutiBesar"));
-const CutiSakit = lazy(() => import("../pages/CutiSakit"));
-const CutiBersalin = lazy(() => import("../pages/CutiBersalin"));
-const CutiAlasanPenting = lazy(() => import("../pages/CutiAlasanPenting"));
-const CLTN = lazy(() => import("../pages/CLTN"));
-const DataPNS = lazy(() => import("../pages/DataPNS"));
-const DetailPNS = lazy(() => import("../pages/DetailPNS"));
-const EditPNS = lazy(() => import("../pages/EditPNS"));
-const RiwayatCutiTahunan = lazy(() => import("../pages/RiwayatCutiTahunan"));
-const DetailCuti = lazy(() => import("../pages/DetailCuti"));
+// Templates
+const Home = lazy(() => import("../templates/Home"));
+const Settings = lazy(() => import("../templates/Settings"));
+const Profile = lazy(() => import("../templates/Profile"));
+const CutiTahunan = lazy(() => import("../templates/CutiTahunan"));
+const CutiBesar = lazy(() => import("../templates/CutiBesar"));
+const CutiSakit = lazy(() => import("../templates/CutiSakit"));
+const CutiBersalin = lazy(() => import("../templates/CutiBersalin"));
+const CutiAlasanPenting = lazy(() => import("../templates/CutiAlasanPenting"));
+const CLTN = lazy(() => import("../templates/CLTN"));
+const DataPNS = lazy(() => import("../templates/DataPNS"));
+const DetailPNS = lazy(() => import("../templates/DetailPNS"));
+const EditDataPNS = lazy(() => import("../templates/EditDataPNS"));
+const RiwayatCutiTahunan = lazy(() => import("../templates/RiwayatCutiTahunan"));
+const DetailCuti = lazy(() => import("../templates/DetailCuti"));
 
 // Molecules
 const BreadCrumbs = lazy(() => import("../molecules/BreadCrumbs"));
@@ -84,7 +84,7 @@ class Content extends Component {
                   path="/beranda/data_pns/:id/edit"
                   render={(routeProps) =>
                     role === "admin" ? (
-                      <EditPNS {...routeProps} />
+                      <EditDataPNS {...routeProps} />
                     ) : (
                         <div>Halaman tidak ditemukan...</div>
                       )

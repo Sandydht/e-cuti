@@ -59,14 +59,6 @@ class TabelDataPNS extends Component {
             }
           },
           {
-            name: "data.nik",
-            label: "NIK",
-            options: {
-              filter: true,
-              sort: false,
-            }
-          },
-          {
             name: "data.nama",
             label: "Nama",
             options: {

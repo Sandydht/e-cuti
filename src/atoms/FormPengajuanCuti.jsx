@@ -46,7 +46,7 @@ const validationSchema = Yup.object().shape({
     .required("Harap isi form alamat selama cuti")
 });
 
-class FormPengajuan extends Component {
+class FormPengajuanCuti extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -306,4 +306,4 @@ const mapStateToProps = ({ session }) => ({
   uid: session.user.uid
 });
 
-export default connect(mapStateToProps, null)(withSnackbar(FormPengajuan)); 
+export default connect(mapStateToProps, null)(withSnackbar(FormPengajuanCuti)); 
