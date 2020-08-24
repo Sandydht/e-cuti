@@ -100,6 +100,7 @@ class FormLogin extends Component {
                 label="Email"
                 variant="outlined"
                 fullWidth
+                required
                 margin="normal"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -108,7 +109,7 @@ class FormLogin extends Component {
                 helperText={touched.email && errors.email ? errors.email : null}
               />
 
-              <FormControl fullWidth margin="normal" variant="outlined" error={Boolean(touched.password && errors.password)}>
+              <FormControl fullWidth required margin="normal" variant="outlined" error={Boolean(touched.password && errors.password)}>
                 <InputLabel htmlFor="password">Kata Sandi</InputLabel>
                 <OutlinedInput
                   id="password"

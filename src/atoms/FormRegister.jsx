@@ -58,6 +58,7 @@ class FormRegister extends Component {
                 label="Email"
                 variant="outlined"
                 fullWidth
+                required
                 margin="normal"
                 onChange={handleChange}
                 onBlur={handleBlur}
