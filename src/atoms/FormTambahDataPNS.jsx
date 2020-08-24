@@ -118,7 +118,7 @@ class FormTambahDataPNS extends Component {
     this.ref = firebase.firestore().collection("pns");
   }
 
-  validationData = (data) => {
+  addDataPNS = (data) => {
     return new Promise((resolve, reject) => {
       const { enqueueSnackbar } = this.props;
 
@@ -175,7 +175,7 @@ class FormTambahDataPNS extends Component {
         }}
         validationSchema={validationSchema}
         onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting, resetForm }) => {
-          this.validationData({ nip, nik, nama, golongan, unitKerja })
+          this.addDataPNS({ nip, nik, nama, golongan, unitKerja })
             .then(() => {
               setSubmitting(false);
               resetForm();

@@ -31,13 +31,13 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, ...rest } = this.props;
     const { mobileOpen } = this.state;
 
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <Topbar onClick={this.handleDrawerToggle} />
+        <Topbar onClick={this.handleDrawerToggle} {...rest} />
         <Sidebar open={mobileOpen} onClose={this.handleDrawerToggle} />
         <Content />
       </div>

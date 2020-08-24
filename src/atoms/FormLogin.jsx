@@ -72,11 +72,12 @@ class FormLogin extends Component {
           password: ""
         }}
         validationSchema={validationSchema}
-        onSubmit={({ email, password }, { setSubmitting }) => {
+        onSubmit={({ email, password }, { setSubmitting, resetForm }) => {
           loginAPI({ email, password })
             .then(() => {
               const { from } = { from: { pathname: "/" } };
               setSubmitting(false);
+              resetForm();
               history.replace(from);
             })
             .catch(() => {
@@ -118,7 +119,7 @@ class FormLogin extends Component {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.password}
-                  labelWidth={82}
+                  labelWidth={95}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton

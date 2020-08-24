@@ -33,7 +33,7 @@ const styles = (theme) => ({
 class Topbar extends Component {
 
   render() {
-    const { classes, onClick } = this.props;
+    const { classes, onClick, ...rest } = this.props;
     return (
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -48,7 +48,7 @@ class Topbar extends Component {
           </IconButton>
           <Logo />
 
-          <AccountMenu />
+          <AccountMenu {...rest} />
         </Toolbar>
       </AppBar>
     );

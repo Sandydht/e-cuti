@@ -35,14 +35,14 @@ class App extends Component {
             />
             <Route
               path="/"
-              render={({ location }) =>
+              render={(routeProps) =>
                 authenticated ? (
-                  <Dashboard />
+                  <Dashboard {...routeProps} />
                 ) : (
                     <Redirect
                       to={{
                         pathname: "/login",
-                        state: { from: location }
+                        state: { from: routeProps.location }
                       }}
                     />
                   )}
