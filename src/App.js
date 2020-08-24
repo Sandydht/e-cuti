@@ -1,4 +1,4 @@
-import React, { Component, Suspense, lazy } from 'react';
+import React, { Component } from 'react';
 
 // React router dom
 import {
@@ -8,20 +8,18 @@ import {
 } from "react-router-dom";
 
 // Pages
-const Dashboard = lazy(() => import("./pages/Dashboard"));
+import Dashboard from "./pages/Dashboard";
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <Suspense fallback={<div>Sedang memuat...</div>}>
-          <Switch>
-            <Route
-              path="/"
-              component={Dashboard}
-            />
-          </Switch>
-        </Suspense>
+        <Switch>
+          <Route
+            path="/"
+            component={Dashboard}
+          />
+        </Switch>
       </Router>
     );
   }

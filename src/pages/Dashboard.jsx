@@ -16,7 +16,6 @@ const styles = (theme) => ({
   }
 });
 
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -33,12 +32,13 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props;
+    const { mobileOpen } = this.state;
 
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <Topbar />
-        <Sidebar />
+        <Topbar onClick={this.handleDrawerToggle} />
+        <Sidebar open={mobileOpen} onClose={this.handleDrawerToggle} />
         <Content />
       </div>
     );

@@ -27,24 +27,9 @@ const styles = (theme) => ({
 });
 
 class Sidebar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      mobileOpen: false
-    };
-  }
-
-  handleDrawerToggle = () => {
-    this.setState((state) => ({
-      mobileOpen: !state.mobileOpen
-    }));
-  };
-
   render() {
-    const { window, classes } = this.props;
-    const { mobileOpen } = this.state;
+    const { window, classes, open, onClose } = this.props;
     const container = window !== undefined ? () => window().document.body : undefined;
-
 
     const drawer = (
       <div>
@@ -58,18 +43,8 @@ class Sidebar extends Component {
             </ListItem>
           ))}
         </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </div>
     );
-
 
     return (
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -77,8 +52,8 @@ class Sidebar extends Component {
           <Drawer
             container={container}
             variant="temporary"
-            open={mobileOpen}
-            onClose={this.handleDrawerToggle}
+            open={open}
+            onClose={onClose}
             classes={{
               paper: classes.drawerPaper,
             }}

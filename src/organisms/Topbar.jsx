@@ -22,7 +22,7 @@ const styles = (theme) => ({
 
 class Topbar extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, onClick } = this.props;
 
     return (
       <AppBar position="fixed" className={classes.appBar}>
@@ -31,13 +31,13 @@ class Topbar extends Component {
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={this.handleDrawerToggle}
+            onClick={onClick}
             className={classes.menuButton}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Responsive drawer
+            E-Cuti
           </Typography>
         </Toolbar>
       </AppBar>
