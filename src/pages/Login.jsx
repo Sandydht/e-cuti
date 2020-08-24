@@ -14,8 +14,8 @@ import { NavLink } from "react-router-dom";
 import AuthHeader from "../organisms/AuthHeader";
 import AuthFooter from "../organisms/AuthFooter";
 
-// Molecules
-import FormLogin from "../molecules/FormLogin";
+// Atoms
+import FormLogin from "../atoms/FormLogin";
 
 // Styles
 const styles = (theme) => ({
