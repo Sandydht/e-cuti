@@ -112,8 +112,57 @@ const golongan = [
 ];
 
 class FormTambahDataPNS extends Component {
+  constructor(props) {
+    super(props);
+
+    this.ref = firebase.firestore().collection("pns");
+  }
+
+  validationData = (data) => {
+    return new Promise((resolve, reject) => {
+      const { enqueueSnackbar } = this.props;
+
+      this.ref
+        .where("nip", "==", data.nip)
+        .get()
+        .then((nipSnapshot) => {
+          let dataNIP = [];
+          nipSnapshot.forEach(doc => dataNIP.push(doc.data()));
+
+          if (dataNIP.length !== 0) {
+            enqueueSnackbar("Data telah tersedia", { variant: "error" });
+            return reject(false);
+          } else {
+            this.ref
+              .where("nik", "==", data.nik)
+              .get()
+              .then((nikSnapshot) => {
+                let dataNIK = [];
+                nikSnapshot.forEach(doc => dataNIK.push(doc.data()));
+
+                if (dataNIK.length !== 0) {
+                  enqueueSnackbar("Data telah tersedia", { variant: "error" });
+                  return reject(false);
+                } else {
+                  this.ref
+                    .add(data)
+                    .then(() => {
+                      enqueueSnackbar("Data tersimpan", { variant: "success" });
+                      return resolve(false);
+                    })
+                    .catch(() => {
+                      enqueueSnackbar("Data gagal tersimpan", { variant: "error" });
+                      return reject(false);
+                    });
+                }
+              });
+          }
+        });
+    });
+  };
+
   render() {
-    const { onClick, enqueueSnackbar } = this.props;
+    const { onClick } = this.props;
 
     return (
       <Formik
@@ -125,57 +174,15 @@ class FormTambahDataPNS extends Component {
           unitKerja: "Badan Kepegawaian Daerah"
         }}
         validationSchema={validationSchema}
-        onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting }) => {
-          firebase
-            .firestore()
-            .collection("pns")
-            .where("nip", "==", nip)
-            .get()
-            .then((nipSnapshot) => {
-              let data = [];
-              nipSnapshot.forEach(doc => data.push(doc.data()));
-
-              if (data.length !== 0) {
-                setSubmitting(false);
-                enqueueSnackbar("Data telah tersedia", { variant: "error" });
-              } else {
-                firebase
-                  .firestore()
-                  .collection("pns")
-                  .where("nik", "==", nik)
-                  .get()
-                  .then((nikSnapshot) => {
-                    let data = [];
-                    nikSnapshot.forEach(doc => data.push(doc.data()));
-
-                    if (data.length !== 0) {
-                      setSubmitting(false);
-                      enqueueSnackbar("Data telah tersedia", { variant: "error" });
-                    } else {
-                      const dataPNS = {
-                        nip,
-                        nik,
-                        nama,
-                        golongan,
-                        unitKerja
-                      };
-
-                      firebase
-                        .firestore()
-                        .collection("pns")
-                        .add(dataPNS)
-                        .then(() => {
-                          setSubmitting(false);
-                          enqueueSnackbar("Data tersimpan", { variant: "success" });
-                          onClick();
-                        })
-                        .catch(() => {
-                          setSubmitting(false);
-                          enqueueSnackbar("Data gagal tersimpan", { variant: "error" });
-                        });
-                    }
-                  });
-              }
+        onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting, resetForm }) => {
+          this.validationData({ nip, nik, nama, golongan, unitKerja })
+            .then(() => {
+              setSubmitting(false);
+              resetForm();
+              onClick();
+            })
+            .catch(() => {
+              setSubmitting(false);
             });
         }}
       >
