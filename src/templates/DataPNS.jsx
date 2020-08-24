@@ -5,8 +5,7 @@ import Grid from "@material-ui/core/Grid";
 
 // Molecules
 import TambahDataPNS from "../molecules/TambahDataPNS";
-
-import DataTable from "../atoms/DataTable";
+import TabelDataPNS from "../molecules/TabelDataPNS";
 
 class DataPNS extends Component {
   render() {
@@ -16,10 +15,10 @@ class DataPNS extends Component {
           <TambahDataPNS />
         </Grid>
         <Grid item xs={12} md={12}>
-          <DataTable />
+          <TabelDataPNS />
         </Grid>
       </Grid>
     );
   }
 }
-export default DataPNS; 
+export default DataPNS;;
