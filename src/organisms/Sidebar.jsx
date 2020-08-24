@@ -10,6 +10,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
+import Toolbar from '@material-ui/core/Toolbar';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+
+// Atoms
+import Logo from "../atoms/Logo";
+
 
 // Styles
 const drawerWidth = 240;
@@ -18,6 +25,12 @@ const styles = (theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
       flexShrink: 0,
+    },
+  },
+  closeButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
     },
   },
   toolbar: theme.mixins.toolbar,
@@ -33,7 +46,6 @@ class Sidebar extends Component {
 
     const drawer = (
       <div>
-        <div className={classes.toolbar} />
         <Divider />
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -61,6 +73,18 @@ class Sidebar extends Component {
               keepMounted: true
             }}
           >
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={onClose}
+                className={classes.closeButton}
+              >
+                <CloseIcon />
+              </IconButton>
+              <Logo />
+            </Toolbar>
             {drawer}
           </Drawer>
         </Hidden>
@@ -72,6 +96,7 @@ class Sidebar extends Component {
             variant="permanent"
             open
           >
+            <div className={classes.toolbar} />
             {drawer}
           </Drawer>
         </Hidden>
