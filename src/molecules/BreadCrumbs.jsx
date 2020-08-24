@@ -40,6 +40,7 @@ class BreadCrumbs extends Component {
                   '/data_cuti/cuti_alasan_penting': "Cuti Alasan Penting",
                   '/data_cuti/cltn': "CLTN",
                   '/pengaturan': "Pengaturan",
+                  '/profil': "Profil",
                 };
 
                 return last ? (

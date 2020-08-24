@@ -11,12 +11,18 @@ import Tooltip from "@material-ui/core/Tooltip";
 // Firebase
 import firebase from "../api/Firebase";
 
+// React router dom
+import { NavLink } from "react-router-dom";
+
 // Styles
 const styles = (theme) => ({
   avatar: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
+    width: theme.spacing(3),
+    height: theme.spacing(3),
   },
+  activeLink: {
+    backgroundColor: "#eeeeee"
+  }
 });
 
 class AccountMenu extends Component {
@@ -98,7 +104,7 @@ class AccountMenu extends Component {
             horizontal: 'right',
           }}
         >
-          <MenuItem onClick={this.handleCloseMenu}>Profil</MenuItem>
+          <MenuItem onClick={this.handleCloseMenu} component={NavLink} to="/profil" activeClassName={classes.activeLink} >Profil</MenuItem>
           <MenuItem onClick={this.handleCloseMenu}>Keluar</MenuItem>
         </Menu>
       </Fragment>

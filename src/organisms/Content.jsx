@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 // React router dom
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -23,6 +24,18 @@ const styles = (theme) => ({
   },
 });
 
+// Templates 
+const DataPNS = lazy(() => import("../templates/DataPNS"));
+const Home = lazy(() => import("../templates/Home"));
+const Settings = lazy(() => import("../templates/Settings"));
+const Profile = lazy(() => import("../templates/Profile"));
+const CutiTahunan = lazy(() => import("../templates/CutiTahunan"));
+const CutiBesar = lazy(() => import("../templates/CutiBesar"));
+const CutiSakit = lazy(() => import("../templates/CutiSakit"));
+const CutiBersalin = lazy(() => import("../templates/CutiBersalin"));
+const CutiAlasanPenting = lazy(() => import("../templates/CutiAlasanPenting"));
+const CLTN = lazy(() => import("../templates/CLTN"));
+
 class Content extends Component {
   render() {
     const { classes, role } = this.props;
@@ -30,72 +43,78 @@ class Content extends Component {
     return (
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={12}>
-            <BreadCrumbs />
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <Switch>
-              <Route
-                path="/pengaturan"
-                render={() => <div>Pengaturan</div>}
-              />
-              <Route
-                path="/data_cuti/cltn"
-                render={() => <div>CLTN</div>}
-              />
-              <Route
-                path="/data_cuti/cuti_alasan_penting"
-                render={() => <div>Cuti Alasan Penting</div>}
-              />
-              <Route
-                path="/data_cuti/cuti_bersalin"
-                render={() => <div>Cuti Bersalin</div>}
-              />
-              <Route
-                path="/data_cuti/cuti_sakit"
-                render={() => <div>Cuti Sakit</div>}
-              />
-              <Route
-                path="/data_cuti/cuti_besar"
-                render={() => <div>Cuti Besar</div>}
-              />
+        <Suspense fallback={<LinearProgress />}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12}>
+              <BreadCrumbs />
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Switch>
+                <Route
+                  path="/profil"
+                  component={Profile}
+                />
+                <Route
+                  path="/pengaturan"
+                  component={Settings}
+                />
+                <Route
+                  path="/data_cuti/cltn"
+                  component={CLTN}
+                />
+                <Route
+                  path="/data_cuti/cuti_alasan_penting"
+                  component={CutiAlasanPenting}
+                />
+                <Route
+                  path="/data_cuti/cuti_bersalin"
+                  component={CutiBersalin}
+                />
+                <Route
+                  path="/data_cuti/cuti_sakit"
+                  component={CutiSakit}
+                />
+                <Route
+                  path="/data_cuti/cuti_besar"
+                  component={CutiBesar}
+                />
 
-              <Route
-                path="/data_cuti/cuti_tahunan"
-                render={() => <div>Cuti Tahunan</div>}
-              />
+                <Route
+                  path="/data_cuti/cuti_tahunan"
+                  component={CutiTahunan}
+                />
 
-              {
-                role === "admin" ? (
-                  <Switch>
-                    <Route
-                      path="/data_pns"
-                      render={() => <div>Data PNS</div>}
-                    />
-
-                    <Redirect
-                      from="/"
-                      to="/data_pns"
-                    />
-                  </Switch>
-                ) : (
+                {
+                  role === "admin" ? (
                     <Switch>
                       <Route
-                        path="/beranda"
-                        render={() => <div>Beranda</div>}
+                        path="/data_pns"
+                        component={DataPNS}
                       />
 
                       <Redirect
                         from="/"
-                        to="/beranda"
+                        to="/data_pns"
                       />
                     </Switch>
-                  )
-              }
-            </Switch>
+                  ) : (
+                      <Switch>
+                        <Route
+                          path="/beranda"
+                          component={Home}
+                        />
+
+                        <Redirect
+                          from="/"
+                          to="/beranda"
+                        />
+                      </Switch>
+                    )
+                }
+              </Switch>
+            </Grid>
           </Grid>
-        </Grid>
+        </Suspense>
       </main>
     );
   }

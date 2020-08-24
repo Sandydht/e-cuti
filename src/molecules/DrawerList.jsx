@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -37,7 +37,7 @@ class DrawerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: true
+      open: false
     };
   }
 
