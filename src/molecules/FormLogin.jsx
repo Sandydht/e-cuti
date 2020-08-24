@@ -62,7 +62,7 @@ class FormLogin extends Component {
   };
 
   render() {
-    const { classes, loginAPI, enqueueSnackbar, history, location } = this.props;
+    const { classes, loginAPI, enqueueSnackbar, history } = this.props;
     const { showPassword } = this.state;
 
     return (
@@ -75,7 +75,7 @@ class FormLogin extends Component {
         onSubmit={({ email, password }, { setSubmitting }) => {
           loginAPI({ email, password })
             .then(() => {
-              const { from } = location.state || { from: { pathname: "/" } };
+              const { from } = { from: { pathname: "/" } };
               setSubmitting(false);
               history.replace(from);
             })

@@ -4,12 +4,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import Toolbar from '@material-ui/core/Toolbar';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 // Atoms
 import Logo from "../atoms/Logo";
 
+// Molecules
+import DrawerList from "../molecules/DrawerList";
 
 // Styles
 const drawerWidth = 240;
@@ -43,20 +39,6 @@ class Sidebar extends Component {
   render() {
     const { window, classes, open, onClose } = this.props;
     const container = window !== undefined ? () => window().document.body : undefined;
-
-    const drawer = (
-      <div>
-        <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </div>
-    );
 
     return (
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -85,7 +67,8 @@ class Sidebar extends Component {
               </IconButton>
               <Logo />
             </Toolbar>
-            {drawer}
+            <Divider />
+            <DrawerList onClick={onClose} />
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
@@ -97,7 +80,8 @@ class Sidebar extends Component {
             open
           >
             <div className={classes.toolbar} />
-            {drawer}
+            <Divider />
+            <DrawerList />
           </Drawer>
         </Hidden>
       </nav>
