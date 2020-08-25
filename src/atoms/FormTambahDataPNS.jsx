@@ -169,7 +169,8 @@ class FormTambahDataPNS extends Component {
                           .then(() => {
                             this.storage
                               .child(res.id)
-                              .getDownloadURL(fotoUrl => {
+                              .getDownloadURL()
+                              .then((fotoUrl) => {
                                 this.ref
                                   .doc(res.id)
                                   .update({
