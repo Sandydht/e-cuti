@@ -5,7 +5,9 @@ import FormPengajuanCuti from "../atoms/FormPengajuanCuti";
 
 class PengajuanCutiTahunan extends Component {
   render() {
-    return <FormPengajuanCuti />;
+    return <FormPengajuanCuti
+      jenisCuti="Cuti Tahunan"
+    />;
   }
 }
 export default PengajuanCutiTahunan; 

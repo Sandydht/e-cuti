@@ -120,27 +120,27 @@ class Content extends Component {
                       )}
                 />
                 <Route
-                  path="/cltn"
+                  path="/data_cltn"
                   component={DataCLTN}
                 />
                 <Route
-                  path="/cuti_alasan_penting"
+                  path="/data_cuti_alasan_penting"
                   component={DataCutiAlasanPenting}
                 />
                 <Route
-                  path="/cuti_bersalin"
+                  path="/data_cuti_bersalin"
                   component={DataCutiBersalin}
                 />
                 <Route
-                  path="/cuti_sakit"
+                  path="/data_cuti_sakit"
                   component={DataCutiSakit}
                 />
                 <Route
-                  path="/cuti_besar"
+                  path="/data_cuti_besar"
                   component={DataCutiBesar}
                 />
                 <Route
-                  path="/cuti_tahunan"
+                  path="/data_cuti_tahunan"
                   component={DataCutiTahunan}
                 />
                 <Route

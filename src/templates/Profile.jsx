@@ -39,7 +39,7 @@ class Profile extends Component {
   }
 
   getDataProfile = (querySnapshot) => {
-    let data = {};
+    let data;
     querySnapshot.forEach(doc => data = doc.data());
     this.setState({
       isLoading: false,
