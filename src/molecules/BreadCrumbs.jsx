@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 // Material UI
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
@@ -47,6 +47,8 @@ class BreadCrumbs extends Component {
                   '/pengajuan_cuti_alasan_penting': role === "admin" ? "404" : "Pengajuan Cuti Alasan Penting",
                   '/pengajuan_cltn': role === "admin" ? "404" : "Pengajuan Cuti Luar Tanggungan Negara",
                 };
+
+                breadcrumbNameMap[`/beranda${id}`] = role === "admin" ? "Detail PNS" : "404";
 
                 return last ? (
                   <Typography color="textPrimary" key={to}>

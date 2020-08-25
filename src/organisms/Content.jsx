@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense, Fragment } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -56,6 +56,15 @@ class Content extends Component {
             </Grid>
             <Grid item xs={12} md={12}>
               <Switch>
+                <Route
+                  path="/beranda/:id"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <DetailPNS {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )}
+                />
                 <Route
                   path="/pengajuan_cltn"
                   render={(routeProps) =>

@@ -104,7 +104,7 @@ class TabelDataPNS extends Component {
                     variant="contained"
                     size="small"
                     component={NavLink}
-                    to={`/data_pns/${dataIndex}`}
+                    to={`/beranda/${dataIndex}`}
                   >Detail</Button>
                 );
               }
