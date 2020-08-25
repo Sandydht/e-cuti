@@ -21,6 +21,9 @@ import { NavLink } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
+// Notistack
+import { withSnackbar } from "notistack";
+
 // Validation schema
 const validationSchema = Yup.object().shape({
 
@@ -40,20 +43,43 @@ class FormPengajuanCuti extends Component {
   }
 
   ajukanCuti = (data) => {
-    const date1 = Date.parse(data.tglMulai);
-    const date2 = Date.parse(data.tglSelesai);
-    const lamaHari = (((date2 - date1) / (1000 * 3600 * 24)) + 1);
-    const hari = lamaHari - (parseInt(lamaHari / 7) * 2);
+    return new Promise((resolve, reject) => {
+      const date1 = Date.parse(data.tglMulai);
+      const date2 = Date.parse(data.tglSelesai);
+      const lamaHari = (((date2 - date1) / (1000 * 3600 * 24)) + 1);
+      const hari = lamaHari - (parseInt(lamaHari / 7) * 2);
 
-    // Mencari tanggal hari ini
-    let today = new Date();
-    let yyyy = today.getFullYear();
-    let mm = today.getMonth() + 1;
-    let dd = today.getDate();
-    if (mm < 10) {
-      mm = `0${mm}`;
-    }
-    today = `${yyyy}-${mm}-${dd}`;
+      // Mencari tanggal hari ini
+      let today = new Date();
+      let yyyy = today.getFullYear();
+      let mm = today.getMonth() + 1;
+      let dd = today.getDate();
+      if (mm < 10) {
+        mm = `0${mm}`;
+      }
+      today = `${yyyy}-${mm}-${dd}`;
+
+      if (Date.parse(data.tglMulai) <= Date.parse(today)) {
+        return reject(false);
+      } else if (date2 < date1) {
+        return reject(false);
+      } else {
+        this.cuti
+          .add({
+            nip: data.nip,
+            tglPengajuan: today,
+            tglMulai: data.tglMulai,
+            tglSelesai: data.tglSelesai,
+            lamaCuti: `${hari} hari`,
+            jenisCuti: data.jenisCuti,
+            alasanCuti: data.alasanCuti,
+            alamatSelamaCuti: data.alamatSelamaCuti,
+            status: "Menunggu"
+          })
+          .then(() => resolve(true))
+          .catch(() => reject(false));
+      }
+    });
   };
 
   getDataPNS = (querySnapshot) => {
@@ -113,9 +139,19 @@ class FormPengajuanCuti extends Component {
                   alamatSelamaCuti: ""
                 }}
                 validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
-                  setSubmitting(false);
-                  console.log(values);
+                onSubmit={({ nip, jenisCuti, tglMulai, tglSelesai, alasanCuti, alamatSelamaCuti }, { setSubmitting, resetForm }) => {
+                  const { enqueueSnackbar } = this.props;
+
+                  this.ajukanCuti({ nip, jenisCuti, tglMulai, tglSelesai, alasanCuti, alamatSelamaCuti })
+                    .then(() => {
+                      setSubmitting(false);
+                      enqueueSnackbar("Cuti telah diajukan", { variant: "success" });
+                      resetForm();
+                    })
+                    .catch(() => {
+                      setSubmitting(false);
+                      enqueueSnackbar("Cuti gagal diajukan", { variant: "error" });
+                    });
                 }}
               >
                 {({
@@ -311,4 +347,4 @@ class FormPengajuanCuti extends Component {
     );
   }
 }
-export default FormPengajuanCuti; 
+export default withSnackbar(FormPengajuanCuti); 
