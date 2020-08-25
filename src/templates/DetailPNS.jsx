@@ -85,7 +85,7 @@ class DetailPNS extends Component {
                         <CircularProgress />
                       </Box>
                     ) : (
-                        <Avatar src={data.fotoUrl} className={classes.avatar} />
+                        <Avatar src={data.data.fotoUrl} className={classes.avatar} />
                       )
                   }
                 </Grid>
