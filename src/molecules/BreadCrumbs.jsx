@@ -28,7 +28,7 @@ class BreadCrumbs extends Component {
               {pathnames.map((value, index) => {
                 const last = index === pathnames.length - 1;
                 const to = `/${pathnames.slice(0, index + 1).join('/')}`;
-                const id = `/${pathnames.slice(1, 3).join('/')}`;
+                const id = `/${pathnames.slice(1, 2).join('/')}`;
 
                 const breadcrumbNameMap = {
                   '/beranda': 'Beranda',
@@ -49,6 +49,7 @@ class BreadCrumbs extends Component {
                 };
 
                 breadcrumbNameMap[`/beranda${id}`] = role === "admin" ? "Detail PNS" : "404";
+                breadcrumbNameMap[`/beranda${id}/edit`] = role === "admin" ? "Edit Data PNS" : "404";
                 breadcrumbNameMap[`/data_cuti_tahunan${id}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
 
                 return last ? (

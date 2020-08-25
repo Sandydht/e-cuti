@@ -47,7 +47,7 @@ class DataTable extends Component {
             selectableRows: "none",
             searchPlaceholder: "Pencarian",
             tableBodyHeight: "auto",
-            tableBodyMaxHeight: "500px",
+            tableBodyMaxHeight: "800px",
             fixedHeader: false,
             enableNestedDataAccess: ".",
             rowsPerPageOptions: [5, 10, 15],

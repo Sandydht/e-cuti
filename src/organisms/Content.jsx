@@ -20,12 +20,13 @@ const styles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    overflow: "auto"
+    // overflow: "auto"
   },
 });
 
 // Templates 
 const DetailPNS = lazy(() => import("../templates/DetailPNS"));
+const EditDataPNS = lazy(() => import("../templates/EditDataPNS"));
 const Home = lazy(() => import("../templates/Home"));
 const Settings = lazy(() => import("../templates/Settings"));
 const Profile = lazy(() => import("../templates/Profile"));
@@ -65,6 +66,15 @@ class Content extends Component {
                       <RiwayatCuti {...routeProps} />
                     ) : (
                         <DetailCuti {...routeProps} />
+                      )}
+                />
+                <Route
+                  path="/beranda/:id/edit"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <EditDataPNS {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
                       )}
                 />
                 <Route
