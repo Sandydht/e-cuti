@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 // Material UI
+import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -11,12 +12,10 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import CardContent from "@material-ui/core/CardContent";
 import MenuItem from "@material-ui/core/MenuItem";
+import Avatar from "@material-ui/core/Avatar";
 
 // Notistack
 import { withSnackbar } from "notistack";
-
-// Atoms
-import Thumb from "./Thumb";
 
 // Firebase
 import firebase from "../api/Firebase";
@@ -27,6 +26,15 @@ import { NavLink } from "react-router-dom";
 // Formik & yup
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+
+// Styles
+const styles = (theme) => ({
+  avatar: {
+    width: theme.spacing(10),
+    height: theme.spacing(10)
+  }
+});
+
 
 // Validation schema
 const validationSchema = Yup.object().shape({
@@ -132,15 +140,47 @@ class FormEditDataPNS extends Component {
     };
 
     this.pns = firebase.firestore().collection("pns");
+    this.storage = firebase.storage().ref("fotoPNS");
   }
 
   updateDataPNS = (data) => {
     return new Promise((resolve, reject) => {
       const { id } = this.state;
+      const dataPNS = {
+        nip: data.nip,
+        nik: data.nik,
+        nama: data.nama,
+        golongan: data.golongan,
+        unitKerja: data.unitKerja
+      };
+
       this.pns
         .doc(id)
-        .update(data)
-        .then(() => resolve(true))
+        .update(dataPNS)
+        .then(() => {
+          if (data.foto !== null) {
+            this.storage
+              .child(id)
+              .put(data.foto)
+              .then(() => {
+                this.storage
+                  .child(id)
+                  .getDownloadURL()
+                  .then((fotoUrl) => {
+                    this.pns
+                      .doc(id)
+                      .update({
+                        fotoUrl
+                      })
+                      .then(() => {
+                        return resolve(true);
+                      });
+                  });
+              });
+          } else {
+            return resolve(true);
+          }
+        })
         .catch(() => reject(false));
     });
   };
@@ -165,7 +205,7 @@ class FormEditDataPNS extends Component {
   }
 
   render() {
-    const { match } = this.props;
+    const { match, classes } = this.props;
     const { isLoading, data } = this.state;
 
     return (
@@ -217,14 +257,14 @@ class FormEditDataPNS extends Component {
                 }) => (
                     <Form>
                       <Grid container spacing={2} justify="center" alignItems="center">
-                        <Grid item xs={4} md={3}>
+                        <Grid item xs={4} md={2}>
                           <Grid container justify="center" alignItems="center">
                             <Grid item>
-                              <Thumb file={values.foto} />
+                              <Avatar src={data.data.fotoUrl} className={classes.avatar} />
                             </Grid>
                           </Grid>
                         </Grid>
-                        <Grid item xs={8} md={9}>
+                        <Grid item xs={8} md={10}>
                           <TextField
                             id="foto"
                             name="foto"
@@ -355,4 +395,4 @@ class FormEditDataPNS extends Component {
     );
   }
 }
-export default withSnackbar(FormEditDataPNS); 
+export default withStyles(styles)(withSnackbar(FormEditDataPNS)); 
