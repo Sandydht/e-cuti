@@ -35,8 +35,26 @@ class FormPengajuanCuti extends Component {
     };
 
     this.auth = firebase.auth();
-    this.ref = firebase.firestore().collection("pns");
+    this.pns = firebase.firestore().collection("pns");
+    this.cuti = firebase.firestore().collection("cuti");
   }
+
+  ajukanCuti = (data) => {
+    const date1 = Date.parse(data.tglMulai);
+    const date2 = Date.parse(data.tglSelesai);
+    const lamaHari = (((date2 - date1) / (1000 * 3600 * 24)) + 1);
+    const hari = lamaHari - (parseInt(lamaHari / 7) * 2);
+
+    // Mencari tanggal hari ini
+    let today = new Date();
+    let yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+    if (mm < 10) {
+      mm = `0${mm}`;
+    }
+    today = `${yyyy}-${mm}-${dd}`;
+  };
 
   getDataPNS = (querySnapshot) => {
     let data;
@@ -52,7 +70,7 @@ class FormPengajuanCuti extends Component {
       .onAuthStateChanged((user) => {
         if (user) {
           const uid = user.uid;
-          this.ref
+          this.pns
             .where("uid", "==", uid)
             .get()
             .then(this.getDataPNS);
