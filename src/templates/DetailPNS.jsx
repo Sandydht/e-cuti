@@ -17,10 +17,12 @@ import TableCell from "@material-ui/core/TableCell";
 import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 // React router dom
 import { NavLink } from "react-router-dom";
+
+// Atoms 
+import HapusDataPNS from "../atoms/HapusDataPNS";
 
 // Firebase
 import firebase from "../api/Firebase";
@@ -38,6 +40,7 @@ class DetailPNS extends Component {
     super(props);
     this.state = {
       isLoading: true,
+      id: "",
       data: {}
     };
 
@@ -46,9 +49,13 @@ class DetailPNS extends Component {
 
   getDataPNS = (querySnapshot) => {
     let data = [];
-    querySnapshot.forEach(doc => data.push(doc.data()));
+    querySnapshot.forEach(doc => data.push({
+      id: doc.id,
+      data: doc.data()
+    }));
     this.setState((state, props) => ({
       isLoading: false,
+      id: data[props.match.params.id].id,
       data: data[props.match.params.id]
     }));
   };
@@ -60,8 +67,8 @@ class DetailPNS extends Component {
   }
 
   render() {
-    const { classes, match } = this.props;
-    const { isLoading, data } = this.state;
+    const { classes, match, ...rest } = this.props;
+    const { isLoading, data, id } = this.state;
 
     return (
       <Grid container spacing={2}>
@@ -106,28 +113,28 @@ class DetailPNS extends Component {
                         <TableBody>
                           <TableRow>
                             <TableCell>NIP</TableCell>
-                            <TableCell>{data.nip}</TableCell>
+                            <TableCell>{data.data.nip}</TableCell>
                           </TableRow>
                           <TableRow>
                             <TableCell>NIK</TableCell>
-                            <TableCell>{data.nik}</TableCell>
+                            <TableCell>{data.data.nik}</TableCell>
                           </TableRow>
                           <TableRow>
                             <TableCell>Nama</TableCell>
-                            <TableCell>{data.nama}</TableCell>
+                            <TableCell>{data.data.nama}</TableCell>
                           </TableRow>
                           <TableRow>
                             <TableCell>Golongan</TableCell>
-                            <TableCell>{data.golongan}</TableCell>
+                            <TableCell>{data.data.golongan}</TableCell>
                           </TableRow>
                           <TableRow>
                             <TableCell>Unit Kerja</TableCell>
-                            <TableCell>{data.unitKerja}</TableCell>
+                            <TableCell>{data.data.unitKerja}</TableCell>
                           </TableRow>
                           <TableRow>
                             <TableCell>Status Akun</TableCell>
                             <TableCell>
-                              {data.uid ? <Alert icon={false}>Teregistrasi</Alert> : <Alert icon={false} severity="error">Belum teregistrasi</Alert>}
+                              {data.data.uid ? <Alert icon={false}>Teregistrasi</Alert> : <Alert icon={false} severity="error">Belum teregistrasi</Alert>}
                             </TableCell>
                           </TableRow>
                         </TableBody>
@@ -148,15 +155,7 @@ class DetailPNS extends Component {
                             </Button>
                           </Grid>
                           <Grid item md={12} xs={12}>
-                            <Button
-                              startIcon={<DeleteIcon />}
-                              color="secondary"
-                              variant="contained"
-                              fullWidth
-                              disabled={Boolean(data.uid)}
-                            >
-                              Hapus
-                            </Button>
+                            <HapusDataPNS id={id} {...rest} />
                           </Grid>
                         </Grid>
                       </Box>
