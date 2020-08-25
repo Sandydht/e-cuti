@@ -68,6 +68,7 @@ class HapusDataPNS extends Component {
   };
 
   render() {
+    const { disabled } = this.props;
     const { isLoading, open } = this.state;
 
     return (
@@ -78,6 +79,7 @@ class HapusDataPNS extends Component {
           variant="contained"
           fullWidth
           onClick={this.handleOpen}
+          disabled={disabled}
         >
           Hapus</Button>
 

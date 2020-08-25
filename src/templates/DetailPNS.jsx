@@ -155,7 +155,11 @@ class DetailPNS extends Component {
                             </Button>
                           </Grid>
                           <Grid item md={12} xs={12}>
-                            <HapusDataPNS id={id} {...rest} />
+                            <HapusDataPNS
+                              id={id}
+                              {...rest}
+                              disabled={Boolean(data.data.uid)}
+                            />
                           </Grid>
                         </Grid>
                       </Box>
