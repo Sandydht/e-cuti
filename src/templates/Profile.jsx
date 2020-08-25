@@ -10,6 +10,10 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import CardContent from "@material-ui/core/CardContent";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 
 // Firebase
 import firebase from "../api/Firebase";
@@ -62,6 +66,7 @@ class Profile extends Component {
   render() {
     const { classes } = this.props;
     const { isLoading, data } = this.state;
+
     return (
       <Grid container spacing={2}>
         <Grid item md={4} xs={12}>
@@ -90,7 +95,42 @@ class Profile extends Component {
             <CardHeader title="Detail Profil" />
             <Divider />
             <CardContent>
-
+              {
+                isLoading ? (
+                  <Box p={5}>
+                    <Grid container justify="center">
+                      <Grid item>
+                        <CircularProgress />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                ) : (
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>NIP</TableCell>
+                          <TableCell>{data.nip}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>NIK</TableCell>
+                          <TableCell>{data.nik}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Nama</TableCell>
+                          <TableCell>{data.nama}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Golongan</TableCell>
+                          <TableCell>{data.golongan}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Unit Kerja</TableCell>
+                          <TableCell>{data.unitKerja}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  )
+              }
             </CardContent>
           </Card>
         </Grid>
