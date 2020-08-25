@@ -150,7 +150,7 @@ class FormPengajuanCuti extends Component {
                     })
                     .catch(() => {
                       setSubmitting(false);
-                      enqueueSnackbar("Cuti gagal diajukan", { variant: "error" });
+                      enqueueSnackbar("Pengajuan cuti minimal h-1", { variant: "error" });
                     });
                 }}
               >

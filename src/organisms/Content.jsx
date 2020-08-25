@@ -41,6 +41,8 @@ const PengajuanCutiSakit = lazy(() => import("../templates/PengajuanCutiSakit"))
 const PengajuanCutiBersalin = lazy(() => import("../templates/PengajuanCutiBersalin"));
 const PengajuanCutiAlasanPenting = lazy(() => import("../templates/PengajuanCutiAlasanPenting"));
 const PengajuanCLTN = lazy(() => import("../templates/PengajuanCLTN"));
+const DetailCuti = lazy(() => import("../templates/DetailCuti"));
+const RiwayatCuti = lazy(() => import("../templates/RiwayatCuti"));
 
 class Content extends Component {
   render() {
@@ -56,6 +58,15 @@ class Content extends Component {
             </Grid>
             <Grid item xs={12} md={12}>
               <Switch>
+                <Route
+                  path="/data_cuti_tahunan/:id"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <RiwayatCuti {...routeProps} />
+                    ) : (
+                        <DetailCuti {...routeProps} />
+                      )}
+                />
                 <Route
                   path="/beranda/:id"
                   render={(routeProps) =>
