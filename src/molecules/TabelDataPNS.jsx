@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 
+// Material UI
+import Button from "@material-ui/core/Button";
+import PageviewIcon from '@material-ui/icons/Pageview';
+
 // Atoms
 import DataTable from "../atoms/DataTable";
+
+// React router dom
+import { NavLink } from "react-router-dom";
 
 // Firebase
 import firebase from "../api/Firebase";
@@ -81,6 +88,26 @@ class TabelDataPNS extends Component {
             options: {
               filter: true,
               sort: false,
+            }
+          },
+          {
+            name: "detail",
+            label: "Detail",
+            options: {
+              filter: true,
+              sort: false,
+              customBodyRenderLite: (dataIndex) => {
+                return (
+                  <Button
+                    startIcon={<PageviewIcon />}
+                    color="primary"
+                    variant="contained"
+                    size="small"
+                    component={NavLink}
+                    to={`/data_pns/${dataIndex}`}
+                  >Detail</Button>
+                );
+              }
             }
           },
         ]}

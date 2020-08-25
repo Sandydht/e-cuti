@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component, lazy, Suspense, Fragment } from 'react';
 
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -25,7 +25,7 @@ const styles = (theme) => ({
 });
 
 // Templates 
-const DataPNS = lazy(() => import("../templates/DataPNS"));
+const DetailPNS = lazy(() => import("../templates/DetailPNS"));
 const Home = lazy(() => import("../templates/Home"));
 const Settings = lazy(() => import("../templates/Settings"));
 const Profile = lazy(() => import("../templates/Profile"));
@@ -57,12 +57,58 @@ class Content extends Component {
             <Grid item xs={12} md={12}>
               <Switch>
                 <Route
-                  path="/profil"
-                  component={Profile}
+                  path="/pengajuan_cltn"
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <PengajuanCLTN {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )}
                 />
                 <Route
-                  path="/pengaturan"
-                  component={Settings}
+                  path="/pengajuan_cuti_alasan_penting"
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <PengajuanCutiAlasanPenting {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )}
+                />
+                <Route
+                  path="/pengajuan_cuti_bersalin"
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <PengajuanCutiBersalin {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )}
+                />
+                <Route
+                  path="/pengajuan_cuti_sakit"
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <PengajuanCutiSakit {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )}
+                />
+                <Route
+                  path="/pengajuan_cuti_besar"
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <PengajuanCutiBesar {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )}
+                />
+                <Route
+                  path="/pengajuan_cuti_tahunan"
+                  render={(routeProps) =>
+                    role === "user" ? (
+                      <PengajuanCutiTahunan {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )}
                 />
                 <Route
                   path="/cltn"
@@ -84,63 +130,26 @@ class Content extends Component {
                   path="/cuti_besar"
                   component={DataCutiBesar}
                 />
-
                 <Route
                   path="/cuti_tahunan"
                   component={DataCutiTahunan}
                 />
-
-                {
-                  role === "admin" ? (
-                    <Switch>
-                      <Route
-                        path="/data_pns"
-                        component={DataPNS}
-                      />
-
-                      <Redirect
-                        from="/"
-                        to="/data_pns"
-                      />
-                    </Switch>
-                  ) : (
-                      <Switch>
-                        <Route
-                          path="/beranda/cltn"
-                          component={PengajuanCLTN}
-                        />
-                        <Route
-                          path="/beranda/cuti_alasan_penting"
-                          component={PengajuanCutiAlasanPenting}
-                        />
-                        <Route
-                          path="/beranda/cuti_bersalin"
-                          component={PengajuanCutiBersalin}
-                        />
-                        <Route
-                          path="/beranda/cuti_sakit"
-                          component={PengajuanCutiSakit}
-                        />
-                        <Route
-                          path="/beranda/cuti_besar"
-                          component={PengajuanCutiBesar}
-                        />
-                        <Route
-                          path="/beranda/cuti_tahunan"
-                          component={PengajuanCutiTahunan}
-                        />
-                        <Route
-                          path="/beranda"
-                          component={Home}
-                        />
-
-                        <Redirect
-                          from="/"
-                          to="/beranda"
-                        />
-                      </Switch>
-                    )
-                }
+                <Route
+                  path="/profil"
+                  component={Profile}
+                />
+                <Route
+                  path="/pengaturan"
+                  component={Settings}
+                />
+                <Route
+                  path="/beranda"
+                  component={Home}
+                />
+                <Redirect
+                  from="/"
+                  to="/beranda"
+                />
               </Switch>
             </Grid>
           </Grid>

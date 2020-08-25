@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 // Material UI
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
@@ -28,24 +28,24 @@ class BreadCrumbs extends Component {
               {pathnames.map((value, index) => {
                 const last = index === pathnames.length - 1;
                 const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+                const id = `/${pathnames.slice(1, 3).join('/')}`;
 
                 const breadcrumbNameMap = {
-                  '/data_pns': "Data PNS",
                   '/beranda': 'Beranda',
-                  '/beranda/cuti_tahunan': 'Cuti Tahunan',
-                  '/beranda/cuti_besar': 'Cuti Besar',
-                  '/beranda/cuti_sakit': 'Cuti Sakit',
-                  '/beranda/cuti_bersalin': 'Cuti Bersalin',
-                  '/beranda/cuti_alasan_penting': 'Cuti Alasan Penting',
-                  '/beranda/cltn': 'CLTN',
+                  '/pengaturan': "Pengaturan",
+                  '/profil': "Profil",
                   '/cuti_tahunan': role === "admin" ? "Data Cuti Tahunan" : "Riwayat Cuti Tahunan",
                   '/cuti_besar': role === "admin" ? "Data Cuti Besar" : "Riwayat Cuti Besar",
                   '/cuti_sakit': role === "admin" ? "Data Cuti Sakit" : "Riwayat Cuti Sakit",
                   '/cuti_bersalin': role === "admin" ? "Data Cuti Bersalin" : "Riwayat Cuti Bersalin",
                   '/cuti_alasan_penting': role === "admin" ? "Data Cuti Alasan Penting" : "Riwayat Cuti Alasan Penting",
-                  '/cltn': role === "admin" ? "Data CLTN" : "Riwayat CLTN",
-                  '/pengaturan': "Pengaturan",
-                  '/profil': "Profil",
+                  '/cltn': role === "admin" ? "Data Cuti Luar Tanggungan Negara" : "Riwayat Cuti Luar Tanggungan Negara",
+                  '/pengajuan_cuti_tahunan': role === "admin" ? "404" : "Pengajuan Cuti Tahunan",
+                  '/pengajuan_cuti_besar': role === "admin" ? "404" : "Pengajuan Cuti Besar",
+                  '/pengajuan_cuti_sakit': role === "admin" ? "404" : "Pengajuan Cuti Sakit",
+                  '/pengajuan_cuti_bersalin': role === "admin" ? "404" : "Pengajuan Cuti Bersalin",
+                  '/pengajuan_cuti_alasan_penting': role === "admin" ? "404" : "Pengajuan Cuti Alasan Penting",
+                  '/pengajuan_cltn': role === "admin" ? "404" : "Pengajuan Cuti Luar Tanggungan Negara",
                 };
 
                 return last ? (

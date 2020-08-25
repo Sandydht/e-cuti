@@ -57,20 +57,10 @@ class DrawerList extends Component {
           <ListSubheader component="div" id="nested-list-subheader">{role === "admin" ? "Admin Menu" : "User Menu"}</ListSubheader>
         }
       >
-        {
-          role === "admin" ? (
-            <ListItem button onClick={onClick} component={NavLink} to="/data_pns" activeClassName={classes.activeLink} >
-              <ListItemIcon><AssignmentIndIcon /></ListItemIcon>
-              <ListItemText primary="Data PNS" />
-            </ListItem>
-          ) : (
-              <ListItem button onClick={onClick} component={NavLink} to="/beranda" activeClassName={classes.activeLink} >
-                <ListItemIcon><HomeIcon /></ListItemIcon>
-                <ListItemText primary="Beranda" />
-              </ListItem>
-            )
-        }
-
+        <ListItem button onClick={onClick} component={NavLink} to="/beranda" activeClassName={classes.activeLink} >
+          <ListItemIcon><HomeIcon /></ListItemIcon>
+          <ListItemText primary="Beranda" />
+        </ListItem>
         <ListItem button onClick={this.handleOpen}>
           <ListItemIcon>{role === "admin" ? <AssignmentIcon /> : <HistoryIcon />}</ListItemIcon>
           <ListItemText primary={role === "admin" ? "Data Cuti" : "Riwayat Cuti"} />
