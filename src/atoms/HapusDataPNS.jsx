@@ -8,6 +8,9 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+// Notistack
+import { withSnackbar } from "notistack";
+
 // Firebase 
 import firebase from "../api/Firebase";
 
@@ -36,9 +39,32 @@ class HapusDataPNS extends Component {
   };
 
   handleDeleteData = () => {
+    const { id, history, enqueueSnackbar } = this.props;
     this.setState({
       isLoading: true
     });
+
+    this.ref
+      .doc(id)
+      .delete()
+      .then(() => {
+        this.storage
+          .child(id)
+          .delete()
+          .then(() => {
+            this.setState({
+              isLoading: false
+            });
+            enqueueSnackbar("Data berhasil dihapus", { variant: "success" });
+            history.replace("/beranda");
+          });
+      })
+      .catch(() => {
+        this.setState({
+          buttonLoading: false
+        });
+        enqueueSnackbar("Data gagal dihapus", { variant: "error" });
+      });
   };
 
   render() {
@@ -84,4 +110,4 @@ class HapusDataPNS extends Component {
     );
   }
 }
-export default HapusDataPNS; 
+export default withSnackbar(HapusDataPNS); 
