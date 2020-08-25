@@ -8,6 +8,9 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import MenuItem from "@material-ui/core/MenuItem";
 
+// Atoms
+import Thumb from "./Thumb";
+
 // Formik & Yup
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -114,8 +117,12 @@ const golongan = [
 class FormTambahDataPNS extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      image: undefined
+    };
 
     this.ref = firebase.firestore().collection("pns");
+    this.storage = firebase.storage().ref("fotoPNS");
   }
 
   addDataPNS = (data) => {
@@ -144,11 +151,40 @@ class FormTambahDataPNS extends Component {
                   enqueueSnackbar("Data telah tersedia", { variant: "error" });
                   return reject(false);
                 } else {
+                  const dataPNS = {
+                    nip: data.nip,
+                    nik: data.nik,
+                    nama: data.nama,
+                    golongan: data.golongan,
+                    unitKerja: data.unitKerja
+                  };
+
                   this.ref
-                    .add(data)
-                    .then(() => {
-                      enqueueSnackbar("Data tersimpan", { variant: "success" });
-                      return resolve(false);
+                    .add(dataPNS)
+                    .then((res) => {
+                      if (data.foto !== null) {
+                        this.storage
+                          .child(res.id)
+                          .put(data.foto)
+                          .then(() => {
+                            this.storage
+                              .child(res.id)
+                              .getDownloadURL(fotoUrl => {
+                                this.ref
+                                  .doc(res.id)
+                                  .update({
+                                    fotoUrl
+                                  })
+                                  .then(() => {
+                                    enqueueSnackbar("Data tersimpan", { variant: "success" });
+                                    return resolve(true);
+                                  });
+                              });
+                          });
+                      } else {
+                        enqueueSnackbar("Data tersimpan", { variant: "success" });
+                        return resolve(true);
+                      }
                     })
                     .catch(() => {
                       enqueueSnackbar("Data gagal tersimpan", { variant: "error" });
@@ -167,6 +203,7 @@ class FormTambahDataPNS extends Component {
     return (
       <Formik
         initialValues={{
+          foto: null,
           nip: "",
           nik: "",
           nama: "",
@@ -174,8 +211,9 @@ class FormTambahDataPNS extends Component {
           unitKerja: "Badan Kepegawaian Daerah"
         }}
         validationSchema={validationSchema}
-        onSubmit={({ nip, nik, nama, golongan, unitKerja }, { setSubmitting, resetForm }) => {
-          this.addDataPNS({ nip, nik, nama, golongan, unitKerja })
+        onSubmit={({ foto, nip, nik, nama, golongan, unitKerja }, { setSubmitting, resetForm }) => {
+          console.log(foto);
+          this.addDataPNS({ foto, nip, nik, nama, golongan, unitKerja })
             .then(() => {
               setSubmitting(false);
               resetForm();
@@ -192,9 +230,40 @@ class FormTambahDataPNS extends Component {
           values,
           handleChange,
           handleBlur,
+          setFieldValue,
           isSubmitting
         }) => (
             <Form>
+              <Grid container spacing={2} justify="center" alignItems="center">
+                <Grid item xs={4} md={3}>
+                  <Grid container justify="center" alignItems="center">
+                    <Grid item>
+                      <Thumb file={values.foto} />
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                  <TextField
+                    id="foto"
+                    name="foto"
+                    label="Foto PNS"
+                    type="file"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    error={Boolean(touched.foto && errors.foto)}
+                    helperText={touched.foto && errors.foto ? errors.foto : null}
+                    onChange={(event) => {
+                      setFieldValue("foto", event.currentTarget.files[0]);
+                    }}
+                    onBlur={handleBlur}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                </Grid>
+              </Grid>
+
               <TextField
                 id="nip"
                 name="nip"
