@@ -29,12 +29,18 @@ const DataPNS = lazy(() => import("../templates/DataPNS"));
 const Home = lazy(() => import("../templates/Home"));
 const Settings = lazy(() => import("../templates/Settings"));
 const Profile = lazy(() => import("../templates/Profile"));
-const CutiTahunan = lazy(() => import("../templates/CutiTahunan"));
-const CutiBesar = lazy(() => import("../templates/CutiBesar"));
-const CutiSakit = lazy(() => import("../templates/CutiSakit"));
-const CutiBersalin = lazy(() => import("../templates/CutiBersalin"));
-const CutiAlasanPenting = lazy(() => import("../templates/CutiAlasanPenting"));
-const CLTN = lazy(() => import("../templates/CLTN"));
+const DataCutiTahunan = lazy(() => import("../templates/DataCutiTahunan"));
+const DataCutiBesar = lazy(() => import("../templates/DataCutiBesar"));
+const DataCutiSakit = lazy(() => import("../templates/DataCutiSakit"));
+const DataCutiBersalin = lazy(() => import("../templates/DataCutiBersalin"));
+const DataCutiAlasanPenting = lazy(() => import("../templates/DataCutiAlasanPenting"));
+const DataCLTN = lazy(() => import("../templates/DataCLTN"));
+const PengajuanCutiTahunan = lazy(() => import("../templates/PengajuanCutiTahunan"));
+const PengajuanCutiBesar = lazy(() => import("../templates/PengajuanCutiBesar"));
+const PengajuanCutiSakit = lazy(() => import("../templates/PengajuanCutiSakit"));
+const PengajuanCutiBersalin = lazy(() => import("../templates/PengajuanCutiBersalin"));
+const PengajuanCutiAlasanPenting = lazy(() => import("../templates/PengajuanCutiAlasanPenting"));
+const PengajuanCLTN = lazy(() => import("../templates/PengajuanCLTN"));
 
 class Content extends Component {
   render() {
@@ -59,29 +65,29 @@ class Content extends Component {
                   component={Settings}
                 />
                 <Route
-                  path="/data_cuti/cltn"
-                  component={CLTN}
+                  path="/cltn"
+                  component={DataCLTN}
                 />
                 <Route
-                  path="/data_cuti/cuti_alasan_penting"
-                  component={CutiAlasanPenting}
+                  path="/cuti_alasan_penting"
+                  component={DataCutiAlasanPenting}
                 />
                 <Route
-                  path="/data_cuti/cuti_bersalin"
-                  component={CutiBersalin}
+                  path="/cuti_bersalin"
+                  component={DataCutiBersalin}
                 />
                 <Route
-                  path="/data_cuti/cuti_sakit"
-                  component={CutiSakit}
+                  path="/cuti_sakit"
+                  component={DataCutiSakit}
                 />
                 <Route
-                  path="/data_cuti/cuti_besar"
-                  component={CutiBesar}
+                  path="/cuti_besar"
+                  component={DataCutiBesar}
                 />
 
                 <Route
-                  path="/data_cuti/cuti_tahunan"
-                  component={CutiTahunan}
+                  path="/cuti_tahunan"
+                  component={DataCutiTahunan}
                 />
 
                 {
@@ -99,6 +105,30 @@ class Content extends Component {
                     </Switch>
                   ) : (
                       <Switch>
+                        <Route
+                          path="/beranda/cltn"
+                          component={PengajuanCLTN}
+                        />
+                        <Route
+                          path="/beranda/cuti_alasan_penting"
+                          component={PengajuanCutiAlasanPenting}
+                        />
+                        <Route
+                          path="/beranda/cuti_bersalin"
+                          component={PengajuanCutiBersalin}
+                        />
+                        <Route
+                          path="/beranda/cuti_sakit"
+                          component={PengajuanCutiSakit}
+                        />
+                        <Route
+                          path="/beranda/cuti_besar"
+                          component={PengajuanCutiBesar}
+                        />
+                        <Route
+                          path="/beranda/cuti_tahunan"
+                          component={PengajuanCutiTahunan}
+                        />
                         <Route
                           path="/beranda"
                           component={Home}

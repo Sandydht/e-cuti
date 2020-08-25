@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-class CutiBesar extends Component {
+class PengajuanCLTN extends Component {
   render() {
     return (
       <div>
-        Cuti Besar
+        PengajuanCLTN
       </div>
     );
   }
 }
-export default CutiBesar; 
+export default PengajuanCLTN; 
