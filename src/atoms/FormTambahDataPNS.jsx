@@ -117,9 +117,6 @@ const golongan = [
 class FormTambahDataPNS extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      image: undefined
-    };
 
     this.ref = firebase.firestore().collection("pns");
     this.storage = firebase.storage().ref("fotoPNS");
@@ -213,7 +210,6 @@ class FormTambahDataPNS extends Component {
         }}
         validationSchema={validationSchema}
         onSubmit={({ foto, nip, nik, nama, golongan, unitKerja }, { setSubmitting, resetForm }) => {
-          console.log(foto);
           this.addDataPNS({ foto, nip, nik, nama, golongan, unitKerja })
             .then(() => {
               setSubmitting(false);

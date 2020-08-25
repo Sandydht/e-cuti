@@ -15,6 +15,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 // Notistack
 import { withSnackbar } from "notistack";
 
+// Atoms
+import Thumb from "./Thumb";
+
 // Firebase
 import firebase from "../api/Firebase";
 
@@ -125,7 +128,7 @@ class FormEditDataPNS extends Component {
     this.state = {
       isLoading: true,
       id: "",
-      data: {}
+      data: {},
     };
 
     this.pns = firebase.firestore().collection("pns");
@@ -181,6 +184,7 @@ class FormEditDataPNS extends Component {
           ) : (
               <Formik
                 initialValues={{
+                  foto: null,
                   nip: data.data.nip,
                   nik: data.data.nik,
                   nama: data.data.nama,
@@ -208,9 +212,40 @@ class FormEditDataPNS extends Component {
                   values,
                   handleChange,
                   handleBlur,
+                  setFieldValue,
                   isSubmitting
                 }) => (
                     <Form>
+                      <Grid container spacing={2} justify="center" alignItems="center">
+                        <Grid item xs={4} md={3}>
+                          <Grid container justify="center" alignItems="center">
+                            <Grid item>
+                              <Thumb file={values.foto} />
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                        <Grid item xs={8} md={9}>
+                          <TextField
+                            id="foto"
+                            name="foto"
+                            label="Foto PNS"
+                            type="file"
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            error={Boolean(touched.foto && errors.foto)}
+                            helperText={touched.foto && errors.foto ? errors.foto : null}
+                            onChange={(event) => {
+                              setFieldValue("foto", event.currentTarget.files[0]);
+                            }}
+                            onBlur={handleBlur}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                          />
+                        </Grid>
+                      </Grid>
+
                       <TextField
                         id="nip"
                         name="nip"
