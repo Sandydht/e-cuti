@@ -57,7 +57,7 @@ class BreadCrumbs extends Component {
                 breadcrumbNameMap[`/data_cuti_bersalin${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
                 breadcrumbNameMap[`/data_cuti_alasan_penting${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
                 breadcrumbNameMap[`/data_cltn${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
-                breadcrumbNameMap[`/data_cuti_tahunan${id1}${id2}`] = role === "admin" ? "Detail PNS" : "404";
+                breadcrumbNameMap[`/data_cuti_tahunan${id1}${id2}`] = role === "admin" ? "Detail Cuti" : "404";
 
                 return last ? (
                   <Typography color="textPrimary" key={to}>

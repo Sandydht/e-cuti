@@ -42,7 +42,7 @@ class TabelDataUser extends Component {
 
     return (
       <DataTable
-        title="Data PNS"
+        title="Data PNS Teregistrasi"
         isLoading={isLoading}
         data={data}
         columns={columns}
