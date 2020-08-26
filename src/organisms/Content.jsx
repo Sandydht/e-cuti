@@ -14,14 +14,26 @@ import { connect } from "react-redux";
 // Molecules
 import BreadCrumbs from "../molecules/BreadCrumbs";
 
+// Atoms
+import Copyright from "../atoms/Copyright";
+
 // Styles
 const styles = (theme) => ({
   toolbar: theme.mixins.toolbar,
-  content: {
+  root: {
     flexGrow: 1,
-    padding: theme.spacing(3),
-    // overflow: "auto"
+    display: "flex",
+    flexDirection: 'column',
+    minHeight: '100vh',
+    overflow: "auto"
   },
+  main: {
+    padding: theme.spacing(3)
+  },
+  footer: {
+    padding: theme.spacing(3, 2),
+    marginTop: 'auto',
+  }
 });
 
 // Templates 
@@ -50,194 +62,199 @@ class Content extends Component {
     const { classes, role } = this.props;
 
     return (
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Suspense fallback={<LinearProgress />}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={12}>
-              <BreadCrumbs />
+      <main className={classes.root}>
+        <div className={classes.main}>
+          <div className={classes.toolbar} />
+          <Suspense fallback={<LinearProgress />}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={12}>
+                <BreadCrumbs />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <Switch>
+                  <Route
+                    path="/data_cuti_tahunan/:id/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <DetailCuti {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cltn/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCuti {...routeProps} />
+                      ) : (
+                          <DetailCuti {...routeProps} />
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_alasan_penting/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCuti {...routeProps} />
+                      ) : (
+                          <DetailCuti {...routeProps} />
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_bersalin/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCuti {...routeProps} />
+                      ) : (
+                          <DetailCuti {...routeProps} />
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_sakit/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCuti {...routeProps} />
+                      ) : (
+                          <DetailCuti {...routeProps} />
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_besar/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCuti {...routeProps} />
+                      ) : (
+                          <DetailCuti {...routeProps} />
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_tahunan/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCuti {...routeProps} />
+                      ) : (
+                          <DetailCuti {...routeProps} />
+                        )}
+                  />
+                  <Route
+                    path="/beranda/:id/edit"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <EditDataPNS {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/beranda/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <DetailPNS {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/pengajuan_cltn"
+                    render={(routeProps) =>
+                      role === "user" ? (
+                        <PengajuanCLTN {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/pengajuan_cuti_alasan_penting"
+                    render={(routeProps) =>
+                      role === "user" ? (
+                        <PengajuanCutiAlasanPenting {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/pengajuan_cuti_bersalin"
+                    render={(routeProps) =>
+                      role === "user" ? (
+                        <PengajuanCutiBersalin {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/pengajuan_cuti_sakit"
+                    render={(routeProps) =>
+                      role === "user" ? (
+                        <PengajuanCutiSakit {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/pengajuan_cuti_besar"
+                    render={(routeProps) =>
+                      role === "user" ? (
+                        <PengajuanCutiBesar {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/pengajuan_cuti_tahunan"
+                    render={(routeProps) =>
+                      role === "user" ? (
+                        <PengajuanCutiTahunan {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cltn"
+                    component={DataCLTN}
+                  />
+                  <Route
+                    path="/data_cuti_alasan_penting"
+                    component={DataCutiAlasanPenting}
+                  />
+                  <Route
+                    path="/data_cuti_bersalin"
+                    component={DataCutiBersalin}
+                  />
+                  <Route
+                    path="/data_cuti_sakit"
+                    component={DataCutiSakit}
+                  />
+                  <Route
+                    path="/data_cuti_besar"
+                    component={DataCutiBesar}
+                  />
+                  <Route
+                    path="/data_cuti_tahunan"
+                    component={DataCutiTahunan}
+                  />
+                  <Route
+                    path="/profil"
+                    component={Profile}
+                  />
+                  <Route
+                    path="/pengaturan"
+                    component={Settings}
+                  />
+                  <Route
+                    path="/beranda"
+                    component={Home}
+                  />
+                  <Redirect
+                    from="/"
+                    to="/beranda"
+                  />
+                </Switch>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={12}>
-              <Switch>
-                <Route
-                  path="/data_cuti_tahunan/:id/:id"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <DetailCuti {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
-                />
-                <Route
-                  path="/data_cltn/:id"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <RiwayatCuti {...routeProps} />
-                    ) : (
-                        <DetailCuti {...routeProps} />
-                      )}
-                />
-                <Route
-                  path="/data_cuti_alasan_penting/:id"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <RiwayatCuti {...routeProps} />
-                    ) : (
-                        <DetailCuti {...routeProps} />
-                      )}
-                />
-                <Route
-                  path="/data_cuti_bersalin/:id"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <RiwayatCuti {...routeProps} />
-                    ) : (
-                        <DetailCuti {...routeProps} />
-                      )}
-                />
-                <Route
-                  path="/data_cuti_sakit/:id"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <RiwayatCuti {...routeProps} />
-                    ) : (
-                        <DetailCuti {...routeProps} />
-                      )}
-                />
-                <Route
-                  path="/data_cuti_besar/:id"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <RiwayatCuti {...routeProps} />
-                    ) : (
-                        <DetailCuti {...routeProps} />
-                      )}
-                />
-                <Route
-                  path="/data_cuti_tahunan/:id"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <RiwayatCuti {...routeProps} />
-                    ) : (
-                        <DetailCuti {...routeProps} />
-                      )}
-                />
-                <Route
-                  path="/beranda/:id/edit"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <EditDataPNS {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
-                />
-                <Route
-                  path="/beranda/:id"
-                  render={(routeProps) =>
-                    role === "admin" ? (
-                      <DetailPNS {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
-                />
-                <Route
-                  path="/pengajuan_cltn"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <PengajuanCLTN {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
-                />
-                <Route
-                  path="/pengajuan_cuti_alasan_penting"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <PengajuanCutiAlasanPenting {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
-                />
-                <Route
-                  path="/pengajuan_cuti_bersalin"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <PengajuanCutiBersalin {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
-                />
-                <Route
-                  path="/pengajuan_cuti_sakit"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <PengajuanCutiSakit {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
-                />
-                <Route
-                  path="/pengajuan_cuti_besar"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <PengajuanCutiBesar {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
-                />
-                <Route
-                  path="/pengajuan_cuti_tahunan"
-                  render={(routeProps) =>
-                    role === "user" ? (
-                      <PengajuanCutiTahunan {...routeProps} />
-                    ) : (
-                        <div>Halaman tidak ditemukan...</div>
-                      )}
-                />
-                <Route
-                  path="/data_cltn"
-                  component={DataCLTN}
-                />
-                <Route
-                  path="/data_cuti_alasan_penting"
-                  component={DataCutiAlasanPenting}
-                />
-                <Route
-                  path="/data_cuti_bersalin"
-                  component={DataCutiBersalin}
-                />
-                <Route
-                  path="/data_cuti_sakit"
-                  component={DataCutiSakit}
-                />
-                <Route
-                  path="/data_cuti_besar"
-                  component={DataCutiBesar}
-                />
-                <Route
-                  path="/data_cuti_tahunan"
-                  component={DataCutiTahunan}
-                />
-                <Route
-                  path="/profil"
-                  component={Profile}
-                />
-                <Route
-                  path="/pengaturan"
-                  component={Settings}
-                />
-                <Route
-                  path="/beranda"
-                  component={Home}
-                />
-                <Redirect
-                  from="/"
-                  to="/beranda"
-                />
-              </Switch>
-            </Grid>
-          </Grid>
-        </Suspense>
+          </Suspense>
+        </div>
+        <footer className={classes.footer}>
+          <Copyright />
+        </footer>
       </main>
     );
   }

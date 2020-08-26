@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -10,10 +10,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import CardContent from "@material-ui/core/CardContent";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
+import TextField from "@material-ui/core/TextField";
 
 // Firebase
 import firebase from "../api/Firebase";
@@ -105,30 +102,58 @@ class Profile extends Component {
                     </Grid>
                   </Box>
                 ) : (
-                    <Table>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell>NIP</TableCell>
-                          <TableCell>{data.nip}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>NIK</TableCell>
-                          <TableCell>{data.nik}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Nama</TableCell>
-                          <TableCell>{data.nama}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Golongan</TableCell>
-                          <TableCell>{data.golongan}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Unit Kerja</TableCell>
-                          <TableCell>{data.unitKerja}</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
+                    <Fragment>
+                      <TextField
+                        label="NIP"
+                        value={data.nip}
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label="NIK"
+                        value={data.nik}
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label="Nama"
+                        value={data.nama}
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label="Golongan"
+                        value={data.golongan}
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label="Unit Kerja"
+                        value={data.unitKerja}
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                    </Fragment>
                   )
               }
             </CardContent>

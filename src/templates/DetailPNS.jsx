@@ -10,13 +10,10 @@ import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
 import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/Edit';
+import TextField from "@material-ui/core/TextField";
 
 // React router dom
 import { NavLink } from "react-router-dom";
@@ -109,36 +106,66 @@ class DetailPNS extends Component {
                   </Box>
                 ) : (
                     <Fragment>
-                      <Table>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell>NIP</TableCell>
-                            <TableCell>{data.data.nip}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>NIK</TableCell>
-                            <TableCell>{data.data.nik}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Nama</TableCell>
-                            <TableCell>{data.data.nama}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Golongan</TableCell>
-                            <TableCell>{data.data.golongan}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Unit Kerja</TableCell>
-                            <TableCell>{data.data.unitKerja}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Status Akun</TableCell>
-                            <TableCell>
-                              {data.data.uid ? <Alert icon={false}>Teregistrasi</Alert> : <Alert icon={false} severity="error">Belum teregistrasi</Alert>}
-                            </TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
+                      <TextField
+                        label="NIP"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        value={data.data.nip}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label="NIK"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        value={data.data.nik}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label="Nama"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        value={data.data.nama}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label="Golongan"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        value={data.data.golongan}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label="Unit Kerja"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        value={data.data.unitKerja}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label="Status Akun"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        value={data.data.uid ? "Teregistrasi" : "Belum Teregistrasi"}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
 
                       <Box mt={2}>
                         <Grid container spacing={1}>

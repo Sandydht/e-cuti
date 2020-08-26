@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 
@@ -16,6 +15,7 @@ import AuthFooter from "../organisms/AuthFooter";
 
 // Atoms
 import FormLogin from "../atoms/FormLogin";
+import Copyright from "../atoms/Copyright";
 
 // Styles
 const styles = (theme) => ({
@@ -46,9 +46,7 @@ class Login extends Component {
           />
         </div>
         <Box mt={8} mb={8}>
-          <Typography variant="body2" color="textSecondary" align="center">
-            Copyright © E-Cuti {new Date().getFullYear()}
-          </Typography>
+          <Copyright />
         </Box>
       </Container>
     );
