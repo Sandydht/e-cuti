@@ -8,6 +8,9 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import MenuItem from "@material-ui/core/MenuItem";
 
+// React router dom
+import { NavLink } from "react-router-dom";
+
 // Atoms
 import Thumb from "./Thumb";
 
@@ -196,8 +199,6 @@ class FormTambahDataPNS extends Component {
   };
 
   render() {
-    const { onClick } = this.props;
-
     return (
       <Formik
         initialValues={{
@@ -214,7 +215,6 @@ class FormTambahDataPNS extends Component {
             .then(() => {
               setSubmitting(false);
               resetForm();
-              onClick();
             })
             .catch(() => {
               setSubmitting(false);
@@ -232,14 +232,14 @@ class FormTambahDataPNS extends Component {
         }) => (
             <Form>
               <Grid container spacing={2} justify="center" alignItems="center">
-                <Grid item xs={4} md={3}>
+                <Grid item xs={4} md={2}>
                   <Grid container justify="center" alignItems="center">
                     <Grid item>
                       <Thumb file={values.foto} />
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={8} md={9}>
+                <Grid item xs={8} md={10}>
                   <TextField
                     id="foto"
                     name="foto"
@@ -345,7 +345,12 @@ class FormTambahDataPNS extends Component {
               <Box mt={2} mb={2}>
                 <Grid container spacing={2} justify="flex-end">
                   <Grid item>
-                    <Button color="primary" variant="outlined" onClick={onClick} >Batal</Button>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      component={NavLink}
+                      to="/data_pns"
+                    >Batal</Button>
                   </Grid>
                   <Grid item>
                     <Button

@@ -39,6 +39,7 @@ const styles = (theme) => ({
 
 // Templates 
 const DataPNS = lazy(() => import("../templates/DataPNS"));
+const TambahDataPNS = lazy(() => import("../templates/TambahDataPNS"));
 const DetailPNS = lazy(() => import("../templates/DetailPNS"));
 const EditDataPNS = lazy(() => import("../templates/EditDataPNS"));
 const Home = lazy(() => import("../templates/Home"));
@@ -97,6 +98,15 @@ class Content extends Component {
                     render={(routeProps) =>
                       role === "admin" ? (
                         <DetailPNS {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/tambah_data_pns"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <TambahDataPNS {...routeProps} />
                       ) : (
                           <div>Halaman tidak ditemukan...</div>
                         )}

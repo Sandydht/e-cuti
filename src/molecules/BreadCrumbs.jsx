@@ -34,6 +34,7 @@ class BreadCrumbs extends Component {
                   '/beranda': 'Beranda',
                   '/pengaturan': "Pengaturan",
                   '/profil': "Profil",
+                  '/tambah_data_pns': role === "admin" ? "Tambah Data PNS" : "404",
                   '/data_pns': role === "admin" ? "Data PNS" : "404",
                   '/data_cuti': role === "admin" ? "Data Cuti" : "404",
                   '/riwayat_cuti_tahunan': role === "admin" ? "404" : "Riwayat Cuti Tahunan",
