@@ -28,7 +28,8 @@ class BreadCrumbs extends Component {
               {pathnames.map((value, index) => {
                 const last = index === pathnames.length - 1;
                 const to = `/${pathnames.slice(0, index + 1).join('/')}`;
-                const id = `/${pathnames.slice(1, 2).join('/')}`;
+                const id1 = `/${pathnames.slice(1, 2).join('/')}`;
+                const id2 = `/${pathnames.slice(2, 3).join('/')}`;
 
                 const breadcrumbNameMap = {
                   '/beranda': 'Beranda',
@@ -48,9 +49,15 @@ class BreadCrumbs extends Component {
                   '/pengajuan_cltn': role === "admin" ? "404" : "Pengajuan Cuti Luar Tanggungan Negara",
                 };
 
-                breadcrumbNameMap[`/beranda${id}`] = role === "admin" ? "Detail PNS" : "404";
-                breadcrumbNameMap[`/beranda${id}/edit`] = role === "admin" ? "Edit Data PNS" : "404";
-                breadcrumbNameMap[`/data_cuti_tahunan${id}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
+                breadcrumbNameMap[`/beranda${id1}`] = role === "admin" ? "Detail PNS" : "404";
+                breadcrumbNameMap[`/beranda${id1}/edit`] = role === "admin" ? "Edit Data PNS" : "404";
+                breadcrumbNameMap[`/data_cuti_tahunan${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
+                breadcrumbNameMap[`/data_cuti_besar${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
+                breadcrumbNameMap[`/data_cuti_sakit${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
+                breadcrumbNameMap[`/data_cuti_bersalin${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
+                breadcrumbNameMap[`/data_cuti_alasan_penting${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
+                breadcrumbNameMap[`/data_cltn${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
+                breadcrumbNameMap[`/data_cuti_tahunan${id1}${id2}`] = role === "admin" ? "Detail PNS" : "404";
 
                 return last ? (
                   <Typography color="textPrimary" key={to}>

@@ -60,6 +60,60 @@ class Content extends Component {
             <Grid item xs={12} md={12}>
               <Switch>
                 <Route
+                  path="/data_cuti_tahunan/:id/:id"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <DetailCuti {...routeProps} />
+                    ) : (
+                        <div>Halaman tidak ditemukan...</div>
+                      )}
+                />
+                <Route
+                  path="/data_cltn/:id"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <RiwayatCuti {...routeProps} />
+                    ) : (
+                        <DetailCuti {...routeProps} />
+                      )}
+                />
+                <Route
+                  path="/data_cuti_alasan_penting/:id"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <RiwayatCuti {...routeProps} />
+                    ) : (
+                        <DetailCuti {...routeProps} />
+                      )}
+                />
+                <Route
+                  path="/data_cuti_bersalin/:id"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <RiwayatCuti {...routeProps} />
+                    ) : (
+                        <DetailCuti {...routeProps} />
+                      )}
+                />
+                <Route
+                  path="/data_cuti_sakit/:id"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <RiwayatCuti {...routeProps} />
+                    ) : (
+                        <DetailCuti {...routeProps} />
+                      )}
+                />
+                <Route
+                  path="/data_cuti_besar/:id"
+                  render={(routeProps) =>
+                    role === "admin" ? (
+                      <RiwayatCuti {...routeProps} />
+                    ) : (
+                        <DetailCuti {...routeProps} />
+                      )}
+                />
+                <Route
                   path="/data_cuti_tahunan/:id"
                   render={(routeProps) =>
                     role === "admin" ? (

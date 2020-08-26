@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
+// Atoms
+import FormPengajuanCuti from "../atoms/FormPengajuanCuti";
+
 class PengajuanCutiBersalin extends Component {
   render() {
     return (
-      <div>
-        PengajuanCutiBersalin
-      </div>
+      <FormPengajuanCuti
+        jenisCuti="Cuti Bersalin"
+      />
     );
   }
 }

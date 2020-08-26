@@ -150,7 +150,7 @@ class FormPengajuanCuti extends Component {
                     })
                     .catch(() => {
                       setSubmitting(false);
-                      enqueueSnackbar("Pengajuan cuti minimal h-1", { variant: "error" });
+                      enqueueSnackbar("Periksa kembali tanggal pengajuan", { variant: "error" });
                     });
                 }}
               >

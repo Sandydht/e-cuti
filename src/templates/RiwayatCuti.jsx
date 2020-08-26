@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 
+// Molecules
+import TabelDataRiwayatCutiPNS from "../molecules/TabelDataRiwayatCutiPNS";
+
 class RiwayatCuti extends Component {
   render() {
+    const { ...rest } = this.props;
+
     return (
-      <div>
-        RiwayatCuti
-      </div>
+      <TabelDataRiwayatCutiPNS
+        {...rest}
+        jenisCuti="Cuti Tahunan"
+      />
     );
   }
 }
