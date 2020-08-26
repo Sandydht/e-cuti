@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -14,6 +14,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import SettingsIcon from '@material-ui/icons/Settings';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 // Redux
 import { connect } from "react-redux";
@@ -60,44 +61,60 @@ class DrawerList extends Component {
           <ListItemIcon><HomeIcon /></ListItemIcon>
           <ListItemText primary="Beranda" />
         </ListItem>
-        <ListItem button onClick={this.handleOpen}>
-          <ListItemIcon>{role === "admin" ? <AssignmentIcon /> : <HistoryIcon />}</ListItemIcon>
-          <ListItemText primary={role === "admin" ? "Data Cuti" : "Riwayat Cuti"} />
-          {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_tahunan" className={classes.nested} activeClassName={classes.activeLink}>
-              <ListItemText primary="Cuti Tahunan" />
-            </ListItem>
-          </List>
-          <List component="div" disablePadding>
-            <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_besar" className={classes.nested} activeClassName={classes.activeLink}>
-              <ListItemText primary="Cuti Besar" />
-            </ListItem>
-          </List>
-          <List component="div" disablePadding>
-            <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_sakit" className={classes.nested} activeClassName={classes.activeLink}>
-              <ListItemText primary="Cuti Sakit" />
-            </ListItem>
-          </List>
-          <List component="div" disablePadding>
-            <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_bersalin" className={classes.nested} activeClassName={classes.activeLink}>
-              <ListItemText primary="Cuti Bersalin" />
-            </ListItem>
-          </List>
-          <List component="div" disablePadding>
-            <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_alasan_penting" className={classes.nested} activeClassName={classes.activeLink}>
-              <ListItemText primary="Cuti Alasan Penting" />
-            </ListItem>
-          </List>
-          <List component="div" disablePadding>
-            <ListItem button onClick={onClick} component={NavLink} to="/data_cltn" className={classes.nested} activeClassName={classes.activeLink}>
-              <ListItemText primary="CLTN" />
-            </ListItem>
-          </List>
-        </Collapse>
-
+        {
+          role === "admin" ? (
+            <Fragment>
+              <ListItem button onClick={onClick} component={NavLink} to="/data_pns" activeClassName={classes.activeLink} >
+                <ListItemIcon><AssignmentIndIcon /></ListItemIcon>
+                <ListItemText primary="Data PNS" />
+              </ListItem>
+              <ListItem button onClick={onClick} component={NavLink} to="/data_cuti" activeClassName={classes.activeLink} >
+                <ListItemIcon><AssignmentIcon /></ListItemIcon>
+                <ListItemText primary="Data Cuti" />
+              </ListItem>
+            </Fragment>
+          ) : (
+              <Fragment>
+                <ListItem button onClick={this.handleOpen}>
+                  <ListItemIcon><HistoryIcon /></ListItemIcon>
+                  <ListItemText primary="Riwayat Cuti" />
+                  {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                </ListItem>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItem button onClick={onClick} component={NavLink} to="/riwayat_cuti_tahunan" className={classes.nested} activeClassName={classes.activeLink}>
+                      <ListItemText primary="Cuti Tahunan" />
+                    </ListItem>
+                  </List>
+                  <List component="div" disablePadding>
+                    <ListItem button onClick={onClick} component={NavLink} to="/riwayat_cuti_besar" className={classes.nested} activeClassName={classes.activeLink}>
+                      <ListItemText primary="Cuti Besar" />
+                    </ListItem>
+                  </List>
+                  <List component="div" disablePadding>
+                    <ListItem button onClick={onClick} component={NavLink} to="/riwayat_cuti_sakit" className={classes.nested} activeClassName={classes.activeLink}>
+                      <ListItemText primary="Cuti Sakit" />
+                    </ListItem>
+                  </List>
+                  <List component="div" disablePadding>
+                    <ListItem button onClick={onClick} component={NavLink} to="/riwayat_cuti_bersalin" className={classes.nested} activeClassName={classes.activeLink}>
+                      <ListItemText primary="Cuti Bersalin" />
+                    </ListItem>
+                  </List>
+                  <List component="div" disablePadding>
+                    <ListItem button onClick={onClick} component={NavLink} to="/riwayat_cuti_alasan_penting" className={classes.nested} activeClassName={classes.activeLink}>
+                      <ListItemText primary="Cuti Alasan Penting" />
+                    </ListItem>
+                  </List>
+                  <List component="div" disablePadding>
+                    <ListItem button onClick={onClick} component={NavLink} to="/riwayat_cltn" className={classes.nested} activeClassName={classes.activeLink}>
+                      <ListItemText primary="CLTN" />
+                    </ListItem>
+                  </List>
+                </Collapse>
+              </Fragment>
+            )
+        }
         <ListItem button onClick={onClick} component={NavLink} to="/pengaturan" activeClassName={classes.activeLink} >
           <ListItemIcon><SettingsIcon /></ListItemIcon>
           <ListItemText primary="Pengaturan" />

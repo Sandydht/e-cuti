@@ -49,7 +49,7 @@ class Profile extends Component {
       .onAuthStateChanged((user) => {
         if (user) {
           const uid = user.uid;
-          this.unsubscribe = this.ref
+          this.ref
             .where("uid", "==", uid)
             .onSnapshot(this.getDataProfile);
         }

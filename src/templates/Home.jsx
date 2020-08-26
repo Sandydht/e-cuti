@@ -15,9 +15,6 @@ import { connect } from "react-redux";
 // React router dom
 import { NavLink } from "react-router-dom";
 
-// Molecules
-import TambahDataPNS from "../molecules/TambahDataPNS";
-import TabelDataPNS from "../molecules/TabelDataPNS";
 
 // Styles
 const styles = (theme) => ({
@@ -31,14 +28,7 @@ class Home extends Component {
     const { classes, role } = this.props;
     return (
       role === "admin" ? (
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={12}>
-            <TambahDataPNS />
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <TabelDataPNS />
-          </Grid>
-        </Grid>
+        <div>Admin Home</div>
       ) : (
           <Card>
             <CardHeader title="Layanan Pengajuan Cuti" />

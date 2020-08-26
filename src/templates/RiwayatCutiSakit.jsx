@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-// Molecules
-import TabelDataRiwayatCutiPNS from "../molecules/TabelDataRiwayatCutiPNS";
-
 // Material UI
 import Button from "@material-ui/core/Button";
 import PageviewIcon from '@material-ui/icons/Pageview';
@@ -10,14 +7,15 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 // React router dom
 import { NavLink } from "react-router-dom";
 
-class RiwayatCuti extends Component {
-  render() {
-    const { ...rest } = this.props;
+// Molecules
+import TabelDataRiwayatCuti from "../molecules/TabelDataRiwayatCuti";
 
+class RiwayatCutiSakit extends Component {
+  render() {
     return (
-      <TabelDataRiwayatCutiPNS
-        {...rest}
-        jenisCuti="Cuti Tahunan"
+      <TabelDataRiwayatCuti
+        title="Riwayat Cuti Sakit"
+        jenisCuti="Cuti Sakit"
         columns={[
           {
             name: "tglPengajuan",
@@ -72,6 +70,8 @@ class RiwayatCuti extends Component {
                     color="primary"
                     variant="contained"
                     size="small"
+                    component={NavLink}
+                    to={`/data_cuti_sakit/${dataIndex}`}
                   >Detail</Button>
                 );
               }
@@ -79,7 +79,9 @@ class RiwayatCuti extends Component {
           }
         ]}
       />
+
     );
   }
 }
-export default RiwayatCuti; 
+
+export default RiwayatCutiSakit; 

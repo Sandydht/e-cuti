@@ -57,9 +57,7 @@ class DetailPNS extends Component {
   };
 
   UNSAFE_componentWillMount() {
-    this.pns
-      .get()
-      .then(this.getDataPNS);
+    this.pns.get().then(this.getDataPNS);
   }
 
   render() {
@@ -175,7 +173,7 @@ class DetailPNS extends Component {
                               variant="contained"
                               fullWidth
                               component={NavLink}
-                              to={`/beranda/${match.params.id}/edit`}
+                              to={`/data_pns/${match.params.id}/edit_data_pns`}
                             >
                               Edit
                             </Button>

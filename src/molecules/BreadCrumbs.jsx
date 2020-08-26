@@ -29,18 +29,19 @@ class BreadCrumbs extends Component {
                 const last = index === pathnames.length - 1;
                 const to = `/${pathnames.slice(0, index + 1).join('/')}`;
                 const id1 = `/${pathnames.slice(1, 2).join('/')}`;
-                const id2 = `/${pathnames.slice(2, 3).join('/')}`;
 
                 const breadcrumbNameMap = {
                   '/beranda': 'Beranda',
                   '/pengaturan': "Pengaturan",
                   '/profil': "Profil",
-                  '/data_cuti_tahunan': role === "admin" ? "Data Cuti Tahunan" : "Riwayat Cuti Tahunan",
-                  '/data_cuti_besar': role === "admin" ? "Data Cuti Besar" : "Riwayat Cuti Besar",
-                  '/data_cuti_sakit': role === "admin" ? "Data Cuti Sakit" : "Riwayat Cuti Sakit",
-                  '/data_cuti_bersalin': role === "admin" ? "Data Cuti Bersalin" : "Riwayat Cuti Bersalin",
-                  '/data_cuti_alasan_penting': role === "admin" ? "Data Cuti Alasan Penting" : "Riwayat Cuti Alasan Penting",
-                  '/data_cltn': role === "admin" ? "Data Cuti Luar Tanggungan Negara" : "Riwayat Cuti Luar Tanggungan Negara",
+                  '/data_pns': role === "admin" ? "Data PNS" : "404",
+                  '/data_cuti': role === "admin" ? "Data Cuti" : "404",
+                  '/riwayat_cuti_tahunan': role === "admin" ? "404" : "Riwayat Cuti Tahunan",
+                  '/riwayat_cuti_besar': role === "admin" ? "404" : "Riwayat Cuti Besar",
+                  '/riwayat_cuti_sakit': role === "admin" ? "404" : "Riwayat Cuti Sakit",
+                  '/riwayat_cuti_bersalin': role === "admin" ? "404" : "Riwayat Cuti Bersalin",
+                  '/riwayat_cuti_alasan_penting': role === "admin" ? "404" : "Riwayat Cuti Alasan Penting",
+                  '/riwayat_cltn': role === "admin" ? "404" : "Riwayat Cuti Luar Tanggungan Negara",
                   '/pengajuan_cuti_tahunan': role === "admin" ? "404" : "Pengajuan Cuti Tahunan",
                   '/pengajuan_cuti_besar': role === "admin" ? "404" : "Pengajuan Cuti Besar",
                   '/pengajuan_cuti_sakit': role === "admin" ? "404" : "Pengajuan Cuti Sakit",
@@ -49,15 +50,8 @@ class BreadCrumbs extends Component {
                   '/pengajuan_cltn': role === "admin" ? "404" : "Pengajuan Cuti Luar Tanggungan Negara",
                 };
 
-                breadcrumbNameMap[`/beranda${id1}`] = role === "admin" ? "Detail PNS" : "404";
-                breadcrumbNameMap[`/beranda${id1}/edit`] = role === "admin" ? "Edit Data PNS" : "404";
-                breadcrumbNameMap[`/data_cuti_tahunan${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
-                breadcrumbNameMap[`/data_cuti_besar${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
-                breadcrumbNameMap[`/data_cuti_sakit${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
-                breadcrumbNameMap[`/data_cuti_bersalin${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
-                breadcrumbNameMap[`/data_cuti_alasan_penting${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
-                breadcrumbNameMap[`/data_cltn${id1}`] = role === "admin" ? "Riwayat Cuti" : "Detail Cuti";
-                breadcrumbNameMap[`/data_cuti_tahunan${id1}${id2}`] = role === "admin" ? "Detail Cuti" : "404";
+                breadcrumbNameMap[`/data_pns${id1}`] = role === "admin" ? "Detail PNS" : "404";
+                breadcrumbNameMap[`/data_pns${id1}/edit_data_pns`] = role === "admin" ? "Edit Data PNS" : "404";
 
                 return last ? (
                   <Typography color="textPrimary" key={to}>

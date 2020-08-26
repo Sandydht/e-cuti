@@ -4,83 +4,54 @@ import React, { Component } from 'react';
 import Button from "@material-ui/core/Button";
 import PageviewIcon from '@material-ui/icons/Pageview';
 
-// Atoms
-import DataTable from "../atoms/DataTable";
-
 // React router dom
 import { NavLink } from "react-router-dom";
 
-// Firebase
-import firebase from "../api/Firebase";
+// Molecules
+import TabelDataRiwayatCuti from "../molecules/TabelDataRiwayatCuti";
 
-class TabelDataPNS extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      data: []
-    };
-
-    this.ref = firebase.firestore().collection("pns");
-    this.unsubscribe = null;
-  }
-
-  getDataPNS = (querySnapshot) => {
-    let data = [];
-    querySnapshot.forEach(doc => data.push(doc.data()));
-    this.setState({
-      isLoading: false,
-      data
-    });
-  };
-
-  UNSAFE_componentWillMount() {
-    this.ref.get().then(this.getDataPNS);
-  }
-
+class RiwayatCutiAlasanPenting extends Component {
   render() {
-    const { isLoading, data } = this.state;
     return (
-      <DataTable
-        title="Data PNS"
-        isLoading={isLoading}
-        data={data}
+      <TabelDataRiwayatCuti
+        title="Riwayat Cuti Alasan Penting"
+        jenisCuti="Cuti Alasan Penting"
         columns={[
           {
-            name: "nip",
-            label: "NIP",
+            name: "tglPengajuan",
+            label: "Tanggal Pengajuan",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "nik",
-            label: "NIK",
+            name: "tglMulai",
+            label: "Tanggal Mulai",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "nama",
-            label: "Nama",
+            name: "tglSelesai",
+            label: "s/d Tanggal",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "golongan",
-            label: "Golongan",
+            name: "lamaCuti",
+            label: "Lama Cuti",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "unitKerja",
-            label: "Unit Kerja",
+            name: "status",
+            label: "Status Persetujuan",
             options: {
               filter: true,
               sort: false,
@@ -100,15 +71,16 @@ class TabelDataPNS extends Component {
                     variant="contained"
                     size="small"
                     component={NavLink}
-                    to={`/data_pns/${dataIndex}`}
+                    to={`/data_cuti_bersalin/${dataIndex}`}
                   >Detail</Button>
                 );
               }
             }
-          },
+          }
         ]}
       />
     );
   }
 }
-export default TabelDataPNS; 
+
+export default RiwayatCutiAlasanPenting; 

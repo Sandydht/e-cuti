@@ -238,7 +238,7 @@ class FormEditDataPNS extends Component {
                     .then(() => {
                       setSubmitting(false);
                       enqueueSnackbar("Data berhasil diperbarui", { variant: "success" });
-                      history.push(`/beranda/${match.params.id}`);
+                      history.push(`/data_pns/${match.params.id}`);
                     })
                     .catch(() => {
                       setSubmitting(false);
@@ -373,7 +373,7 @@ class FormEditDataPNS extends Component {
                               color="primary"
                               variant="outlined"
                               component={NavLink}
-                              to={`/beranda/${match.params.id}`}
+                              to={`/data_pns/${match.params.id}`}
                             >Batal</Button>
                           </Grid>
                           <Grid item>

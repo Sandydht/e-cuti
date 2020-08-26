@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-class DataCLTN extends Component {
+class DataCuti extends Component {
   render() {
     return (
       <div>
-        Cuti Luar Tanggungan Negara
+        DataCuti
       </div>
     );
   }
 }
-export default DataCLTN; 
+export default DataCuti;  
