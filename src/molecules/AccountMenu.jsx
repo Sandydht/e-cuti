@@ -110,7 +110,6 @@ class AccountMenu extends Component {
       <Fragment>
         <Tooltip title="Profil">
           <IconButton
-            size="small"
             onClick={this.handleOpenMenu}
             color="inherit"
           >

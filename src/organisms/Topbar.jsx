@@ -6,6 +6,8 @@ import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
+import Badge from "@material-ui/core/Badge";
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 // Atoms
 import Logo from "../atoms/Logo";
@@ -47,6 +49,14 @@ class Topbar extends Component {
             <MenuIcon />
           </IconButton>
           <Logo />
+
+          <IconButton
+            color="inherit"
+          >
+            <Badge badgeContent={1} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
 
           <AccountMenu {...rest} />
         </Toolbar>

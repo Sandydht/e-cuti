@@ -40,6 +40,7 @@ class HapusDataPNS extends Component {
 
   handleDeleteData = () => {
     const { id, history, enqueueSnackbar } = this.props;
+
     this.setState({
       isLoading: true
     });
@@ -56,7 +57,7 @@ class HapusDataPNS extends Component {
               isLoading: false
             });
             enqueueSnackbar("Data berhasil dihapus", { variant: "success" });
-            history.replace("/beranda");
+            history.replace("/data_pns");
           });
       })
       .catch(() => {
