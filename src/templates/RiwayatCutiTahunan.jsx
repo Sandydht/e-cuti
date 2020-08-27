@@ -71,7 +71,7 @@ class RiwayatCutiTahunan extends Component {
                     variant="contained"
                     size="small"
                     component={NavLink}
-                    to={`/data_cuti_tahunan/${dataIndex}`}
+                    to={`/riwayat_cuti_tahunan/${dataIndex}`}
                   >Detail</Button>
                 );
               }

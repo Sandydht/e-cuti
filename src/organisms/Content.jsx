@@ -58,6 +58,7 @@ const PengajuanCutiBersalin = lazy(() => import("../templates/PengajuanCutiBersa
 const PengajuanCutiAlasanPenting = lazy(() => import("../templates/PengajuanCutiAlasanPenting"));
 const PengajuanCLTN = lazy(() => import("../templates/PengajuanCLTN"));
 const DataCuti = lazy(() => import("../templates/DataCuti"));
+const DetailCuti = lazy(() => import("../templates/DetailCuti"));
 
 class Content extends Component {
   render() {
@@ -177,6 +178,15 @@ class Content extends Component {
                           <div>Halaman tidak ditemukan...</div>
                         )}
                   />
+                  <Route
+                    path="/pengajuan_cuti_tahunan"
+                    render={(routeProps) =>
+                      role === "user" ? (
+                        <PengajuanCutiTahunan {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
                   {/* End halaman pengajuan cuti */}
 
                   {/* Halaman riwayat cuti */}
@@ -222,6 +232,15 @@ class Content extends Component {
                     render={(routeProps) =>
                       role === "user" ? (
                         <RiwayatCutiBesar {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/riwayat_cuti_tahunan/:id"
+                    render={(routeProps) =>
+                      role === "user" ? (
+                        <DetailCuti {...routeProps} />
                       ) : (
                           <div>Halaman tidak ditemukan...</div>
                         )}
