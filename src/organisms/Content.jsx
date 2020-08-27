@@ -39,6 +39,12 @@ const styles = (theme) => ({
 
 // Templates 
 const DataPNS = lazy(() => import("../templates/DataPNS"));
+const DataCutiTahunan = lazy(() => import("../templates/DataCutiTahunan"));
+const DataCutiBesar = lazy(() => import("../templates/DataCutiBesar"));
+const DataCutiSakit = lazy(() => import("../templates/DataCutiSakit"));
+const DataCutiAlasanPenting = lazy(() => import("../templates/DataCutiAlasanPenting"));
+const DataCutiBersalin = lazy(() => import("../templates/DataCutiBersalin"));
+const DataCLTN = lazy(() => import("../templates/DataCLTN"));
 const TambahDataPNS = lazy(() => import("../templates/TambahDataPNS"));
 const DetailPNS = lazy(() => import("../templates/DetailPNS"));
 const EditDataPNS = lazy(() => import("../templates/EditDataPNS"));
@@ -57,7 +63,6 @@ const PengajuanCutiSakit = lazy(() => import("../templates/PengajuanCutiSakit"))
 const PengajuanCutiBersalin = lazy(() => import("../templates/PengajuanCutiBersalin"));
 const PengajuanCutiAlasanPenting = lazy(() => import("../templates/PengajuanCutiAlasanPenting"));
 const PengajuanCLTN = lazy(() => import("../templates/PengajuanCLTN"));
-const DataCuti = lazy(() => import("../templates/DataCuti"));
 const DetailCuti = lazy(() => import("../templates/DetailCuti"));
 
 class Content extends Component {
@@ -77,10 +82,55 @@ class Content extends Component {
                 <Switch>
                   {/* Admin only */}
                   <Route
-                    path="/data_cuti"
+                    path="/data_cltn"
                     render={(routeProps) =>
                       role === "admin" ? (
-                        <DataCuti {...routeProps} />
+                        <DataCLTN {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_alasan_penting"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <DataCutiAlasanPenting {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_bersalin"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <DataCutiBersalin {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_sakit"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <DataCutiSakit {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_besar"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <DataCutiBesar {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_tahunan"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <DataCutiTahunan {...routeProps} />
                       ) : (
                           <div>Halaman tidak ditemukan...</div>
                         )}

@@ -36,22 +36,28 @@ class BreadCrumbs extends Component {
                   '/profil': "Profil",
                   '/tambah_data_pns': role === "admin" ? "Tambah Data PNS" : "404",
                   '/data_pns': role === "admin" ? "Data PNS" : "404",
-                  '/data_cuti': role === "admin" ? "Data Cuti" : "404",
+                  '/data_cuti_tahunan': role === "admin" ? "Cuti Tahunan" : "404",
+                  '/data_cuti_besar': role === "admin" ? "Cuti Besar" : "404",
+                  '/data_cuti_sakit': role === "admin" ? "Cuti Sakit" : "404",
+                  '/data_cuti_bersalin': role === "admin" ? "Cuti Bersalin" : "404",
+                  '/data_cltn': role === "admin" ? "CLTN" : "404",
+                  '/data_cuti_alasan_penting': role === "admin" ? "Cuti Alasan Penting" : "404",
                   '/riwayat_cuti_tahunan': role === "admin" ? "404" : "Riwayat Cuti Tahunan",
                   '/riwayat_cuti_besar': role === "admin" ? "404" : "Riwayat Cuti Besar",
                   '/riwayat_cuti_sakit': role === "admin" ? "404" : "Riwayat Cuti Sakit",
                   '/riwayat_cuti_bersalin': role === "admin" ? "404" : "Riwayat Cuti Bersalin",
                   '/riwayat_cuti_alasan_penting': role === "admin" ? "404" : "Riwayat Cuti Alasan Penting",
-                  '/riwayat_cltn': role === "admin" ? "404" : "Riwayat Cuti Luar Tanggungan Negara",
+                  '/riwayat_cltn': role === "admin" ? "404" : "Riwayat CLTN",
                   '/pengajuan_cuti_tahunan': role === "admin" ? "404" : "Pengajuan Cuti Tahunan",
                   '/pengajuan_cuti_besar': role === "admin" ? "404" : "Pengajuan Cuti Besar",
                   '/pengajuan_cuti_sakit': role === "admin" ? "404" : "Pengajuan Cuti Sakit",
                   '/pengajuan_cuti_bersalin': role === "admin" ? "404" : "Pengajuan Cuti Bersalin",
                   '/pengajuan_cuti_alasan_penting': role === "admin" ? "404" : "Pengajuan Cuti Alasan Penting",
-                  '/pengajuan_cltn': role === "admin" ? "404" : "Pengajuan Cuti Luar Tanggungan Negara",
+                  '/pengajuan_cltn': role === "admin" ? "404" : "Pengajuan CLTN",
                 };
 
                 breadcrumbNameMap[`/data_pns${id1}`] = role === "admin" ? "Detail PNS" : "404";
+                breadcrumbNameMap[`/data_cuti${id1}`] = role === "admin" ? "Riwayat Cuti PNS" : "404";
                 breadcrumbNameMap[`/data_pns${id1}/edit_data_pns`] = role === "admin" ? "Edit Data PNS" : "404";
                 breadcrumbNameMap[`/riwayat_cuti_tahunan${id1}`] = role === "admin" ? "404" : "Detail Cuti";
 

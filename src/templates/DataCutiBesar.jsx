@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-class DataCuti extends Component {
+class DataCutiBesar extends Component {
   render() {
     return (
       <div>
-        DataCuti
+        DataCutiBesar
       </div>
     );
   }
 }
-export default DataCuti; 
+export default DataCutiBesar; 

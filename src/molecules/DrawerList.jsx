@@ -37,19 +37,26 @@ class DrawerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      openRiwayatCuti: false,
+      openDataCuti: false
     };
   }
 
-  handleOpen = () => {
+  handleOpenRiwayatCuti = () => {
     this.setState((state) => ({
-      open: !state.open
+      openRiwayatCuti: !state.openRiwayatCuti
+    }));
+  };
+
+  handleOpenDataCuti = () => {
+    this.setState((state) => ({
+      openDataCuti: !state.openDataCuti
     }));
   };
 
   render() {
     const { onClick, role, classes } = this.props;
-    const { open } = this.state;
+    const { openRiwayatCuti, openDataCuti } = this.state;
 
     return (
       <List
@@ -68,19 +75,52 @@ class DrawerList extends Component {
                 <ListItemIcon><AssignmentIndIcon /></ListItemIcon>
                 <ListItemText primary="Data PNS" />
               </ListItem>
-              <ListItem button onClick={onClick} component={NavLink} to="/data_cuti" activeClassName={classes.activeLink} >
+              <ListItem button onClick={this.handleOpenDataCuti}  >
                 <ListItemIcon><AssignmentIcon /></ListItemIcon>
                 <ListItemText primary="Data Cuti" />
+                {openDataCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </ListItem>
+              <Collapse in={openDataCuti} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_tahunan" className={classes.nested} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Tahunan" />
+                  </ListItem>
+                </List>
+                <List component="div" disablePadding>
+                  <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_besar" className={classes.nested} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Besar" />
+                  </ListItem>
+                </List>
+                <List component="div" disablePadding>
+                  <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_sakit" className={classes.nested} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Sakit" />
+                  </ListItem>
+                </List>
+                <List component="div" disablePadding>
+                  <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_bersalin" className={classes.nested} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Bersalin" />
+                  </ListItem>
+                </List>
+                <List component="div" disablePadding>
+                  <ListItem button onClick={onClick} component={NavLink} to="/data_cuti_alasan_penting" className={classes.nested} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Alasan Penting" />
+                  </ListItem>
+                </List>
+                <List component="div" disablePadding>
+                  <ListItem button onClick={onClick} component={NavLink} to="/data_cltn" className={classes.nested} activeClassName={classes.activeLink}>
+                    <ListItemText primary="CLTN" />
+                  </ListItem>
+                </List>
+              </Collapse>
             </Fragment>
           ) : (
               <Fragment>
-                <ListItem button onClick={this.handleOpen}>
+                <ListItem button onClick={this.handleOpenRiwayatCuti}>
                   <ListItemIcon><HistoryIcon /></ListItemIcon>
                   <ListItemText primary="Riwayat Cuti" />
-                  {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  {openRiwayatCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </ListItem>
-                <Collapse in={open} timeout="auto" unmountOnExit>
+                <Collapse in={openRiwayatCuti} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                     <ListItem button onClick={onClick} component={NavLink} to="/riwayat_cuti_tahunan" className={classes.nested} activeClassName={classes.activeLink}>
                       <ListItemText primary="Cuti Tahunan" />
