@@ -51,7 +51,7 @@ class HapusDataPNS extends Component {
       .then((doc) => {
         if (doc.exists) {
           const fotoUrl = doc.data().fotoUrl;
-          if (doc.data().fotoUrl) {
+          if (fotoUrl) {
             this.ref
               .doc(id)
               .delete()
