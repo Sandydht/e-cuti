@@ -14,7 +14,7 @@ class DataCLTN extends Component {
   render() {
     return (
       <TabelDataPNS
-        title="CLTN PNS"
+        title="Riwayat CLTN PNS"
         columns={[
           {
             name: "nip",

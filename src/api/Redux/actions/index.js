@@ -1,16 +1,6 @@
 import firebase from "../../Firebase";
 import { sessionService } from "redux-react-session";
 
-// Offline data
-firebase.firestore().enablePersistence()
-  .catch((err) => {
-    if (err.code === 'failed-precondition') {
-      console.log('failed-precondition');
-    } else if (err.code === 'unimplemented') {
-      console.log('unimplemented');
-    }
-  });
-
 // Reference 
 const auth = firebase.auth();
 const pns = firebase.firestore().collection("pns");
