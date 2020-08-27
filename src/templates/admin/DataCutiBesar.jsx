@@ -8,58 +8,57 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 import { NavLink } from "react-router-dom";
 
 // Molecules
-import TabelDataRiwayatCuti from "../molecules/TabelDataRiwayatCuti";
+import TabelDataPNS from "../../molecules/TabelDataPNS";
 
-class RiwayatCutiBesar extends Component {
+class DataCutiBesar extends Component {
   render() {
     return (
-      <TabelDataRiwayatCuti
-        title="Riwayat Cuti Besar"
-        jenisCuti="Cuti Besar"
+      <TabelDataPNS
+        title="Cuti Besar PNS"
         columns={[
           {
-            name: "tglPengajuan",
-            label: "Tanggal Pengajuan",
+            name: "nip",
+            label: "NIP",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "tglMulai",
-            label: "Tanggal Mulai",
+            name: "nik",
+            label: "NIK",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "tglSelesai",
-            label: "s/d Tanggal",
+            name: "nama",
+            label: "Nama",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "lamaCuti",
-            label: "Lama Cuti",
+            name: "golongan",
+            label: "Golongan",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "status",
-            label: "Status Persetujuan",
+            name: "unitKerja",
+            label: "Unit Kerja",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "detail",
-            label: "Detail",
+            name: "riwayatCuti",
+            label: "Riwayat Cuti",
             options: {
               filter: true,
               sort: false,
@@ -72,15 +71,15 @@ class RiwayatCutiBesar extends Component {
                     size="small"
                     component={NavLink}
                     to={`/data_cuti_besar/${dataIndex}`}
-                  >Detail</Button>
+                  >Riwayat</Button>
                 );
               }
             }
-          }
+          },
         ]}
       />
     );
   }
 }
 
-export default RiwayatCutiBesar; 
+export default DataCutiBesar; 

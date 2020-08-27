@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // Atoms
-import FormPengajuanCuti from "../atoms/FormPengajuanCuti";
+import FormPengajuanCuti from "../../atoms/FormPengajuanCuti";
 
 class PengajuanCutiTahunan extends Component {
   render() {

@@ -31,11 +31,11 @@ class TabelDataPNS extends Component {
   }
 
   render() {
-    const { columns } = this.props;
+    const { columns, title } = this.props;
     const { isLoading, data } = this.state;
     return (
       <DataTable
-        title="Data PNS"
+        title={title}
         isLoading={isLoading}
         data={data}
         columns={columns}

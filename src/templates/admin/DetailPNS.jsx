@@ -18,10 +18,10 @@ import TextField from "@material-ui/core/TextField";
 import { NavLink } from "react-router-dom";
 
 // Atoms 
-import HapusDataPNS from "../atoms/HapusDataPNS";
+import HapusDataPNS from "../../atoms/HapusDataPNS";
 
 // Firebase
-import firebase from "../api/Firebase";
+import firebase from "../../api/Firebase";
 
 // Styles
 const styles = (theme) => ({

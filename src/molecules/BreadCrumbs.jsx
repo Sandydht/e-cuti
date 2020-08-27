@@ -57,7 +57,12 @@ class BreadCrumbs extends Component {
                 };
 
                 breadcrumbNameMap[`/data_pns${id1}`] = role === "admin" ? "Detail PNS" : "404";
-                breadcrumbNameMap[`/data_cuti${id1}`] = role === "admin" ? "Riwayat Cuti PNS" : "404";
+                breadcrumbNameMap[`/data_cuti_tahunan${id1}`] = role === "admin" ? "Riwayat Cuti Tahunan" : "404";
+                breadcrumbNameMap[`/data_cuti_besar${id1}`] = role === "admin" ? "Riwayat Cuti Besar" : "404";
+                breadcrumbNameMap[`/data_cuti_sakit${id1}`] = role === "admin" ? "Riwayat Cuti Sakit" : "404";
+                breadcrumbNameMap[`/data_cuti_bersalin${id1}`] = role === "admin" ? "Riwayat Cuti Bersalin" : "404";
+                breadcrumbNameMap[`/data_cuti_alasan_penting${id1}`] = role === "admin" ? "Riwayat Cuti Alasan Penting" : "404";
+                breadcrumbNameMap[`/data_cltn${id1}`] = role === "admin" ? "Riwayat CLTN" : "404";
                 breadcrumbNameMap[`/data_pns${id1}/edit_data_pns`] = role === "admin" ? "Edit Data PNS" : "404";
                 breadcrumbNameMap[`/riwayat_cuti_tahunan${id1}`] = role === "admin" ? "404" : "Detail Cuti";
 

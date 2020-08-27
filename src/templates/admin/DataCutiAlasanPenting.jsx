@@ -8,58 +8,57 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 import { NavLink } from "react-router-dom";
 
 // Molecules
-import TabelDataRiwayatCuti from "../molecules/TabelDataRiwayatCuti";
+import TabelDataPNS from "../../molecules/TabelDataPNS";
 
-class RiwayatCutiTahunan extends Component {
+class DataCutiAlasanPenting extends Component {
   render() {
     return (
-      <TabelDataRiwayatCuti
-        title="Riwayat Cuti Tahunan"
-        jenisCuti="Cuti Tahunan"
+      <TabelDataPNS
+        title="Cuti Alasan Penting PNS"
         columns={[
           {
-            name: "tglPengajuan",
-            label: "Tanggal Pengajuan",
+            name: "nip",
+            label: "NIP",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "tglMulai",
-            label: "Tanggal Mulai",
+            name: "nik",
+            label: "NIK",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "tglSelesai",
-            label: "s/d Tanggal",
+            name: "nama",
+            label: "Nama",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "lamaCuti",
-            label: "Lama Cuti",
+            name: "golongan",
+            label: "Golongan",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "status",
-            label: "Status Persetujuan",
+            name: "unitKerja",
+            label: "Unit Kerja",
             options: {
               filter: true,
               sort: false,
             }
           },
           {
-            name: "detail",
-            label: "Detail",
+            name: "riwayatCuti",
+            label: "Riwayat Cuti",
             options: {
               filter: true,
               sort: false,
@@ -71,16 +70,16 @@ class RiwayatCutiTahunan extends Component {
                     variant="contained"
                     size="small"
                     component={NavLink}
-                    to={`/riwayat_cuti_tahunan/${dataIndex}`}
-                  >Detail</Button>
+                    to={`/data_cuti_alasan_penting/${dataIndex}`}
+                  >Riwayat</Button>
                 );
               }
             }
-          }
+          },
         ]}
       />
     );
   }
 }
 
-export default RiwayatCutiTahunan; 
+export default DataCutiAlasanPenting; 

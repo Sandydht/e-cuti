@@ -8,14 +8,14 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 import { NavLink } from "react-router-dom";
 
 // Molecules
-import TabelDataRiwayatCuti from "../molecules/TabelDataRiwayatCuti";
+import TabelDataRiwayatCuti from "../../molecules/TabelDataRiwayatCuti";
 
-class RiwayatCutiAlasanPenting extends Component {
+class RiwayatCutiSakit extends Component {
   render() {
     return (
       <TabelDataRiwayatCuti
-        title="Riwayat Cuti Alasan Penting"
-        jenisCuti="Cuti Alasan Penting"
+        title="Riwayat Cuti Sakit"
+        jenisCuti="Cuti Sakit"
         columns={[
           {
             name: "tglPengajuan",
@@ -71,7 +71,7 @@ class RiwayatCutiAlasanPenting extends Component {
                     variant="contained"
                     size="small"
                     component={NavLink}
-                    to={`/data_cuti_bersalin/${dataIndex}`}
+                    to={`/data_cuti_sakit/${dataIndex}`}
                   >Detail</Button>
                 );
               }
@@ -79,8 +79,9 @@ class RiwayatCutiAlasanPenting extends Component {
           }
         ]}
       />
+
     );
   }
 }
 
-export default RiwayatCutiAlasanPenting; 
+export default RiwayatCutiSakit; 

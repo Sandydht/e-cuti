@@ -8,7 +8,7 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 import { NavLink } from "react-router-dom";
 
 // Molecules
-import TabelDataRiwayatCuti from "../molecules/TabelDataRiwayatCuti";
+import TabelDataRiwayatCuti from "../../molecules/TabelDataRiwayatCuti";
 
 class RiwayatCutiBersalin extends Component {
   render() {

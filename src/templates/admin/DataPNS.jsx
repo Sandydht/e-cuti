@@ -10,7 +10,7 @@ import PageviewIcon from '@material-ui/icons/Pageview';
 import { NavLink } from "react-router-dom";
 
 // Molecules
-import TabelDataPNS from "../molecules/TabelDataPNS";
+import TabelDataPNS from "../../molecules/TabelDataPNS";
 
 class DataPNS extends Component {
   render() {
@@ -21,6 +21,7 @@ class DataPNS extends Component {
         </Grid>
         <Grid item xs={12} md={12}>
           <TabelDataPNS
+            title="Data PNS"
             columns={[
               {
                 name: "nip",

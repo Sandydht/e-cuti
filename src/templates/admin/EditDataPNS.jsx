@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 // Atoms
-import FormEditDataPNS from "../atoms/FormEditDataPNS";
+import FormEditDataPNS from "../../atoms/FormEditDataPNS";
 
 class EditDataPNS extends Component {
   render() {

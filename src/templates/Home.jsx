@@ -15,7 +15,6 @@ import { connect } from "react-redux";
 // React router dom
 import { NavLink } from "react-router-dom";
 
-
 // Styles
 const styles = (theme) => ({
   card: {

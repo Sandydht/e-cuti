@@ -37,33 +37,46 @@ const styles = (theme) => ({
   }
 });
 
-// Templates 
-const DataPNS = lazy(() => import("../templates/DataPNS"));
-const DataCutiTahunan = lazy(() => import("../templates/DataCutiTahunan"));
-const DataCutiBesar = lazy(() => import("../templates/DataCutiBesar"));
-const DataCutiSakit = lazy(() => import("../templates/DataCutiSakit"));
-const DataCutiAlasanPenting = lazy(() => import("../templates/DataCutiAlasanPenting"));
-const DataCutiBersalin = lazy(() => import("../templates/DataCutiBersalin"));
-const DataCLTN = lazy(() => import("../templates/DataCLTN"));
-const TambahDataPNS = lazy(() => import("../templates/TambahDataPNS"));
-const DetailPNS = lazy(() => import("../templates/DetailPNS"));
-const EditDataPNS = lazy(() => import("../templates/EditDataPNS"));
+// Global templates
 const Home = lazy(() => import("../templates/Home"));
 const Settings = lazy(() => import("../templates/Settings"));
 const Profile = lazy(() => import("../templates/Profile"));
-const RiwayatCutiTahunan = lazy(() => import("../templates/RiwayatCutiTahunan"));
-const RiwayatCutiBesar = lazy(() => import("../templates/RiwayatCutiBesar"));
-const RiwayatCutiSakit = lazy(() => import("../templates/RiwayatCutiSakit"));
-const RiwayatCutiBersalin = lazy(() => import("../templates/RiwayatCutiBersalin"));
-const RiwayatCutiAlasanPenting = lazy(() => import("../templates/RiwayatCutiAlasanPenting"));
-const RiwayatCLTN = lazy(() => import("../templates/RiwayatCLTN"));
-const PengajuanCutiTahunan = lazy(() => import("../templates/PengajuanCutiTahunan"));
-const PengajuanCutiBesar = lazy(() => import("../templates/PengajuanCutiBesar"));
-const PengajuanCutiSakit = lazy(() => import("../templates/PengajuanCutiSakit"));
-const PengajuanCutiBersalin = lazy(() => import("../templates/PengajuanCutiBersalin"));
-const PengajuanCutiAlasanPenting = lazy(() => import("../templates/PengajuanCutiAlasanPenting"));
-const PengajuanCLTN = lazy(() => import("../templates/PengajuanCLTN"));
-const DetailCuti = lazy(() => import("../templates/DetailCuti"));
+// End global templates
+
+
+// Admin templates
+const DataPNS = lazy(() => import("../templates/admin/DataPNS"));
+const DataCutiTahunan = lazy(() => import("../templates/admin/DataCutiTahunan"));
+const DataCutiBesar = lazy(() => import("../templates/admin/DataCutiBesar"));
+const DataCutiSakit = lazy(() => import("../templates/admin/DataCutiSakit"));
+const DataCutiAlasanPenting = lazy(() => import("../templates/admin/DataCutiAlasanPenting"));
+const DataCutiBersalin = lazy(() => import("../templates/admin/DataCutiBersalin"));
+const DataCLTN = lazy(() => import("../templates/admin/DataCLTN"));
+const RiwayatCutiTahunanPNS = lazy(() => import("../templates/admin/RiwayatCutiTahunanPNS"));
+const RiwayatCutiBesarPNS = lazy(() => import("../templates/admin/RiwayatCutiBesarPNS"));
+const RiwayatCutiSakitPNS = lazy(() => import("../templates/admin/RiwayatCutiSakitPNS"));
+const RiwayatCutiBersalinPNS = lazy(() => import("../templates/admin/RiwayatCutiBersalinPNS"));
+const RiwayatCutiAlasanPentingPNS = lazy(() => import("../templates/admin/RiwayatCutiAlasanPentingPNS"));
+const RiwayatCLTNPNS = lazy(() => import("../templates/admin/RiwayatCLTNPNS"));
+const TambahDataPNS = lazy(() => import("../templates/admin/TambahDataPNS"));
+const DetailPNS = lazy(() => import("../templates/admin/DetailPNS"));
+const EditDataPNS = lazy(() => import("../templates/admin/EditDataPNS"));
+// End admin templates
+
+// User templates
+const RiwayatCutiTahunan = lazy(() => import("../templates/user/RiwayatCutiTahunan"));
+const RiwayatCutiBesar = lazy(() => import("../templates/user/RiwayatCutiBesar"));
+const RiwayatCutiSakit = lazy(() => import("../templates/user/RiwayatCutiSakit"));
+const RiwayatCutiBersalin = lazy(() => import("../templates/user/RiwayatCutiBersalin"));
+const RiwayatCutiAlasanPenting = lazy(() => import("../templates/user/RiwayatCutiAlasanPenting"));
+const RiwayatCLTN = lazy(() => import("../templates/user/RiwayatCLTN"));
+const PengajuanCutiTahunan = lazy(() => import("../templates/user/PengajuanCutiTahunan"));
+const PengajuanCutiBesar = lazy(() => import("../templates/user/PengajuanCutiBesar"));
+const PengajuanCutiSakit = lazy(() => import("../templates/user/PengajuanCutiSakit"));
+const PengajuanCutiBersalin = lazy(() => import("../templates/user/PengajuanCutiBersalin"));
+const PengajuanCutiAlasanPenting = lazy(() => import("../templates/user/PengajuanCutiAlasanPenting"));
+const PengajuanCLTN = lazy(() => import("../templates/user/PengajuanCLTN"));
+// Ens user templates
 
 class Content extends Component {
   render() {
@@ -80,7 +93,61 @@ class Content extends Component {
               </Grid>
               <Grid item xs={12} md={12}>
                 <Switch>
-                  {/* Admin only */}
+                  {/* Admin */}
+                  <Route
+                    path="/data_cuti_tahunan/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCutiTahunanPNS {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_besar/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCutiBesarPNS {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_sakit/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCutiSakitPNS {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_bersalin/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCutiBersalinPNS {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cuti_alasan_penting/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCutiAlasanPentingPNS {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
+                  <Route
+                    path="/data_cltn/:id"
+                    render={(routeProps) =>
+                      role === "admin" ? (
+                        <RiwayatCLTNPNS {...routeProps} />
+                      ) : (
+                          <div>Halaman tidak ditemukan...</div>
+                        )}
+                  />
                   <Route
                     path="/data_cltn"
                     render={(routeProps) =>
@@ -171,9 +238,9 @@ class Content extends Component {
                           <div>Halaman tidak ditemukan...</div>
                         )}
                   />
-                  {/* End admin only */}
+                  {/* End admin */}
 
-                  {/* Halaman pengajuan cuti */}
+                  {/* User */}
                   <Route
                     path="/pengajuan_cltn"
                     render={(routeProps) =>
@@ -237,9 +304,6 @@ class Content extends Component {
                           <div>Halaman tidak ditemukan...</div>
                         )}
                   />
-                  {/* End halaman pengajuan cuti */}
-
-                  {/* Halaman riwayat cuti */}
 
                   <Route
                     path="/riwayat_cltn"
@@ -287,15 +351,6 @@ class Content extends Component {
                         )}
                   />
                   <Route
-                    path="/riwayat_cuti_tahunan/:id"
-                    render={(routeProps) =>
-                      role === "user" ? (
-                        <DetailCuti {...routeProps} />
-                      ) : (
-                          <div>Halaman tidak ditemukan...</div>
-                        )}
-                  />
-                  <Route
                     path="/riwayat_cuti_tahunan"
                     render={(routeProps) =>
                       role === "user" ? (
@@ -304,8 +359,9 @@ class Content extends Component {
                           <div>Halaman tidak ditemukan...</div>
                         )}
                   />
-                  {/* End halaman riwayat cuti */}
+                  {/* End user */}
 
+                  {/* Global */}
                   <Route
                     path="/profil"
                     component={Profile}
@@ -322,6 +378,7 @@ class Content extends Component {
                     from="/"
                     to="/beranda"
                   />
+                  {/* End global */}
                 </Switch>
               </Grid>
             </Grid>
