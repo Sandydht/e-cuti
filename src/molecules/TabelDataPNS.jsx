@@ -20,22 +20,20 @@ class TabelDataPNS extends Component {
       isLoading: true,
       data: []
     };
-
-    this.ref = firebase.firestore().collection("pns");
-    this.unsubscribe = null;
   }
 
-  getDataPNS = (querySnapshot) => {
-    let data = [];
-    querySnapshot.forEach(doc => data.push(doc.data()));
-    this.setState({
-      isLoading: false,
-      data
-    });
-  };
-
   UNSAFE_componentWillMount() {
-    this.ref.get().then(this.getDataPNS);
+    const ref = firebase.firestore().collection("pns");
+    ref
+      .get()
+      .then((querySnapshot) => {
+        let data = [];
+        querySnapshot.forEach(doc => data.push(doc.data()));
+        this.setState({
+          isLoading: false,
+          data
+        });
+      });
   }
 
   render() {
