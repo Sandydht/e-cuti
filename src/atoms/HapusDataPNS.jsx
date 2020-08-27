@@ -47,24 +47,49 @@ class HapusDataPNS extends Component {
 
     this.ref
       .doc(id)
-      .delete()
-      .then(() => {
-        this.storage
-          .child(id)
-          .delete()
-          .then(() => {
-            this.setState({
-              isLoading: false
-            });
-            enqueueSnackbar("Data berhasil dihapus", { variant: "success" });
-            history.replace("/data_pns");
-          });
-      })
-      .catch(() => {
-        this.setState({
-          buttonLoading: false
-        });
-        enqueueSnackbar("Data gagal dihapus", { variant: "error" });
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          const fotoUrl = doc.data().fotoUrl;
+          if (doc.data().fotoUrl) {
+            this.ref
+              .doc(id)
+              .delete()
+              .then(() => {
+                this.storage
+                  .child(id)
+                  .delete()
+                  .then(() => {
+                    this.setState({
+                      isLoading: false
+                    });
+                    enqueueSnackbar("Data berhasil dihapus", { variant: "success" });
+                    history.replace("/data_pns");
+                  });
+              })
+              .catch(() => {
+                this.setState({
+                  buttonLoading: false
+                });
+                enqueueSnackbar("Data gagal dihapus", { variant: "error" });
+              });
+
+          } else {
+            this.ref
+              .doc(id)
+              .delete()
+              .then(() => {
+                enqueueSnackbar("Data berhasil dihapus", { variant: "success" });
+                history.replace("/data_pns");
+              })
+              .catch(() => {
+                this.setState({
+                  buttonLoading: false
+                });
+                enqueueSnackbar("Data gagal dihapus", { variant: "error" });
+              });
+          }
+        }
       });
   };
 
