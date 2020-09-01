@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import "./App.css";
+
+// Material UI
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 // React router dom
 import {
@@ -16,24 +19,27 @@ import Dashboard from "./pages/Dashboard";
 class App extends Component {
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route
-            path="/register"
-            component={Signup}
-          />
+      <Fragment>
+        <CssBaseline />
+        <Router>
+          <Switch>
+            <Route
+              path="/register"
+              component={Signup}
+            />
 
-          <Route
-            path="/login"
-            component={Login}
-          />
+            <Route
+              path="/login"
+              component={Login}
+            />
 
-          <Route
-            path="/"
-            component={Dashboard}
-          />
-        </Switch>
-      </Router>
+            <Route
+              path="/"
+              component={Dashboard}
+            />
+          </Switch>
+        </Router>
+      </Fragment>
     );
   }
 }

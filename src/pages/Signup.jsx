@@ -8,7 +8,6 @@ import { Link as RouteLink } from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -23,13 +22,15 @@ import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
 
 // Icons
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 // Formik & Yup
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+
+// Components
+import Footer from "../components/Footer";
 
 // Validation schema
 const validationSchema = Yup.object().shape({
@@ -75,7 +76,6 @@ class Signup extends Component {
 
     return (
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar} src={logo} alt="logo-prov-jateng" />
 
@@ -166,10 +166,7 @@ class Signup extends Component {
           </Grid>
         </div>
         <Box mt={8} mb={8}>
-          <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © E-Cuti '}
-            {new Date().getFullYear()}
-          </Typography>
+          <Footer />
         </Box>
       </Container>
     );
