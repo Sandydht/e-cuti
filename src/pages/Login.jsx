@@ -119,7 +119,7 @@ class Login extends Component {
                           onMouseDown={this.handleMouseDownPassword}
                           edge="end"
                         >
-                          {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                          {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                         </IconButton>
                       </InputAdornment>
                     }
