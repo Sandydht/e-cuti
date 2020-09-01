@@ -140,7 +140,7 @@ class Dashboard extends Component {
             </Tooltip>
           </Toolbar>
         </AppBar>
-        <nav className={classes.drawer} aria-label="mailbox folders">
+        <aside className={classes.drawer} aria-label="mailbox folders">
           {/* Mobile drawer */}
           <Hidden smUp implementation="css">
             <Drawer
@@ -187,7 +187,7 @@ class Dashboard extends Component {
               <DrawerList />
             </Drawer>
           </Hidden>
-        </nav>
+        </aside>
 
         <div className={classes.content}>
           <main className={classes.main} >
