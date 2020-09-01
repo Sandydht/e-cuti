@@ -5,7 +5,8 @@ import logo from "../images/logo-prov-jateng.png";
 // React router dom
 import {
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 
 // Material UI
@@ -28,13 +29,13 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import CloseIcon from '@material-ui/icons/Close';
 
-// Components
-import DrawerList from "../components/DrawerList";
-
 // Pages
 import Home from "./Home";
 import Info from "./Info";
 import Setting from "./Setting";
+
+// Components
+import DrawerList from "../components/DrawerList";
 
 // Styles
 const drawerWidth = 240;
@@ -79,10 +80,11 @@ const styles = (theme) => ({
   footer: {
     padding: theme.spacing(3, 2),
     textAlign: "center",
-    marginTop: 'auto',
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
+    marginTop: 'auto'
   },
+  activeLink: {
+    backgroundColor: "#eeeeee"
+  }
 });
 
 class Dashboard extends Component {
@@ -139,6 +141,7 @@ class Dashboard extends Component {
           </Toolbar>
         </AppBar>
         <nav className={classes.drawer} aria-label="mailbox folders">
+          {/* Mobile drawer */}
           <Hidden smUp implementation="css">
             <Drawer
               container={container}
@@ -169,6 +172,8 @@ class Dashboard extends Component {
               <DrawerList onClick={this.handleDrawerToggle} />
             </Drawer>
           </Hidden>
+
+          {/* Desktop drawer */}
           <Hidden xsDown implementation="css">
             <Drawer
               classes={{
@@ -197,8 +202,12 @@ class Dashboard extends Component {
                 component={Setting}
               />
               <Route
-                path="/"
+                path="/beranda"
                 component={Home}
+              />
+              <Redirect
+                from="/"
+                to="/beranda"
               />
             </Switch>
           </main>
