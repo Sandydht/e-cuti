@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class Info extends Component {
+class DataCutiBesar extends Component {
   render() {
     return (
       <div>
-        Info
+        Data Cuti Besar
       </div>
     );
   }
 }
 
-export default Info;
+export default DataCutiBesar;
