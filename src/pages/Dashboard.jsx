@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
 
-// Components
-import Topbar from "../components/Topbar";
-import Sidebar from "../components/Sidebar";
-import Main from "../components/Main";
-import Footer from "../components/Footer";
+// Organisms
+import Topbar from "../organisms/Topbar";
+import Sidebar from "../organisms/Sidebar";
+import Main from "../organisms/Main";
+import Footer from "../organisms/Footer";
 
 // Styles
 const styles = (theme) => ({

@@ -20,6 +20,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Icons
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -29,12 +30,20 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-// Components
-import Footer from "../components/Footer";
+// Organisms
+import Footer from "../organisms/Footer";
 
 // Validation schema
 const validationSchema = Yup.object().shape({
-
+  nip: Yup.string()
+    .required("Harap isi form nip"),
+  noTelp: Yup.string()
+    .required("Harap isi form nomor telepon"),
+  email: Yup.string()
+    .email("Email tidak valid")
+    .required("Harap isi form email"),
+  password: Yup.string()
+    .required("Harap isi form kata sandi")
 });
 
 // Styles
@@ -86,7 +95,7 @@ class Signup extends Component {
           <Formik
             initialValues={{
               nip: "",
-              nik: "",
+              noTelp: "",
               email: "",
               password: ""
             }}
@@ -95,67 +104,93 @@ class Signup extends Component {
               console.log(values);
             }}
           >
-            {() => (
-              <Form className={classes.form}>
-                <TextField
-                  id="nip"
-                  name="nip"
-                  label="NIP"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  required
-                />
-                <TextField
-                  id="nik"
-                  name="nik"
-                  label="NIK"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  required
-                />
-                <TextField
-                  id="email"
-                  name="email"
-                  label="Email"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  required
-                />
-
-                <FormControl variant="outlined" fullWidth margin="normal" required>
-                  <InputLabel htmlFor="password">Kata Sandi</InputLabel>
-                  <OutlinedInput
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    labelWidth={95}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={this.handleClickShowPassword}
-                          onMouseDown={this.handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
+            {({
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              values,
+              isSubmitting
+            }) => (
+                <Form className={classes.form}>
+                  <TextField
+                    id="nip"
+                    name="nip"
+                    label="NIP"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    required
+                    error={Boolean(touched.nip && errors.nip)}
+                    helperText={touched.nip && errors.nip ? errors.nip : null}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.nip}
                   />
-                </FormControl>
+                  <TextField
+                    id="noTelp"
+                    name="noTelp"
+                    label="Nomor Telepon"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    required
+                    error={Boolean(touched.noTelp && errors.noTelp)}
+                    helperText={touched.noTelp && errors.noTelp ? errors.noTelp : null}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.noTelp}
+                  />
+                  <TextField
+                    id="email"
+                    name="email"
+                    label="Email"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    required
+                    error={Boolean(touched.email && errors.email)}
+                    helperText={touched.email && errors.email ? errors.email : null}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                  />
+                  <FormControl variant="outlined" fullWidth margin="normal" required error={Boolean(touched.password && errors.password)}>
+                    <InputLabel htmlFor="password">Kata Sandi</InputLabel>
+                    <OutlinedInput
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      labelWidth={95}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={this.handleClickShowPassword}
+                            onMouseDown={this.handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                    <FormHelperText>{touched.password && errors.password ? errors.password : null}</FormHelperText>
+                  </FormControl>
 
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >Registrasi</Button>
-              </Form>
-            )}
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    disabled={isSubmitting}
+                  >{isSubmitting ? <CircularProgress size={25} /> : "Registrasi"}</Button>
+                </Form>
+              )}
           </Formik>
           <Grid container justify="flex-end">
             <Grid item>

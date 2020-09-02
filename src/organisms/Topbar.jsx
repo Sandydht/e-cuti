@@ -4,17 +4,17 @@ import logo from "../images/logo-prov-jateng.png";
 // Material UI
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import AppBar from "@material-ui/core/AppBar";
-import Tooltip from "@material-ui/core/Tooltip";
 import Avatar from "@material-ui/core/Avatar";
-import Badge from '@material-ui/core/Badge';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 
 // Icons
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+
+// Molecules
+import Account from "../molecules/Account";
+import Notifications from "../molecules/Notifications";
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -53,23 +53,8 @@ const Topbar = ({ onClick }) => {
         <Avatar alt="logo-prov-jateng" src={logo} className={classes.logo} />
         <Typography variant="h6" noWrap className={classes.title}>E-Cuti</Typography>
 
-        <Tooltip title="Notifikasi">
-          <IconButton
-            color="inherit"
-          >
-            <Badge badgeContent={1} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Profil">
-          <IconButton
-            color="inherit"
-          >
-            <AccountCircleIcon />
-          </IconButton>
-        </Tooltip>
+        <Notifications />
+        <Account />
       </Toolbar>
     </AppBar>
   );

@@ -14,8 +14,8 @@ import Typography from '@material-ui/core/Typography';
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
 
-// Components
-import DrawerList from "../components/DrawerList";
+// Molecules
+import DrawerList from "../molecules/DrawerList";
 
 // Styles
 const drawerWidth = 240;
@@ -29,6 +29,15 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
+  },
+  closeButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  logo: {
+    marginRight: theme.spacing(2),
   },
 }));
 
@@ -57,7 +66,7 @@ const Sidebar = ({ onClick, open, window }) => {
               aria-label="open drawer"
               edge="start"
               onClick={onClick}
-              className={classes.menuButton}
+              className={classes.closeButton}
             >
               <CloseIcon />
             </IconButton>
