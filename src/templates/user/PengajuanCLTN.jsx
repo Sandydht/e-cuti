@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class PengajuanCLTN extends Component {
-  render() {
-    return (
-      <div>
-        Pengajuan CLTN
-      </div>
-    );
-  }
-}
+// Molecules
+import FormPengajuanCuti from "../../molecules/FormPengajuanCuti";
 
+const PengajuanCLTN = () => {
+  return <FormPengajuanCuti jenisCuti="Cuti Luar Tanggungan Negara" />;
+};
 export default PengajuanCLTN;

@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class PengajuanCutiTahunan extends Component {
-  render() {
-    return (
-      <div>
-        Pengajuan Cuti Tahunan
-      </div>
-    );
-  }
-}
+// Molecules
+import FormPengajuanCuti from "../../molecules/FormPengajuanCuti";
+
+const PengajuanCutiTahunan = () => {
+  return <FormPengajuanCuti jenisCuti="Cuti Tahunan" />;
+};
 
 export default PengajuanCutiTahunan;

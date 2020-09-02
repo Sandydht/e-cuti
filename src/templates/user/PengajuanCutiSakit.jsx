@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class PengajuanCutiSakit extends Component {
-  render() {
-    return (
-      <div>
-        Pengajuan Cuti Sakit
-      </div>
-    );
-  }
-}
+// Molecules
+import FormPengajuanCuti from "../../molecules/FormPengajuanCuti";
 
+const PengajuanCutiSakit = () => {
+  return <FormPengajuanCuti jenisCuti="Cuti Sakit" />;
+};
 export default PengajuanCutiSakit;

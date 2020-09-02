@@ -38,7 +38,7 @@ class DrawerList extends Component {
     super(props);
     this.state = {
       open: false,
-      role: "admin"
+      role: "user"
     };
   }
 
