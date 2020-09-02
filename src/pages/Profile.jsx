@@ -19,30 +19,45 @@ class Profile extends Component {
             variant="outlined"
             margin="normal"
             label="NIP"
+            InputProps={{
+              readOnly: true,
+            }}
           />
           <TextField
             fullWidth
             variant="outlined"
             margin="normal"
             label="Nama"
+            InputProps={{
+              readOnly: true,
+            }}
           />
           <TextField
             fullWidth
             variant="outlined"
             margin="normal"
             label="Golongan"
+            InputProps={{
+              readOnly: true,
+            }}
           />
           <TextField
             fullWidth
             variant="outlined"
             margin="normal"
             label="Unit Kerja"
+            InputProps={{
+              readOnly: true,
+            }}
           />
           <TextField
             fullWidth
             variant="outlined"
             margin="normal"
             label="Nomor Telepon"
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </CardContent>
       </Card>

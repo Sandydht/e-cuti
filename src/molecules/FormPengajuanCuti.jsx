@@ -15,23 +15,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-// React router dom
-import { NavLink } from "react-router-dom";
-
 // Validation schema
 const validationSchema = Yup.object().shape({
-  nip: Yup.string()
-    .required("Harap isi form nip"),
-  nama: Yup.string()
-    .required("Harap isi form nama"),
-  noTelp: Yup.string()
-    .required("Harap isi form nomor telepon"),
-  golongan: Yup.string()
-    .required("Harap isi form golongan"),
-  unitKerja: Yup.string()
-    .required("Harap isi form unit kerja"),
-  jenisCuti: Yup.string()
-    .required("Harap isi form jenis cuti"),
   alasanCuti: Yup.string()
     .required("Harap isi form alasan cuti"),
   tglMulai: Yup.string()
@@ -88,8 +73,6 @@ class FormPengajuanCuti extends Component {
                     value={values.nip}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={Boolean(touched.nip && errors.nip)}
-                    helperText={touched.nip && errors.nip ? errors.nip : null}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -104,8 +87,6 @@ class FormPengajuanCuti extends Component {
                     value={values.nama}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={Boolean(touched.nama && errors.nama)}
-                    helperText={touched.nama && errors.nama ? errors.nama : null}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -120,8 +101,6 @@ class FormPengajuanCuti extends Component {
                     value={values.noTelp}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={Boolean(touched.noTelp && errors.noTelp)}
-                    helperText={touched.noTelp && errors.noTelp ? errors.noTelp : null}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -136,8 +115,6 @@ class FormPengajuanCuti extends Component {
                     value={values.golongan}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={Boolean(touched.golongan && errors.golongan)}
-                    helperText={touched.golongan && errors.golongan ? errors.golongan : null}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -152,8 +129,6 @@ class FormPengajuanCuti extends Component {
                     value={values.unitKerja}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={Boolean(touched.unitKerja && errors.unitKerja)}
-                    helperText={touched.unitKerja && errors.unitKerja ? errors.unitKerja : null}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -168,8 +143,6 @@ class FormPengajuanCuti extends Component {
                     value={values.jenisCuti}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={Boolean(touched.jenisCuti && errors.jenisCuti)}
-                    helperText={touched.jenisCuti && errors.jenisCuti ? errors.jenisCuti : null}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -251,14 +224,6 @@ class FormPengajuanCuti extends Component {
 
                   <Box mt={2}>
                     <Grid container spacing={2} justify="flex-end">
-                      <Grid item>
-                        <Button
-                          color="primary"
-                          variant="outlined"
-                          component={NavLink}
-                          to="/"
-                        >Batal</Button>
-                      </Grid>
                       <Grid item>
                         <Button
                           type="submit"
