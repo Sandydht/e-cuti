@@ -1,25 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 
 // Templates
 import AdminHome from "../templates/admin/AdminHome";
 import UserHome from "../templates/user/UserHome";
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      role: "admin"
-    };
-  }
+const Home = ({ role }) => {
 
-  render() {
-    const { role } = this.state;
-    return (
-      <Fragment>
-        {role === "admin" ? <AdminHome /> : <UserHome />}
-      </Fragment>
-    );
-  }
-}
+  return role === "admin" ? <AdminHome /> : <UserHome />;
+};
 
 export default Home;

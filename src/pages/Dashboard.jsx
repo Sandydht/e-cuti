@@ -37,9 +37,13 @@ const styles = (theme) => ({
 });
 
 class Dashboard extends Component {
-  state = {
-    mobileOpen: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      mobileOpen: false,
+      role: "admin"
+    };
+  }
 
   handleDrawerToggle = () => {
     this.setState((state) => ({
@@ -49,7 +53,7 @@ class Dashboard extends Component {
 
   render() {
     const { classes, ...rest } = this.props;
-    const { mobileOpen } = this.state;
+    const { mobileOpen, role } = this.state;
 
     return (
       <div className={classes.root}>
@@ -64,6 +68,7 @@ class Dashboard extends Component {
           {...rest}
           mobileOpen={mobileOpen}
           onClick={this.handleDrawerToggle}
+          role={role}
         />
 
         {/* Main */}
@@ -71,6 +76,7 @@ class Dashboard extends Component {
           {/* Content */}
           <Main
             {...rest}
+            role={role}
           />
 
           {/* Footer */}

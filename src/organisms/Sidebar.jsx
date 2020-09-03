@@ -66,8 +66,7 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
-      role: "admin"
+      open: false
     };
   }
 
@@ -78,8 +77,8 @@ class Sidebar extends Component {
   };
 
   render() {
-    const { onClick, window, classes, mobileOpen, match } = this.props;
-    const { open, role } = this.state;
+    const { onClick, window, classes, mobileOpen, match, role } = this.props;
+    const { open } = this.state;
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
