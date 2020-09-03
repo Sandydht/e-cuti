@@ -19,12 +19,6 @@ import Profile from "../pages/Profile";
 // Admin templates
 import DataPNS from "../templates/admin/DataPNS";
 import DetailPNS from "../templates/admin/DetailPNS";
-import DataCutiTahunan from "../templates/admin/DataCutiTahunan";
-import DataCutiBesar from "../templates/admin/DataCutiBesar";
-import DataCutiSakit from "../templates/admin/DataCutiSakit";
-import DataCutiBersalin from "../templates/admin/DataCutiBersalin";
-import DataCutiAlasanPenting from "../templates/admin/DataCutiAlasanPenting";
-import DataCLTN from "../templates/admin/DataCLTN";
 import DetailCuti from "../templates/admin/DetailCuti";
 
 // User templates
@@ -56,12 +50,12 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      role: "admin"
+      role: "user"
     };
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, match } = this.props;
     const { role } = this.state;
     return (
       <main className={classes.main} >
@@ -74,7 +68,7 @@ class Main extends Component {
             <Switch>
               {/* User templates */}
               <Route
-                path="/pengajuan_cuti_tahunan"
+                path={`${match.path}pengajuan_cuti_tahunan`}
                 render={(props) =>
                   role === "user" ? (
                     <PengajuanCutiTahunan {...props} />
@@ -83,7 +77,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/pengajuan_cuti_besar"
+                path={`${match.path}pengajuan_cuti_besar`}
                 render={(props) =>
                   role === "user" ? (
                     <PengajuanCutiBesar {...props} />
@@ -92,7 +86,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/pengajuan_cuti_sakit"
+                path={`${match.path}pengajuan_cuti_sakit`}
                 render={(props) =>
                   role === "user" ? (
                     <PengajuanCutiSakit {...props} />
@@ -101,7 +95,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/pengajuan_cuti_bersalin"
+                path={`${match.path}pengajuan_cuti_bersalin`}
                 render={(props) =>
                   role === "user" ? (
                     <PengajuanCutiBersalin {...props} />
@@ -110,7 +104,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/pengajuan_cuti_alasan_penting"
+                path={`${match.path}pengajuan_cuti_alasan_penting`}
                 render={(props) =>
                   role === "user" ? (
                     <PengajuanCutiAlasanPenting {...props} />
@@ -119,7 +113,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/pengajuan_cltn"
+                path={`${match.path}pengajuan_cltn`}
                 render={(props) =>
                   role === "user" ? (
                     <PengajuanCLTN {...props} />
@@ -128,7 +122,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/riwayat_cuti_tahunan"
+                path={`${match.path}riwayat_cuti_tahunan`}
                 render={(props) =>
                   role === "user" ? (
                     <RiwayatCutiTahunan {...props} />
@@ -137,7 +131,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/riwayat_cuti_besar"
+                path={`${match.path}riwayat_cuti_besar`}
                 render={(props) =>
                   role === "user" ? (
                     <RiwayatCutiBesar {...props} />
@@ -146,7 +140,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/riwayat_cuti_sakit"
+                path={`${match.path}riwayat_cuti_sakit`}
                 render={(props) =>
                   role === "user" ? (
                     <RiwayatCutiSakit {...props} />
@@ -155,7 +149,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/riwayat_cuti_bersalin"
+                path={`${match.path}riwayat_cuti_bersalin`}
                 render={(props) =>
                   role === "user" ? (
                     <RiwayatCutiBersalin {...props} />
@@ -164,7 +158,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/riwayat_cuti_alasan_penting"
+                path={`${match.path}riwayat_cuti_alasan_penting`}
                 render={(props) =>
                   role === "user" ? (
                     <RiwayatCutiAlasanPenting {...props} />
@@ -173,7 +167,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/riwayat_cltn"
+                path={`${match.path}riwayat_cltn`}
                 render={(props) =>
                   role === "user" ? (
                     <RiwayatCLTN {...props} />
@@ -184,7 +178,7 @@ class Main extends Component {
 
               {/* Admin templates */}
               <Route
-                path="/data_pns"
+                path={`${match.path}data_pns`}
                 render={(props) =>
                   role === "admin" ? (
                     <DataPNS {...props} />
@@ -193,7 +187,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/detail_pns"
+                path={`${match.path}data_pns/:pnsId`}
                 render={(props) =>
                   role === "admin" ? (
                     <DetailPNS {...props} />
@@ -202,61 +196,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path="/data_cuti_tahunan"
-                render={(props) =>
-                  role === "admin" ? (
-                    <DataCutiTahunan {...props} />
-                  ) : (
-                      <div>Halaman Tidak Ditemukan</div>
-                    )}
-              />
-              <Route
-                path="/data_cuti_besar"
-                render={(props) =>
-                  role === "admin" ? (
-                    <DataCutiBesar {...props} />
-                  ) : (
-                      <div>Halaman Tidak Ditemukan</div>
-                    )}
-              />
-              <Route
-                path="/data_cuti_sakit"
-                render={(props) =>
-                  role === "admin" ? (
-                    <DataCutiSakit {...props} />
-                  ) : (
-                      <div>Halaman Tidak Ditemukan</div>
-                    )}
-              />
-              <Route
-                path="/data_cuti_bersalin"
-                render={(props) =>
-                  role === "admin" ? (
-                    <DataCutiBersalin {...props} />
-                  ) : (
-                      <div>Halaman Tidak Ditemukan</div>
-                    )}
-              />
-              <Route
-                path="/data_cuti_alasan_penting"
-                render={(props) =>
-                  role === "admin" ? (
-                    <DataCutiAlasanPenting {...props} />
-                  ) : (
-                      <div>Halaman Tidak Ditemukan</div>
-                    )}
-              />
-              <Route
-                path="/data_cltn"
-                render={(props) =>
-                  role === "admin" ? (
-                    <DataCLTN {...props} />
-                  ) : (
-                      <div>Halaman Tidak Ditemukan</div>
-                    )}
-              />
-              <Route
-                path="/detail_cuti"
+                path={`${match.path}beranda/:cutiId`}
                 render={(props) =>
                   role === "admin" ? (
                     <DetailCuti {...props} />
@@ -267,20 +207,21 @@ class Main extends Component {
 
               {/* Global */}
               <Route
-                path="/profil"
+                path={`${match.path}profil`}
                 component={Profile}
               />
               <Route
-                path="/pengaturan"
+                path={`${match.path}pengaturan`}
                 component={Setting}
               />
               <Route
-                path="/beranda"
+                exact
+                path={`${match.path}beranda`}
                 component={Home}
               />
               <Redirect
-                from="/"
-                to="/beranda"
+                from={`${match.path}`}
+                to={`${match.path}beranda`}
               />
             </Switch>
           </Grid>

@@ -41,7 +41,7 @@ class Account extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, match } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
@@ -73,7 +73,7 @@ class Account extends Component {
             horizontal: 'center',
           }}
         >
-          <MenuItem component={NavLink} to="/profil" onClick={this.handleClose} activeClassName={classes.activeLink}>Profil</MenuItem>
+          <MenuItem component={NavLink} to={`${match.url}profil`} onClick={this.handleClose} activeClassName={classes.activeLink}>Profil</MenuItem>
           <MenuItem>Keluar</MenuItem>
         </Menu>
       </Fragment>

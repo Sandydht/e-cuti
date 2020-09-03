@@ -12,10 +12,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 // Icons
 import MenuIcon from '@material-ui/icons/Menu';
 
-// Molecules
-import Account from "../molecules/Account";
-import Notifications from "../molecules/Notifications";
-
 // Styles
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -35,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Topbar = ({ onClick }) => {
+const Topbar = ({ onClick, children }) => {
   const classes = useStyles();
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -52,9 +48,7 @@ const Topbar = ({ onClick }) => {
 
         <Avatar alt="logo-prov-jateng" src={logo} className={classes.logo} />
         <Typography variant="h6" noWrap className={classes.title}>E-Cuti</Typography>
-
-        <Notifications />
-        <Account />
+        {children}
       </Toolbar>
     </AppBar>
   );

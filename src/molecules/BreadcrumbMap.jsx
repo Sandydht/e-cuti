@@ -25,7 +25,7 @@ class BreadcrumbMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      role: "admin"
+      role: "user"
     };
   }
 
@@ -46,14 +46,9 @@ class BreadcrumbMap extends Component {
                 const params = `/${pathnames.slice(1, 3).join('/')}`;
 
                 // Admin
+                breadcrumbNameMap[`/beranda${params}`] = role === "admin" ? "Detail Cuti" : "404";
                 breadcrumbNameMap["/data_pns"] = role === "admin" ? "Data PNS" : "404";
                 breadcrumbNameMap[`/data_pns${params}`] = role === "admin" ? "Detail PNS" : "404";
-                breadcrumbNameMap["/data_cuti_tahunan"] = role === "admin" ? "Data Cuti Tahunan" : "404";
-                breadcrumbNameMap["/data_cuti_besar"] = role === "admin" ? "Data Cuti Besar" : "404";
-                breadcrumbNameMap["/data_cuti_sakit"] = role === "admin" ? "Data Cuti Sakit" : "404";
-                breadcrumbNameMap["/data_cuti_bersalin"] = role === "admin" ? "Data Cuti Bersalin" : "404";
-                breadcrumbNameMap["/data_cuti_alasan_penting"] = role === "admin" ? "Data Cuti Alasan Penting" : "404";
-                breadcrumbNameMap["/data_cltn"] = role === "admin" ? "Data CLTN" : "404";
 
                 // User
                 breadcrumbNameMap['/pengajuan_cuti_tahunan'] = role === "user" ? "Pengajuan Cuti Tahunan" : "404";

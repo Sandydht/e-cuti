@@ -15,34 +15,7 @@ import DataTable from "../../atoms/DataTable";
 import { NavLink } from "react-router-dom";
 
 const data = [
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"]
 ];
 
 class DataPNS extends Component {
@@ -98,7 +71,7 @@ class DataPNS extends Component {
                         size="small"
                         startIcon={<FindInPageIcon />}
                         component={NavLink}
-                        to={`/detail_pns`}
+                        to={`/data_pns/${dataIndex}`}
                       >Detail</Button>
                     );
                   }

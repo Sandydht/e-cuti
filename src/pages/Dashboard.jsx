@@ -10,6 +10,10 @@ import Sidebar from "../organisms/Sidebar";
 import Main from "../organisms/Main";
 import Footer from "../organisms/Footer";
 
+// Molecules
+import Account from "../molecules/Account";
+import Notifications from "../molecules/Notifications";
+
 // Styles
 const styles = (theme) => ({
   root: {
@@ -44,15 +48,32 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, ...rest } = this.props;
     const { mobileOpen } = this.state;
 
     return (
       <div className={classes.root}>
-        <Topbar onClick={this.handleDrawerToggle} />
-        <Sidebar open={mobileOpen} onClick={this.handleDrawerToggle} />
+        {/* Topbar */}
+        <Topbar onClick={this.handleDrawerToggle}>
+          <Notifications />
+          <Account {...rest} />
+        </Topbar>
+
+        {/* Sidebar */}
+        <Sidebar
+          {...rest}
+          mobileOpen={mobileOpen}
+          onClick={this.handleDrawerToggle}
+        />
+
+        {/* Main */}
         <div className={classes.content}>
-          <Main />
+          {/* Content */}
+          <Main
+            {...rest}
+          />
+
+          {/* Footer */}
           <Footer className={classes.footer} />
         </div>
       </div>
