@@ -19,7 +19,7 @@ import Profile from "../pages/Profile";
 // Admin templates
 import DataPNS from "../templates/admin/DataPNS";
 import DetailPNS from "../templates/admin/DetailPNS";
-import DetailCuti from "../templates/admin/DetailCuti";
+import Aproval from "../templates/admin/Aproval";
 
 // User templates
 import PengajuanCutiTahunan from "../templates/user/PengajuanCutiTahunan";
@@ -50,7 +50,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      role: "user"
+      role: "admin"
     };
   }
 
@@ -187,7 +187,7 @@ class Main extends Component {
                     )}
               />
               <Route
-                path={`${match.path}data_pns/:pnsId`}
+                path={`${match.path}detail_pns`}
                 render={(props) =>
                   role === "admin" ? (
                     <DetailPNS {...props} />
@@ -199,7 +199,7 @@ class Main extends Component {
                 path={`${match.path}beranda/:cutiId`}
                 render={(props) =>
                   role === "admin" ? (
-                    <DetailCuti {...props} />
+                    <Aproval {...props} />
                   ) : (
                       <div>Halaman Tidak Ditemukan</div>
                     )}

@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 
-class DetailCuti extends Component {
+class Aproval extends Component {
   render() {
     return (
       <Card>
@@ -111,4 +111,4 @@ class DetailCuti extends Component {
   }
 }
 
-export default DetailCuti;
+export default Aproval;

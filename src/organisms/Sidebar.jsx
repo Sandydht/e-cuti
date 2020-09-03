@@ -67,7 +67,7 @@ class Sidebar extends Component {
     super(props);
     this.state = {
       open: false,
-      role: "user"
+      role: "admin"
     };
   }
 

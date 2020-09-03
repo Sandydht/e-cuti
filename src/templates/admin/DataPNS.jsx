@@ -20,6 +20,7 @@ const data = [
 
 class DataPNS extends Component {
   render() {
+    const { match } = this.props;
     return (
       <Grid container spacing={2}>
         <Grid item md={12} xs={12}>
@@ -71,7 +72,7 @@ class DataPNS extends Component {
                         size="small"
                         startIcon={<FindInPageIcon />}
                         component={NavLink}
-                        to={`/data_pns/${dataIndex}`}
+                        to={`${match.url}/${dataIndex}`}
                       >Detail</Button>
                     );
                   }
