@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import "./App.css";
 
 // Material UI
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 // React router dom
@@ -16,10 +17,21 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 
+const theme = createMuiTheme({
+  overrides: {
+    MuiTableCell: {
+      head: {
+        backgroundColor: 'black',
+        color: "white"
+      }
+    }
+  }
+});
+
 class App extends Component {
   render() {
     return (
-      <Fragment>
+      <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
           <Switch>
@@ -39,7 +51,7 @@ class App extends Component {
             />
           </Switch>
         </Router>
-      </Fragment>
+      </MuiThemeProvider>
     );
   }
 }

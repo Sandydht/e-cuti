@@ -6,6 +6,41 @@ import Grid from "@material-ui/core/Grid";
 
 // Icons
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+
+// Atoms
+import DataTable from "../../atoms/DataTable";
+
+const data = [
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
+];
 
 class DataPNS extends Component {
   render() {
@@ -15,7 +50,52 @@ class DataPNS extends Component {
           <Button color="primary" variant="contained" startIcon={<PersonAddIcon />}>Tambah Data PNS</Button>
         </Grid>
         <Grid item md={12} xs={12}>
-          Data tabel
+          <DataTable
+            title="Data PNS"
+            data={data}
+            columns={[
+              {
+                name: "NIP",
+                options: {
+                  filter: true,
+                  sort: false
+                }
+              },
+              {
+                name: "Nama",
+                options: {
+                  filter: true,
+                  sort: false
+                }
+              },
+              {
+                name: "Golongan",
+                options: {
+                  filter: true,
+                  sort: false
+                }
+              },
+              {
+                name: "Unit Kerja",
+                options: {
+                  filter: true,
+                  sort: false
+                }
+              },
+              {
+                name: "Detail",
+                options: {
+                  filter: true,
+                  sort: false,
+                  customBodyRenderLite: (dataIndex) => {
+                    return (
+                      <Button color="primary" variant="contained" size="small" startIcon={<FindInPageIcon />} >Detail</Button>
+                    );
+                  }
+                }
+              },
+            ]}
+          />
         </Grid>
       </Grid>
     );

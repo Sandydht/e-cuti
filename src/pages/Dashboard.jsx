@@ -20,6 +20,7 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
+    overflow: "auto"
   },
   footer: {
     padding: theme.spacing(3, 2),
