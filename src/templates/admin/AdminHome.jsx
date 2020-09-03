@@ -14,7 +14,7 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 import DataTable from "../../atoms/DataTable";
 
 const data = [
-  ["123456789012345678", "2020-03-02", "Cuti Tahunan", "2020-03-02", "2020-03-02", "Menunggu"]
+  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Cuti Tahunan", "Menunggu"]
 ];
 
 class AdminHome extends Component {
@@ -36,7 +36,14 @@ class AdminHome extends Component {
                 }
               },
               {
-                name: "Tanggal Pengajuan",
+                name: "Nama",
+                options: {
+                  filter: true,
+                  sort: false
+                }
+              },
+              {
+                name: "Golongan",
                 options: {
                   filter: true,
                   sort: false
@@ -44,20 +51,6 @@ class AdminHome extends Component {
               },
               {
                 name: "Jenis Cuti",
-                options: {
-                  filter: true,
-                  sort: false
-                }
-              },
-              {
-                name: "Tanggal Mulai",
-                options: {
-                  filter: true,
-                  sort: false
-                }
-              },
-              {
-                name: "s/d Tanggal",
                 options: {
                   filter: true,
                   sort: false
@@ -77,7 +70,12 @@ class AdminHome extends Component {
                   sort: false,
                   customBodyRenderLite: (dataIndex) => {
                     return (
-                      <Button color="primary" variant="contained" size="small" startIcon={<FindInPageIcon />} >Detail</Button>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        size="small"
+                        startIcon={<FindInPageIcon />}
+                      >Detail</Button>
                     );
                   }
                 }

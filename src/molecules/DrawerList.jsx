@@ -21,7 +21,7 @@ import HistoryIcon from '@material-ui/icons/History';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+// import AssignmentIcon from '@material-ui/icons/Assignment';
 
 // Styles
 const styles = (theme) => ({
@@ -72,7 +72,7 @@ class DrawerList extends Component {
                 <ListItemIcon><AssignmentIndIcon /></ListItemIcon>
                 <ListItemText primary="Data PNS" />
               </ListItem>
-              <ListItem button onClick={this.handleClick}>
+              {/* <ListItem button onClick={this.handleClick}>
                 <ListItemIcon><AssignmentIcon /></ListItemIcon>
                 <ListItemText primary="Data Cuti" />
                 {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -96,7 +96,7 @@ class DrawerList extends Component {
                 <ListItem button onClick={onClick} className={classes.nested} component={NavLink} to="/data_cltn" activeClassName={classes.activeLink}>
                   <ListItemText primary="CLTN" />
                 </ListItem>
-              </Collapse>
+              </Collapse> */}
             </Fragment>
           ) : (
               <Fragment>

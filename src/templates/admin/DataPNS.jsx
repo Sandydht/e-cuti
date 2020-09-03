@@ -11,6 +11,9 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 // Atoms
 import DataTable from "../../atoms/DataTable";
 
+// React router dom
+import { NavLink } from "react-router-dom";
+
 const data = [
   ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
   ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Badan Kepegawaian Daerah"],
@@ -89,7 +92,14 @@ class DataPNS extends Component {
                   sort: false,
                   customBodyRenderLite: (dataIndex) => {
                     return (
-                      <Button color="primary" variant="contained" size="small" startIcon={<FindInPageIcon />} >Detail</Button>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        size="small"
+                        startIcon={<FindInPageIcon />}
+                        component={NavLink}
+                        to={`/detail_pns`}
+                      >Detail</Button>
                     );
                   }
                 }

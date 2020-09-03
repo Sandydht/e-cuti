@@ -43,9 +43,11 @@ class BreadcrumbMap extends Component {
               {pathnames.map((value, index) => {
                 const last = index === pathnames.length - 1;
                 const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+                const params = `/${pathnames.slice(1, 3).join('/')}`;
 
                 // Admin
                 breadcrumbNameMap["/data_pns"] = role === "admin" ? "Data PNS" : "404";
+                breadcrumbNameMap[`/data_pns${params}`] = role === "admin" ? "Detail PNS" : "404";
                 breadcrumbNameMap["/data_cuti_tahunan"] = role === "admin" ? "Data Cuti Tahunan" : "404";
                 breadcrumbNameMap["/data_cuti_besar"] = role === "admin" ? "Data Cuti Besar" : "404";
                 breadcrumbNameMap["/data_cuti_sakit"] = role === "admin" ? "Data Cuti Sakit" : "404";

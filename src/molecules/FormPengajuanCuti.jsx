@@ -11,6 +11,9 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+// Icons
+import SendIcon from '@material-ui/icons/Send';
+
 // Formik & Yup
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -230,6 +233,7 @@ class FormPengajuanCuti extends Component {
                           color="primary"
                           variant="contained"
                           disabled={isSubmitting}
+                          startIcon={<SendIcon />}
                         >{isSubmitting ? <CircularProgress size={25} /> : "Ajukan"}</Button>
                       </Grid>
                     </Grid>

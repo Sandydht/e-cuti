@@ -18,12 +18,14 @@ import Profile from "../pages/Profile";
 
 // Admin templates
 import DataPNS from "../templates/admin/DataPNS";
+import DetailPNS from "../templates/admin/DetailPNS";
 import DataCutiTahunan from "../templates/admin/DataCutiTahunan";
 import DataCutiBesar from "../templates/admin/DataCutiBesar";
 import DataCutiSakit from "../templates/admin/DataCutiSakit";
 import DataCutiBersalin from "../templates/admin/DataCutiBersalin";
 import DataCutiAlasanPenting from "../templates/admin/DataCutiAlasanPenting";
 import DataCLTN from "../templates/admin/DataCLTN";
+import DetailCuti from "../templates/admin/DetailCuti";
 
 // User templates
 import PengajuanCutiTahunan from "../templates/user/PengajuanCutiTahunan";
@@ -191,6 +193,15 @@ class Main extends Component {
                     )}
               />
               <Route
+                path="/detail_pns"
+                render={(props) =>
+                  role === "admin" ? (
+                    <DetailPNS {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+              <Route
                 path="/data_cuti_tahunan"
                 render={(props) =>
                   role === "admin" ? (
@@ -240,6 +251,15 @@ class Main extends Component {
                 render={(props) =>
                   role === "admin" ? (
                     <DataCLTN {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+              <Route
+                path="/detail_cuti"
+                render={(props) =>
+                  role === "admin" ? (
+                    <DetailCuti {...props} />
                   ) : (
                       <div>Halaman Tidak Ditemukan</div>
                     )}
