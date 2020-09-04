@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+// React router dom
+import { NavLink } from "react-router-dom";
+
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -16,6 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 class DetailPNS extends Component {
   render() {
+    const { match } = this.props;
     return (
       <Card>
         <CardHeader title="Detail PNS" />
@@ -90,6 +94,8 @@ class DetailPNS extends Component {
                   variant="contained"
                   color="primary"
                   startIcon={<EditIcon />}
+                  component={NavLink}
+                  to={`${match.url}/edit`}
                 >Edit</Button>
               </Grid>
             </Grid>

@@ -33,12 +33,13 @@ const BreadcrumbMap = ({ role }) => {
             {pathnames.map((value, index) => {
               const last = index === pathnames.length - 1;
               const to = `/${pathnames.slice(0, index + 1).join('/')}`;
-              const params = `/${pathnames.slice(1, 3).join('/')}`;
+              const params = `/${pathnames.slice(1, 2).join('/')}`;
 
               // Admin
               breadcrumbNameMap[`/beranda${params}`] = role === "admin" ? "Detail Cuti" : "404";
               breadcrumbNameMap["/data_pns"] = role === "admin" ? "Data PNS" : "404";
               breadcrumbNameMap[`/data_pns${params}`] = role === "admin" ? "Detail PNS" : "404";
+              breadcrumbNameMap[`/data_pns${params}/edit`] = role === "admin" ? "Edit Data PNS" : "404";
 
               // User
               breadcrumbNameMap['/pengajuan_cuti_tahunan'] = role === "user" ? "Pengajuan Cuti Tahunan" : "404";

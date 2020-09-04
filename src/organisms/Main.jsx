@@ -20,6 +20,7 @@ import Profile from "../pages/Profile";
 import DataPNS from "../templates/admin/DataPNS";
 import DetailPNS from "../templates/admin/DetailPNS";
 import Aproval from "../templates/admin/Aproval";
+import EditDataPNS from "../templates/admin/EditDataPNS";
 
 // User templates
 import PengajuanCutiTahunan from "../templates/user/PengajuanCutiTahunan";
@@ -59,6 +60,7 @@ const Main = ({ role, match }) => {
           <Switch>
             {/* User templates */}
             <Route
+              exact
               path={`${match.path}pengajuan_cuti_tahunan`}
               render={(props) =>
                 role === "user" ? (
@@ -67,7 +69,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}pengajuan_cuti_besar`}
               render={(props) =>
                 role === "user" ? (
@@ -76,7 +80,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}pengajuan_cuti_sakit`}
               render={(props) =>
                 role === "user" ? (
@@ -85,7 +91,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}pengajuan_cuti_bersalin`}
               render={(props) =>
                 role === "user" ? (
@@ -94,7 +102,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}pengajuan_cuti_alasan_penting`}
               render={(props) =>
                 role === "user" ? (
@@ -103,7 +113,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}pengajuan_cltn`}
               render={(props) =>
                 role === "user" ? (
@@ -112,7 +124,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}riwayat_cuti_tahunan`}
               render={(props) =>
                 role === "user" ? (
@@ -121,7 +135,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}riwayat_cuti_besar`}
               render={(props) =>
                 role === "user" ? (
@@ -130,7 +146,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}riwayat_cuti_sakit`}
               render={(props) =>
                 role === "user" ? (
@@ -139,7 +157,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}riwayat_cuti_bersalin`}
               render={(props) =>
                 role === "user" ? (
@@ -148,7 +168,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}riwayat_cuti_alasan_penting`}
               render={(props) =>
                 role === "user" ? (
@@ -157,7 +179,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}riwayat_cltn`}
               render={(props) =>
                 role === "user" ? (
@@ -169,6 +193,7 @@ const Main = ({ role, match }) => {
 
             {/* Admin templates */}
             <Route
+              exact
               path={`${match.path}data_pns`}
               render={(props) =>
                 role === "admin" ? (
@@ -177,7 +202,9 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
               path={`${match.path}data_pns/:pnsId`}
               render={(props) =>
                 role === "admin" ? (
@@ -186,7 +213,20 @@ const Main = ({ role, match }) => {
                     <div>Halaman Tidak Ditemukan</div>
                   )}
             />
+
             <Route
+              exact
+              path={`${match.path}data_pns/:pnsId/edit`}
+              render={(props) =>
+                role === "admin" ? (
+                  <EditDataPNS {...props} />
+                ) : (
+                    <div>Halaman Tidak Ditemukan</div>
+                  )}
+            />
+
+            <Route
+              exact
               path={`${match.path}beranda/:cutiId`}
               render={(props) =>
                 role === "admin" ? (
@@ -198,10 +238,12 @@ const Main = ({ role, match }) => {
 
             {/* Global */}
             <Route
+              exact
               path={`${match.path}profil`}
               render={(props) => <Profile {...props} />}
             />
             <Route
+              exact
               path={`${match.path}pengaturan`}
               render={(props) => <Setting {...props} />}
             />
