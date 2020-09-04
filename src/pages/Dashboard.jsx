@@ -23,8 +23,8 @@ const styles = (theme) => ({
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh',
-    overflow: "auto"
+    minHeight: "100vh",
+    overflow: 'auto',
   },
   footer: {
     padding: theme.spacing(3, 2),
@@ -41,7 +41,7 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       mobileOpen: false,
-      role: "admin"
+      role: "user"
     };
   }
 
@@ -58,7 +58,7 @@ class Dashboard extends Component {
     return (
       <div className={classes.root}>
         {/* Topbar */}
-        <Topbar onClick={this.handleDrawerToggle}>
+        <Topbar onClick={this.handleDrawerToggle} {...rest}>
           <Notifications />
           <Account {...rest} />
         </Topbar>

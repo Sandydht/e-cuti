@@ -17,6 +17,10 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 
+// Redux
+import { Provider } from "react-redux";
+import store from "./redux";
+
 const theme = createMuiTheme({
   overrides: {
     MuiTableCell: {
@@ -31,27 +35,29 @@ const theme = createMuiTheme({
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <Switch>
-            <Route
-              path="/register"
-              component={Signup}
-            />
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <Switch>
+              <Route
+                path="/register"
+                component={Signup}
+              />
 
-            <Route
-              path="/login"
-              component={Login}
-            />
+              <Route
+                path="/login"
+                component={Login}
+              />
 
-            <Route
-              path="/"
-              component={Dashboard}
-            />
-          </Switch>
-        </Router>
-      </MuiThemeProvider>
+              <Route
+                path="/"
+                component={Dashboard}
+              />
+            </Switch>
+          </Router>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }

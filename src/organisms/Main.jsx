@@ -43,14 +43,14 @@ import BreadcrumbMap from "../molecules/BreadcrumbMap";
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   main: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(3)
   }
 }));
 
 const Main = ({ role, match }) => {
   const classes = useStyles();
   return (
-    <main className={classes.main} >
+    <main className={classes.main}>
       <div className={classes.toolbar} />
       <Grid container spacing={2}>
         <Grid item md={12} xs={12}>

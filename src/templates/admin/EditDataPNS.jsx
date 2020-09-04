@@ -18,13 +18,45 @@ import SaveIcon from '@material-ui/icons/Save';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
+import Axios from "axios";
+
 // Validation schema
 const validationSchema = Yup.object().shape({
 
 });
 
 class EditDataPNS extends Component {
+  _isMounted = false;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      detailPNS: {},
+      isLoading: true
+    };
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+    const { match } = this.props;
+    Axios.get(`/dataPNS/${match.params.pnsId}`)
+      .then((res) => {
+        if (this._isMounted) {
+          this.setState({
+            detailPNS: res.data,
+            isLoading: false
+          });
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   render() {
+    const { detailPNS } = this.state;
+
     return (
       <Card>
         <CardHeader title="Edit Data PNS" />
@@ -32,7 +64,7 @@ class EditDataPNS extends Component {
         <CardContent>
           <Formik
             initialValues={{
-              nip: "",
+              nip: detailPNS.nip,
               nama: "",
               golongan: "",
               unitKerja: "",
