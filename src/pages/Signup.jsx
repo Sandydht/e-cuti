@@ -33,10 +33,19 @@ import * as Yup from "yup";
 // Organisms
 import Footer from "../organisms/Footer";
 
+// Notistack
+import { withSnackbar } from "notistack";
+
+// Redux
+import { connect } from "react-redux";
+import { register } from "../redux/actions";
+
 // Validation schema
 const validationSchema = Yup.object().shape({
   nip: Yup.string()
     .required("Harap isi form nip"),
+  nik: Yup.string()
+    .required("Harap isi form nik"),
   noTelp: Yup.string()
     .required("Harap isi form nomor telepon"),
   email: Yup.string()
@@ -95,13 +104,24 @@ class Signup extends Component {
           <Formik
             initialValues={{
               nip: "",
+              nik: "",
               noTelp: "",
               email: "",
               password: ""
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
+            onSubmit={(values, { setSubmitting }) => {
+              this.props.register(values)
+                .then(() => {
+                  const { from } = this.props.location.state || { from: { pathname: "/" } };
+                  setSubmitting(false);
+                  this.props.enqueueSnackbar("Registrasi akun berhasil", { variant: "success", preventDuplicate: true });
+                  this.props.history.replace(from);
+                })
+                .catch(() => {
+                  setSubmitting(false);
+                  this.props.enqueueSnackbar("Registrasi akun gagal", { variant: "error", preventDuplicate: true });
+                });
             }}
           >
             {({
@@ -126,6 +146,20 @@ class Signup extends Component {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.nip}
+                  />
+                  <TextField
+                    id="nik"
+                    name="nik"
+                    label="NIK"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    required
+                    error={Boolean(touched.nik && errors.nik)}
+                    helperText={touched.nik && errors.nik ? errors.nik : null}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.nik}
                   />
                   <TextField
                     id="noTelp"
@@ -208,4 +242,8 @@ class Signup extends Component {
   }
 }
 
-export default withStyles(styles)(Signup);
+const mapDispatchToProps = (dispatch) => ({
+  register: (newUser) => dispatch(register(newUser))
+});
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(withSnackbar(Signup)));

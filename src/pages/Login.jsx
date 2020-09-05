@@ -30,8 +30,15 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
+// Redux
+import { connect } from "react-redux";
+import { login } from "../redux/actions";
+
 // Organisms
 import Footer from "../organisms/Footer";
+
+// Notistack
+import { withSnackbar } from "notistack";
 
 // Validation schema
 const validationSchema = Yup.object().shape({
@@ -94,8 +101,18 @@ class Login extends Component {
               password: ""
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
+            onSubmit={(values, { setSubmitting }) => {
+              this.props.login(values)
+                .then(() => {
+                  setSubmitting(false);
+                  const { from } = this.props.location.state || { from: { pathname: "/" } };
+                  this.props.history.replace(from);
+                  this.props.enqueueSnackbar("Login berhasil", { variant: "success", preventDuplicate: true });
+                })
+                .catch(() => {
+                  setSubmitting(false);
+                  this.props.enqueueSnackbar("Login gagal", { variant: "error", preventDuplicate: true });
+                });
             }}
           >
             {({
@@ -180,4 +197,8 @@ class Login extends Component {
   }
 }
 
-export default withStyles(styles)(Login);
+const mapDispatchToProps = (dispatch) => ({
+  login: (user, history) => dispatch(login(user, history))
+});
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(withSnackbar(Login)));

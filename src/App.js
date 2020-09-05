@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { lazy, Suspense } from 'react';
 import "./App.css";
 
 // Material UI
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import IconButton from "@material-ui/core/IconButton";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
@@ -16,17 +17,21 @@ import { SnackbarProvider } from "notistack";
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 
-// Pages
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
-
 // Redux
-import { Provider } from "react-redux";
-import store from "./redux";
+import { connect } from "react-redux";
+
+// Pages
+// import Login from "./pages/Login";
+// import Signup from "./pages/Signup";
+// import Dashboard from "./pages/Dashboard";
+
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 
 const theme = createMuiTheme({
   overrides: {
@@ -39,30 +44,31 @@ const theme = createMuiTheme({
   }
 });
 
-class App extends Component {
-  render() {
-    // add action to all snackbars
-    const notistackRef = React.createRef();
-    const onClickDismiss = key => () => {
-      notistackRef.current.closeSnackbar(key);
-    };
-    return (
-      <Provider store={store}>
-        <MuiThemeProvider theme={theme}>
-          <SnackbarProvider
-            maxSnack={3}
-            ref={notistackRef}
-            action={(key) => (
-              <IconButton
-                color="inherit"
-                onClick={onClickDismiss(key)}
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            )}
+const App = ({ checked, authenticated }) => {
+  const notistackRef = React.createRef();
+  const onClickDismiss = key => () => {
+    notistackRef.current.closeSnackbar(key);
+  };
+
+  return (
+    <MuiThemeProvider theme={theme}>
+      <SnackbarProvider
+        maxSnack={3}
+        ref={notistackRef}
+        action={(key) => (
+          <IconButton
+            color="inherit"
+            onClick={onClickDismiss(key)}
           >
-            <CssBaseline />
-            <Router>
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        )}
+      >
+        <CssBaseline />
+        <Router>
+          {
+            checked &&
+            <Suspense fallback={<LinearProgress />}>
               <Switch>
                 <Route
                   path="/register"
@@ -76,15 +82,30 @@ class App extends Component {
 
                 <Route
                   path="/"
-                  component={Dashboard}
+                  render={(props) =>
+                    authenticated ? (
+                      <Dashboard {...props} />
+                    ) : (
+                        <Redirect
+                          to={{
+                            pathname: "/login",
+                            state: { from: props.location }
+                          }}
+                        />
+                      )}
                 />
               </Switch>
-            </Router>
-          </SnackbarProvider>
-        </MuiThemeProvider>
-      </Provider>
-    );
-  }
-}
+            </Suspense>
+          }
+        </Router>
+      </SnackbarProvider>
+    </MuiThemeProvider>
+  );
+};
 
-export default App; 
+const mapStateToProps = ({ session }) => ({
+  checked: session.checked,
+  authenticated: session.authenticated
+});
+
+export default connect(mapStateToProps, null)(App); 

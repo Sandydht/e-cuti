@@ -174,7 +174,6 @@ class EditDataPNS extends Component {
                   Axios.put(`/dataPNS/${this.props.match.params.pnsId}/edit`, values)
                     .then(() => {
                       setSubmitting(false);
-                      this.props.history.push(`/data_pns/${this.props.match.params.pnsId}`);
                       this.props.enqueueSnackbar("Data berhasil diperbarui", { variant: "success", preventDuplicate: true });
                     })
                     .catch(() => {

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 
+// Redux
+import { connect } from "react-redux";
+
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -52,8 +55,8 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { classes, ...rest } = this.props;
-    const { mobileOpen, role } = this.state;
+    const { classes, role, ...rest } = this.props;
+    const { mobileOpen } = this.state;
 
     return (
       <div className={classes.root}>
@@ -91,4 +94,8 @@ Dashboard.propTypes = {
   window: PropTypes.func
 };
 
-export default withStyles(styles)(Dashboard);
+const mapStateToProps = ({ session }) => ({
+  role: session.user.role
+});
+
+export default connect(mapStateToProps, null)(withStyles(styles)(Dashboard));

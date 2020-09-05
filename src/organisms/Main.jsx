@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 
 // Material UI
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 // React router dom
 import {
@@ -10,32 +11,6 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-
-// Pages
-import Home from "../pages/Home";
-import Setting from "../pages/Setting";
-import Profile from "../pages/Profile";
-
-// Admin templates
-import DataPNS from "../templates/admin/DataPNS";
-import DetailPNS from "../templates/admin/DetailPNS";
-import Aproval from "../templates/admin/Aproval";
-import EditDataPNS from "../templates/admin/EditDataPNS";
-import TambahDataPNS from "../templates/admin/TambahDataPNS";
-
-// User templates
-import PengajuanCutiTahunan from "../templates/user/PengajuanCutiTahunan";
-import PengajuanCutiBesar from "../templates/user/PengajuanCutiBesar";
-import PengajuanCutiSakit from "../templates/user/PengajuanCutiSakit";
-import PengajuanCutiBersalin from "../templates/user/PengajuanCutiBersalin";
-import PengajuanCutiAlasanPenting from "../templates/user/PengajuanCutiAlasanPenting";
-import PengajuanCLTN from "../templates/user/PengajuanCLTN";
-import RiwayatCutiTahunan from "../templates/user/RiwayatCutiTahunan";
-import RiwayatCutiBesar from "../templates/user/RiwayatCutiBesar";
-import RiwayatCutiSakit from "../templates/user/RiwayatCutiSakit";
-import RiwayatCutiBersalin from "../templates/user/RiwayatCutiBersalin";
-import RiwayatCutiAlasanPenting from "../templates/user/RiwayatCutiAlasanPenting";
-import RiwayatCLTN from "../templates/user/RiwayatCLTN";
 
 // Molecules
 import BreadcrumbMap from "../molecules/BreadcrumbMap";
@@ -48,230 +23,258 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+// Pages
+const Home = lazy(() => import("../pages/Home"));
+const Setting = lazy(() => import("../pages/Setting"));
+const Profile = lazy(() => import("../pages/Profile"));
+
+// Admin templates
+const DataPNS = lazy(() => import("../templates/admin/DataPNS"));
+const DetailPNS = lazy(() => import("../templates/admin/DetailPNS"));
+const Aproval = lazy(() => import("../templates/admin/Aproval"));
+const EditDataPNS = lazy(() => import("../templates/admin/EditDataPNS"));
+const TambahDataPNS = lazy(() => import("../templates/admin/TambahDataPNS"));
+
+// User templates
+const PengajuanCutiTahunan = lazy(() => import("../templates/user/PengajuanCutiTahunan"));
+const PengajuanCutiBesar = lazy(() => import("../templates/user/PengajuanCutiBesar"));
+const PengajuanCutiSakit = lazy(() => import("../templates/user/PengajuanCutiSakit"));
+const PengajuanCutiBersalin = lazy(() => import("../templates/user/PengajuanCutiBersalin"));
+const PengajuanCutiAlasanPenting = lazy(() => import("../templates/user/PengajuanCutiAlasanPenting"));
+const PengajuanCLTN = lazy(() => import("../templates/user/PengajuanCLTN"));
+const RiwayatCutiTahunan = lazy(() => import("../templates/user/RiwayatCutiTahunan"));
+const RiwayatCutiBesar = lazy(() => import("../templates/user/RiwayatCutiBesar"));
+const RiwayatCutiSakit = lazy(() => import("../templates/user/RiwayatCutiSakit"));
+const RiwayatCutiBersalin = lazy(() => import("../templates/user/RiwayatCutiBersalin"));
+const RiwayatCutiAlasanPenting = lazy(() => import("../templates/user/RiwayatCutiAlasanPenting"));
+const RiwayatCLTN = lazy(() => import("../templates/user/RiwayatCLTN"));
+
 const Main = ({ role, match }) => {
   const classes = useStyles();
   return (
     <main className={classes.main}>
       <div className={classes.toolbar} />
-      <Grid container spacing={2}>
-        <Grid item md={12} xs={12}>
-          <BreadcrumbMap role={role} />
+      <Suspense fallback={<LinearProgress />}>
+        <Grid container spacing={2}>
+          <Grid item md={12} xs={12}>
+            <BreadcrumbMap role={role} />
+          </Grid>
+          <Grid item md={12} xs={12}>
+            <Switch>
+              {/* User templates */}
+              <Route
+                exact
+                path={`${match.path}pengajuan_cuti_tahunan`}
+                render={(props) =>
+                  role === "user" ? (
+                    <PengajuanCutiTahunan {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}pengajuan_cuti_besar`}
+                render={(props) =>
+                  role === "user" ? (
+                    <PengajuanCutiBesar {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}pengajuan_cuti_sakit`}
+                render={(props) =>
+                  role === "user" ? (
+                    <PengajuanCutiSakit {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}pengajuan_cuti_bersalin`}
+                render={(props) =>
+                  role === "user" ? (
+                    <PengajuanCutiBersalin {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}pengajuan_cuti_alasan_penting`}
+                render={(props) =>
+                  role === "user" ? (
+                    <PengajuanCutiAlasanPenting {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}pengajuan_cltn`}
+                render={(props) =>
+                  role === "user" ? (
+                    <PengajuanCLTN {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}riwayat_cuti_tahunan`}
+                render={(props) =>
+                  role === "user" ? (
+                    <RiwayatCutiTahunan {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}riwayat_cuti_besar`}
+                render={(props) =>
+                  role === "user" ? (
+                    <RiwayatCutiBesar {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}riwayat_cuti_sakit`}
+                render={(props) =>
+                  role === "user" ? (
+                    <RiwayatCutiSakit {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}riwayat_cuti_bersalin`}
+                render={(props) =>
+                  role === "user" ? (
+                    <RiwayatCutiBersalin {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}riwayat_cuti_alasan_penting`}
+                render={(props) =>
+                  role === "user" ? (
+                    <RiwayatCutiAlasanPenting {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}riwayat_cltn`}
+                render={(props) =>
+                  role === "user" ? (
+                    <RiwayatCLTN {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              {/* Admin templates */}
+              <Route
+                exact
+                path={`${match.path}tambah_data_pns`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <TambahDataPNS {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}data_pns`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <DataPNS {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}data_pns/:pnsId`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <DetailPNS {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}data_pns/:pnsId/edit`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <EditDataPNS {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}beranda/:cutiId`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <Aproval {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              {/* Global */}
+              <Route
+                exact
+                path={`${match.path}profil`}
+                render={(props) => <Profile {...props} />}
+              />
+              <Route
+                exact
+                path={`${match.path}pengaturan`}
+                render={(props) => <Setting {...props} />}
+              />
+              <Route
+                exact
+                path={`${match.path}beranda`}
+                render={(props) => <Home role={role} {...props} />}
+              />
+              <Redirect
+                from={`${match.path}`}
+                to={`${match.path}beranda`}
+              />
+            </Switch>
+          </Grid>
         </Grid>
-        <Grid item md={12} xs={12}>
-          <Switch>
-            {/* User templates */}
-            <Route
-              exact
-              path={`${match.path}pengajuan_cuti_tahunan`}
-              render={(props) =>
-                role === "user" ? (
-                  <PengajuanCutiTahunan {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}pengajuan_cuti_besar`}
-              render={(props) =>
-                role === "user" ? (
-                  <PengajuanCutiBesar {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}pengajuan_cuti_sakit`}
-              render={(props) =>
-                role === "user" ? (
-                  <PengajuanCutiSakit {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}pengajuan_cuti_bersalin`}
-              render={(props) =>
-                role === "user" ? (
-                  <PengajuanCutiBersalin {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}pengajuan_cuti_alasan_penting`}
-              render={(props) =>
-                role === "user" ? (
-                  <PengajuanCutiAlasanPenting {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}pengajuan_cltn`}
-              render={(props) =>
-                role === "user" ? (
-                  <PengajuanCLTN {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}riwayat_cuti_tahunan`}
-              render={(props) =>
-                role === "user" ? (
-                  <RiwayatCutiTahunan {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}riwayat_cuti_besar`}
-              render={(props) =>
-                role === "user" ? (
-                  <RiwayatCutiBesar {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}riwayat_cuti_sakit`}
-              render={(props) =>
-                role === "user" ? (
-                  <RiwayatCutiSakit {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}riwayat_cuti_bersalin`}
-              render={(props) =>
-                role === "user" ? (
-                  <RiwayatCutiBersalin {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}riwayat_cuti_alasan_penting`}
-              render={(props) =>
-                role === "user" ? (
-                  <RiwayatCutiAlasanPenting {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}riwayat_cltn`}
-              render={(props) =>
-                role === "user" ? (
-                  <RiwayatCLTN {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            {/* Admin templates */}
-            <Route
-              exact
-              path={`${match.path}tambah_data_pns`}
-              render={(props) =>
-                role === "admin" ? (
-                  <TambahDataPNS {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}data_pns`}
-              render={(props) =>
-                role === "admin" ? (
-                  <DataPNS {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}data_pns/:pnsId`}
-              render={(props) =>
-                role === "admin" ? (
-                  <DetailPNS {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}data_pns/:pnsId/edit`}
-              render={(props) =>
-                role === "admin" ? (
-                  <EditDataPNS {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            <Route
-              exact
-              path={`${match.path}beranda/:cutiId`}
-              render={(props) =>
-                role === "admin" ? (
-                  <Aproval {...props} />
-                ) : (
-                    <div>Halaman Tidak Ditemukan</div>
-                  )}
-            />
-
-            {/* Global */}
-            <Route
-              exact
-              path={`${match.path}profil`}
-              render={(props) => <Profile {...props} />}
-            />
-            <Route
-              exact
-              path={`${match.path}pengaturan`}
-              render={(props) => <Setting {...props} />}
-            />
-            <Route
-              exact
-              path={`${match.path}beranda`}
-              render={(props) => <Home role={role} {...props} />}
-            />
-            <Redirect
-              from={`${match.path}`}
-              to={`${match.path}beranda`}
-            />
-          </Switch>
-        </Grid>
-      </Grid>
-    </main>
+      </Suspense>
+    </main >
   );
 };
 
