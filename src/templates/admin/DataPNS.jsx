@@ -39,6 +39,9 @@ class DataPNS extends Component {
         if (this.__subscribe) {
           this.dataPNS(res.data);
         }
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }
 

@@ -14,7 +14,9 @@ export const login = (user) => (dispatch) => {
                 sessionService.saveUser({
                   role: res.data.role
                 })
-                  .then(() => resolve(true));
+                  .then(() => {
+                    return resolve(true);
+                  });
               });
           });
       })
@@ -40,5 +42,14 @@ export const register = (newUser) => (dispatch) => {
           });
       })
       .catch(() => reject(false));
+  });
+};
+
+export const logout = () => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    delete Axios.defaults.headers.common['Authorization'];
+    sessionService.deleteSession();
+    sessionService.deleteSessionUser();
+    return resolve(true);
   });
 };
