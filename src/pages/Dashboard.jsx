@@ -41,7 +41,7 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       mobileOpen: false,
-      role: "user"
+      role: "admin"
     };
   }
 

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import Axios from "axios";
 
 // React router dom
 import { NavLink } from "react-router-dom";
@@ -18,43 +19,40 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-// Redux
-import { connect } from "react-redux";
-import { getDetailPNS } from "../../redux/actions/pnsAction";
-
-import Axios from "axios";
-
 class DetailPNS extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detailPNS: {},
+      data: {},
       isLoading: true
     };
-    this._isMounted = false;
+    this.__subscribe = false;
   }
 
+  dataPNS = (data) => {
+    this.setState({
+      data,
+      isLoading: false
+    });
+  };
+
   componentDidMount() {
-    this._isMounted = true;
-    const { match } = this.props;
-    Axios.get(`/dataPNS/${match.params.pnsId}`)
-      .then((res) => {
-        if (this._isMounted) {
-          this.setState({
-            detailPNS: res.data,
-            isLoading: false
-          });
+    this.__subscribe = true;
+    Axios.get(`/dataPNS/${this.props.match.params.pnsId}`)
+      .then(res => {
+        if (this.__subscribe) {
+          this.dataPNS(res.data);
         }
       });
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.__subscribe = false;
   }
 
   render() {
     const { match } = this.props;
-    const { detailPNS, isLoading } = this.state;
+    const { data, isLoading } = this.state;
     return (
       <Card>
         <CardHeader title="Detail PNS" />
@@ -75,7 +73,17 @@ class DetailPNS extends Component {
                   variant="outlined"
                   margin="normal"
                   label="NIP"
-                  value={detailPNS.nip}
+                  value={data.nip}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  label="NIK"
+                  value={data.nik}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -85,7 +93,7 @@ class DetailPNS extends Component {
                   variant="outlined"
                   margin="normal"
                   label="Nama"
-                  value={detailPNS.nama}
+                  value={data.nama}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -95,7 +103,7 @@ class DetailPNS extends Component {
                   variant="outlined"
                   margin="normal"
                   label="Golongan"
-                  value={detailPNS.golongan}
+                  value={data.golongan}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -105,7 +113,7 @@ class DetailPNS extends Component {
                   variant="outlined"
                   margin="normal"
                   label="Unit Kerja"
-                  value={detailPNS.unitKerja}
+                  value={data.unitKerja}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -115,7 +123,7 @@ class DetailPNS extends Component {
                   variant="outlined"
                   margin="normal"
                   label="Nomor Telepon"
-                  value={detailPNS.noTelp}
+                  value={data.noTelp}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -125,7 +133,7 @@ class DetailPNS extends Component {
                   variant="outlined"
                   margin="normal"
                   label="Status Registrasi"
-                  value={detailPNS.registrasi ? "Teregistrasi" : "Belum Teregistrasi"}
+                  value={data.registrasi ? "Teregistrasi" : "Belum Teregistrasi"}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -159,13 +167,4 @@ class DetailPNS extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isLoading: state.pns.isLoading,
-  detailPNS: state.pns.detailPNS
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getDetailPNS: (pnsId) => dispatch(getDetailPNS(pnsId))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DetailPNS);
+export default DetailPNS;

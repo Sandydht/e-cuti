@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import pnsReducer from "./pnsReducer";
+import { sessionReducer } from "redux-react-session";
 
 export default combineReducers({
-  pns: pnsReducer
+  session: sessionReducer
 });

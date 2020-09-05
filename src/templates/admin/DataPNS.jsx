@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Axios from "axios";
 
 // Material UI
 import Button from "@material-ui/core/Button";
@@ -14,43 +15,40 @@ import DataTable from "../../atoms/DataTable";
 // React router dom
 import { NavLink } from "react-router-dom";
 
-// Redux
-import { connect } from "react-redux";
-import { getAllDataPNS } from "../../redux/actions/pnsAction";
-
-import Axios from "axios";
-
 class DataPNS extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataPNS: [],
+      data: [],
       isLoading: true
     };
-    this._isMounted = false;
+    this.__subscribe = false;
   }
 
+  dataPNS = (data) => {
+    this.setState({
+      data,
+      isLoading: false
+    });
+  };
+
   componentDidMount() {
-    this._isMounted = true;
-    Axios
-      .get("/dataPNS")
+    this.__subscribe = true;
+    Axios.get("/dataPNS")
       .then(res => {
-        if (this._isMounted) {
-          this.setState({
-            isLoading: false,
-            dataPNS: res.data
-          });
+        if (this.__subscribe) {
+          this.dataPNS(res.data);
         }
       });
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.__subscribe = false;
   }
 
   render() {
     const { match } = this.props;
-    const { dataPNS, isLoading } = this.state;
+    const { data, isLoading } = this.state;
     return (
       <Grid container spacing={2}>
         <Grid item md={12} xs={12}>
@@ -60,11 +58,19 @@ class DataPNS extends Component {
           <DataTable
             title="Data PNS"
             isLoading={isLoading}
-            data={dataPNS}
+            data={data}
             columns={[
               {
                 name: "nip",
                 label: "NIP",
+                options: {
+                  filter: true,
+                  sort: false
+                }
+              },
+              {
+                name: "nik",
+                label: "NIK",
                 options: {
                   filter: true,
                   sort: false
@@ -107,7 +113,7 @@ class DataPNS extends Component {
                         size="small"
                         startIcon={<FindInPageIcon />}
                         component={NavLink}
-                        to={`${match.url}/${dataPNS[dataIndex].pnsId}`}
+                        to={`${match.url}/${data[dataIndex].pnsId}`}
                       >Detail</Button>
                     );
                   }
@@ -121,13 +127,4 @@ class DataPNS extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isLoading: state.pns.isLoading,
-  dataPNS: state.pns.dataPNS
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getAllDataPNS: () => dispatch(getAllDataPNS())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DataPNS);
+export default DataPNS;
