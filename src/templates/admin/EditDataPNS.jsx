@@ -11,9 +11,13 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // Icons
 import SaveIcon from '@material-ui/icons/Save';
+
+// Notistack
+import { withSnackbar } from "notistack";
 
 // Formik & Yup 
 import { Formik, Form } from "formik";
@@ -21,8 +25,91 @@ import * as Yup from "yup";
 
 // Validation schema
 const validationSchema = Yup.object().shape({
-
+  nip: Yup.string()
+    .required("Harap isi form nip"),
+  nik: Yup.string()
+    .required("Harap isi form nik"),
+  nama: Yup.string()
+    .required("Harap isi form nama"),
+  golongan: Yup.string()
+    .required("Harap isi form golongan"),
+  unitKerja: Yup.string()
+    .required("Harap isi form unitKerja"),
+  noTelp: Yup.string()
+    .required("Harap isi form nomor telepon")
 });
+
+// Golongan
+const golongan = [
+  {
+    value: "Juru Muda (I/a)",
+    label: "Juru Muda (I/a)"
+  },
+  {
+    value: "Juru Muda Tingkat I (I/b)",
+    label: "Juru Muda Tingkat I (I/b)"
+  },
+  {
+    value: "Juru (I/c)",
+    label: "Juru (I/c)"
+  },
+  {
+    value: "Juru Tingkat I (I/d)",
+    label: "Juru Tingkat I (I/d)"
+  },
+  {
+    value: "Pengatur Muda (II/a)",
+    label: "Pengatur Muda (II/a)"
+  },
+  {
+    value: "Pengatur Muda Tingkat I (II/b)",
+    label: "Pengatur Muda Tingkat I (II/b)"
+  },
+  {
+    value: "Pengatur (II/c)",
+    label: "Pengatur (II/c)"
+  },
+  {
+    value: "Pengatur Tingkat I (II/d)",
+    label: "Pengatur Tingkat I (II/d)"
+  },
+  {
+    value: "Penata Muda (III/a)",
+    label: "Penata Muda (III/a)"
+  },
+  {
+    value: "Penata Muda Tingkat I (III/b)",
+    label: "Penata Muda Tingkat I (III/b)"
+  },
+  {
+    value: "Penata (III/c)",
+    label: "Penata (III/c)"
+  },
+  {
+    value: "Penata Tingkat I (III/d)",
+    label: "Penata Tingkat I (III/d)"
+  },
+  {
+    value: "Pembina (IV/a)",
+    label: "Pembina (IV/a)"
+  },
+  {
+    value: "Pembina Tingkat I (IV/b)",
+    label: "Pembina Tingkat I (IV/b)"
+  },
+  {
+    value: "Pembina Utama Muda (IV/c)",
+    label: "Pembina Utama Muda (IV/c)"
+  },
+  {
+    value: "Pembina Utama Madya (IV/d)",
+    label: "Pembina Utama Madya (IV/d)"
+  },
+  {
+    value: "Pembina Utama (IV/e)",
+    label: "Pembina Utama (IV/e)"
+  },
+];
 
 class EditDataPNS extends Component {
   constructor(props) {
@@ -87,11 +174,12 @@ class EditDataPNS extends Component {
                   Axios.put(`/dataPNS/${this.props.match.params.pnsId}/edit`, values)
                     .then(() => {
                       setSubmitting(false);
-                      console.log("Data berhasil diperbarui");
+                      this.props.history.push(`/data_pns/${this.props.match.params.pnsId}`);
+                      this.props.enqueueSnackbar("Data berhasil diperbarui", { variant: "success", preventDuplicate: true });
                     })
                     .catch(() => {
                       setSubmitting(false);
-                      console.log("Data gagal diperbarui");
+                      this.props.enqueueSnackbar("Data gagal diperbarui", { variant: "error", preventDuplicate: true });
                     });
                 }}
               >
@@ -109,6 +197,7 @@ class EditDataPNS extends Component {
                         name="nip"
                         label="NIP"
                         fullWidth
+                        required
                         margin="normal"
                         variant="outlined"
                         error={Boolean(touched.nip && errors.nip)}
@@ -122,6 +211,7 @@ class EditDataPNS extends Component {
                         name="nik"
                         label="NIK"
                         fullWidth
+                        required
                         margin="normal"
                         variant="outlined"
                         error={Boolean(touched.nik && errors.nik)}
@@ -135,6 +225,7 @@ class EditDataPNS extends Component {
                         name="nama"
                         label="Nama"
                         fullWidth
+                        required
                         margin="normal"
                         variant="outlined"
                         error={Boolean(touched.nama && errors.nama)}
@@ -148,6 +239,8 @@ class EditDataPNS extends Component {
                         name="golongan"
                         label="Golongan"
                         fullWidth
+                        required
+                        select
                         margin="normal"
                         variant="outlined"
                         error={Boolean(touched.golongan && errors.golongan)}
@@ -155,12 +248,19 @@ class EditDataPNS extends Component {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.golongan}
-                      />
+                      >
+                        {golongan.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
                       <TextField
                         id="unitKerja"
                         name="unitKerja"
                         label="Unit Kerja"
                         fullWidth
+                        required
                         margin="normal"
                         variant="outlined"
                         error={Boolean(touched.unitKerja && errors.unitKerja)}
@@ -174,6 +274,7 @@ class EditDataPNS extends Component {
                         name="noTelp"
                         label="Nomor Telepon"
                         fullWidth
+                        required
                         margin="normal"
                         variant="outlined"
                         error={Boolean(touched.noTelp && errors.noTelp)}
@@ -206,4 +307,4 @@ class EditDataPNS extends Component {
   }
 }
 
-export default EditDataPNS;
+export default withSnackbar(EditDataPNS);

@@ -4,6 +4,13 @@ import "./App.css";
 // Material UI
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import IconButton from "@material-ui/core/IconButton";
+
+// Icons
+import CloseIcon from '@material-ui/icons/Close';
+
+// Notistack
+import { SnackbarProvider } from "notistack";
 
 // React router dom
 import {
@@ -34,28 +41,46 @@ const theme = createMuiTheme({
 
 class App extends Component {
   render() {
+    // add action to all snackbars
+    const notistackRef = React.createRef();
+    const onClickDismiss = key => () => {
+      notistackRef.current.closeSnackbar(key);
+    };
     return (
       <Provider store={store}>
         <MuiThemeProvider theme={theme}>
-          <CssBaseline />
-          <Router>
-            <Switch>
-              <Route
-                path="/register"
-                component={Signup}
-              />
+          <SnackbarProvider
+            maxSnack={3}
+            ref={notistackRef}
+            action={(key) => (
+              <IconButton
+                color="inherit"
+                onClick={onClickDismiss(key)}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            )}
+          >
+            <CssBaseline />
+            <Router>
+              <Switch>
+                <Route
+                  path="/register"
+                  component={Signup}
+                />
 
-              <Route
-                path="/login"
-                component={Login}
-              />
+                <Route
+                  path="/login"
+                  component={Login}
+                />
 
-              <Route
-                path="/"
-                component={Dashboard}
-              />
-            </Switch>
-          </Router>
+                <Route
+                  path="/"
+                  component={Dashboard}
+                />
+              </Switch>
+            </Router>
+          </SnackbarProvider>
         </MuiThemeProvider>
       </Provider>
     );

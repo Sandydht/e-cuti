@@ -21,6 +21,7 @@ import DataPNS from "../templates/admin/DataPNS";
 import DetailPNS from "../templates/admin/DetailPNS";
 import Aproval from "../templates/admin/Aproval";
 import EditDataPNS from "../templates/admin/EditDataPNS";
+import TambahDataPNS from "../templates/admin/TambahDataPNS";
 
 // User templates
 import PengajuanCutiTahunan from "../templates/user/PengajuanCutiTahunan";
@@ -192,6 +193,17 @@ const Main = ({ role, match }) => {
             />
 
             {/* Admin templates */}
+            <Route
+              exact
+              path={`${match.path}tambah_data_pns`}
+              render={(props) =>
+                role === "admin" ? (
+                  <TambahDataPNS {...props} />
+                ) : (
+                    <div>Halaman Tidak Ditemukan</div>
+                  )}
+            />
+
             <Route
               exact
               path={`${match.path}data_pns`}

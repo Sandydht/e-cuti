@@ -17,7 +17,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Icons
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+
+import HapusDataPNS from "./HapusDataPNS";
 
 class DetailPNS extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class DetailPNS extends Component {
   }
 
   render() {
-    const { match } = this.props;
+    const { match, ...rest } = this.props;
     const { data, isLoading } = this.state;
     return (
       <Card>
@@ -133,7 +134,7 @@ class DetailPNS extends Component {
                   variant="outlined"
                   margin="normal"
                   label="Status Registrasi"
-                  value={data.registrasi ? "Teregistrasi" : "Belum Teregistrasi"}
+                  value={data.register ? "Teregistrasi" : "Belum Teregistrasi"}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -142,11 +143,11 @@ class DetailPNS extends Component {
                 <Box mt={2}>
                   <Grid container spacing={2} justify="flex-end">
                     <Grid item>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<DeleteIcon />}
-                      >Hapus</Button>
+                      <HapusDataPNS
+                        disabled={data.register}
+                        id={this.props.match.params.pnsId}
+                        {...rest}
+                      />
                     </Grid>
                     <Grid item>
                       <Button

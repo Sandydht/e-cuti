@@ -52,7 +52,7 @@ class DataPNS extends Component {
     return (
       <Grid container spacing={2}>
         <Grid item md={12} xs={12}>
-          <Button color="primary" variant="contained" startIcon={<PersonAddIcon />}>Tambah Data PNS</Button>
+          <Button color="primary" variant="contained" startIcon={<PersonAddIcon />} component={NavLink} to="/tambah_data_pns" >Tambah Data PNS</Button>
         </Grid>
         <Grid item md={12} xs={12}>
           <DataTable
@@ -87,14 +87,6 @@ class DataPNS extends Component {
               {
                 name: "golongan",
                 label: "Golongan",
-                options: {
-                  filter: true,
-                  sort: false
-                }
-              },
-              {
-                name: "unitKerja",
-                label: "Unit Kerja",
                 options: {
                   filter: true,
                   sort: false
