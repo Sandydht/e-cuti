@@ -25,6 +25,8 @@ import {
 
 // Redux
 import { connect } from "react-redux";
+import store from "./redux";
+import { logout } from './redux/actions';
 
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
@@ -43,13 +45,19 @@ const theme = createMuiTheme({
 
 Axios.defaults.baseURL = "http://localhost:5001/e-cuti-5a43b/us-central1/api";
 
-let reduxReactSession = "";
-reduxReactSession = localStorage.getItem("redux-react-session/USER-SESSION");
+const token = localStorage.getItem("redux-react-session/USER-SESSION");
 
-if (reduxReactSession !== null) {
-  Axios.defaults.headers.common['Authorization'] = reduxReactSession.replace(/("|')/g, "");
+if (token) {
+  const decodedToken = jwtDecode(token);
+  if (decodedToken.exp * 1000 < Date.now()) {
+    store.dispatch(logout());
+    window.location.href = "/login";
+  } else {
+    if (token !== null) {
+      Axios.defaults.headers.common['Authorization'] = token.replace(/("|')/g, "");
+    }
+  }
 }
-
 
 const App = ({ checked, authenticated }) => {
   const notistackRef = React.createRef();

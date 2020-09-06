@@ -5,8 +5,7 @@ export const login = (user) => (dispatch) => {
   return new Promise((resolve, reject) => {
     Axios.post("/login", user)
       .then(res => {
-        const bearer = "Bearer";
-        const FBIdToken = bearer.concat(` ${res.data.token}`);
+        const FBIdToken = `Bearer ${res.data.token}`;
         Axios.defaults.headers.common['Authorization'] = FBIdToken;
         sessionService.saveSession(FBIdToken)
           .then(() => {
@@ -48,9 +47,13 @@ export const register = (newUser) => (dispatch) => {
 
 export const logout = () => (dispatch) => {
   return new Promise((resolve, reject) => {
-    delete Axios.defaults.headers.common['Authorization'];
-    sessionService.deleteSession();
-    sessionService.deleteSessionUser();
-    return resolve(true);
+    Axios.post("/logout")
+      .then(() => {
+        delete Axios.defaults.headers.common['Authorization'];
+        sessionService.deleteSession();
+        sessionService.deleteUser();
+        return resolve(true);
+      })
+      .catch(() => reject(false));
   });
 };
