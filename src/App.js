@@ -44,9 +44,7 @@ const theme = createMuiTheme({
 });
 
 Axios.defaults.baseURL = "http://localhost:5001/e-cuti-5a43b/us-central1/api";
-
 const token = localStorage.getItem("redux-react-session/USER-SESSION");
-
 if (token) {
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {

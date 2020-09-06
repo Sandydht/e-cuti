@@ -30,7 +30,7 @@ const styles = (theme) => ({
     overflow: 'auto',
   },
   footer: {
-    padding: theme.spacing(3, 2),
+    padding: theme.spacing(5, 3),
     textAlign: "center",
     marginTop: 'auto'
   },

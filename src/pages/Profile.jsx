@@ -36,6 +36,11 @@ class Profile extends Component {
         if (this.__subscribe) {
           this.dataProfile(res.data);
         }
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false
+        });
       });
   }
 
@@ -45,6 +50,7 @@ class Profile extends Component {
 
   render() {
     const { data, isLoading } = this.state;
+
     return (
       <Card>
         <CardHeader title="Profil" />
