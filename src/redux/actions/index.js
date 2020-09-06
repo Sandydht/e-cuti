@@ -5,9 +5,10 @@ export const login = (user) => (dispatch) => {
   return new Promise((resolve, reject) => {
     Axios.post("/login", user)
       .then(res => {
-        const FBIdToken = `Bearer ${res.data.token}`;
+        const bearer = "Bearer";
+        const FBIdToken = bearer.concat(` ${res.data.token}`);
         Axios.defaults.headers.common['Authorization'] = FBIdToken;
-        sessionService.saveSession({ FBIdToken })
+        sessionService.saveSession(FBIdToken)
           .then(() => {
             Axios.get("/dataUser")
               .then(res => {

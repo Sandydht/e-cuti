@@ -7,6 +7,6 @@ import { sessionService } from "redux-react-session";
 const store = createStore(rootReducers, composeWithDevTools(
   applyMiddleware(thunk)
 ));
-sessionService.initSessionService(store);
+sessionService.initSessionService(store, { driver: "LOCALSTORAGE" });
 
 export default store;
