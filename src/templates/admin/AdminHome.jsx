@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Axios from "axios";
 
 // Material UI
 import Card from "@material-ui/core/Card";
@@ -16,12 +17,45 @@ import DataTable from "../../atoms/DataTable";
 // React router dom
 import { NavLink } from "react-router-dom";
 
-const data = [
-  ["123456789012345678", "Sandy Dwi Handoko Trapsilo", "Pembina Utama (IV/e)", "Cuti Tahunan", "Menunggu"]
-];
-
 class AdminHome extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      data: []
+    };
+
+    this.__subscribe = false;
+  }
+
+  dataCuti = (data) => {
+    this.setState({
+      isLoading: false,
+      data
+    });
+  };
+
+  componentDidMount() {
+    this.__subscribe = true;
+    Axios.get("/dataPengajuanCuti")
+      .then(res => {
+        if (this.__subscribe) {
+          this.dataCuti(res.data);
+        }
+      })
+      .catch(() => this.setState({
+        isLoading: false,
+        data: []
+      }));
+  }
+
+  componentWillUnmount() {
+    this.__subscribe = false;
+  }
+
   render() {
+    const { data, isLoading } = this.state;
+
     return (
       <Card>
         <CardHeader title="Admin Dashboard" />
@@ -29,38 +63,44 @@ class AdminHome extends Component {
         <CardContent>
           <DataTable
             title="Data Pengajuan Cuti"
+            isLoading={isLoading}
             data={data}
             columns={[
               {
-                name: "NIP",
+                name: "nip",
+                label: "NIP",
                 options: {
                   filter: true,
                   sort: false
                 }
               },
               {
-                name: "Nama",
+                name: "nama",
+                label: "Nama",
                 options: {
                   filter: true,
                   sort: false
                 }
               },
               {
-                name: "Golongan",
+                name: "golongan",
+                label: "Golongan",
                 options: {
                   filter: true,
                   sort: false
                 }
               },
               {
-                name: "Jenis Cuti",
+                name: "jenisCuti",
+                label: "Jenis Cuti",
                 options: {
                   filter: true,
                   sort: false
                 }
               },
               {
-                name: "Status Persetujuan",
+                name: "tglPengajuan",
+                label: "Tanggal Pengajuan",
                 options: {
                   filter: true,
                   sort: false
@@ -79,7 +119,7 @@ class AdminHome extends Component {
                         size="small"
                         startIcon={<FindInPageIcon />}
                         component={NavLink}
-                        to={`/beranda/${dataIndex}`}
+                        to={`/beranda/${data[dataIndex].cutiId}`}
                       >Detail</Button>
                     );
                   }
