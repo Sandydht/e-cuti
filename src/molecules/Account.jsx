@@ -65,12 +65,7 @@ class Account extends Component {
   };
 
   handleLogout = () => {
-    this.props.logout()
-      .then(() => {
-        this.props.enqueueSnackbar("Logout berhasil", { variant: "success", preventDuplicate: true });
-        this.props.history.push("/");
-      })
-      .catch(() => this.props.enqueueSnackbar("Logout gagal", { variant: "error", preventDuplicate: true }));
+    this.props.logout();
   };
 
   render() {

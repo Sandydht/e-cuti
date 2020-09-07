@@ -62,7 +62,7 @@ class AdminHome extends Component {
         <Divider />
         <CardContent>
           <DataTable
-            title="Data Pengajuan Cuti"
+            title="Tabel Pengajuan Cuti"
             isLoading={isLoading}
             data={data}
             columns={[
@@ -99,8 +99,16 @@ class AdminHome extends Component {
                 }
               },
               {
-                name: "tglPengajuan",
-                label: "Tanggal Pengajuan",
+                name: "tglMulai",
+                label: "Tanggal Mulai",
+                options: {
+                  filter: true,
+                  sort: false
+                }
+              },
+              {
+                name: "tglSelesai",
+                label: "s/d Tanggal",
                 options: {
                   filter: true,
                   sort: false

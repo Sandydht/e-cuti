@@ -46,14 +46,7 @@ export const register = (newUser) => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  return new Promise((resolve, reject) => {
-    Axios.post("/logout")
-      .then(() => {
-        delete Axios.defaults.headers.common['Authorization'];
-        sessionService.deleteSession();
-        sessionService.deleteUser();
-        return resolve(true);
-      })
-      .catch(() => reject(false));
-  });
+  delete Axios.defaults.headers.common['Authorization'];
+  sessionService.deleteSession();
+  sessionService.deleteUser();
 };

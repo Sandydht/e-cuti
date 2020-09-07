@@ -104,8 +104,35 @@ class FormPengajuanCuti extends Component {
                     alamatSelamaCuti: ""
                   }}
                   validationSchema={validationSchema}
-                  onSubmit={(values, { setSubmitting, resetForm }) => {
-                    Axios.post("/pengajuanCuti", values)
+                  onSubmit={({ nip, nama, noTelp, golongan, unitKerja, jenisCuti, alasanCuti, tglMulai, tglSelesai, alamatSelamaCuti }, { setSubmitting, resetForm }) => {
+                    // Mencari lama cuti
+                    const date1 = Date.parse(tglMulai);
+                    const date2 = Date.parse(tglSelesai);
+                    const lamaHari = (((date2 - date1) / (1000 * 3600 * 24) + 1));
+                    const lamaCuti = `${lamaHari - (parseInt(lamaHari / 7) * 2)} hari`;
+
+                    // Mencari tgl pengajuan
+                    let today = new Date();
+                    let yyyy = today.getFullYear();
+                    let mm = today.getMonth() + 1;
+                    let dd = today.getDate();
+                    if (mm < 10) mm = `0${mm}`;
+                    today = `${yyyy}-${mm}-${dd}`;
+
+                    Axios.post("/pengajuanCuti", {
+                      nip,
+                      nama,
+                      noTelp,
+                      golongan,
+                      unitKerja,
+                      jenisCuti,
+                      alasanCuti,
+                      tglMulai,
+                      tglSelesai,
+                      alamatSelamaCuti,
+                      lamaCuti,
+                      tglPengajuan: today
+                    })
                       .then(() => {
                         setSubmitting(false);
                         resetForm();

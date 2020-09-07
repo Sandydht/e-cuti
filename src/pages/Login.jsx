@@ -105,8 +105,7 @@ class Login extends Component {
               this.props.login(values)
                 .then(() => {
                   setSubmitting(false);
-                  const { from } = this.props.location.state || { from: { pathname: "/" } };
-                  this.props.history.replace(from);
+                  this.props.history.replace("/");
                   this.props.enqueueSnackbar("Login berhasil", { variant: "success", preventDuplicate: true });
                 })
                 .catch(() => {
