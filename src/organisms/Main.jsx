@@ -28,10 +28,12 @@ const Home = lazy(() => import("../pages/Home"));
 const Setting = lazy(() => import("../pages/Setting"));
 const Profile = lazy(() => import("../pages/Profile"));
 
+// Global templates
+const DetailCuti = lazy(() => import("../templates/DetailCuti"));
+
 // Admin templates
 const DataPNS = lazy(() => import("../templates/admin/DataPNS"));
 const DetailPNS = lazy(() => import("../templates/admin/DetailPNS"));
-const Aproval = lazy(() => import("../templates/admin/Aproval"));
 const EditDataPNS = lazy(() => import("../templates/admin/EditDataPNS"));
 const TambahDataPNS = lazy(() => import("../templates/admin/TambahDataPNS"));
 
@@ -141,10 +143,32 @@ const Main = ({ role, match }) => {
 
               <Route
                 exact
+                path={`${match.path}riwayat_cuti_tahunan/:cutiId`}
+                render={(props) =>
+                  role === "user" ? (
+                    <DetailCuti {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
                 path={`${match.path}riwayat_cuti_besar`}
                 render={(props) =>
                   role === "user" ? (
                     <RiwayatCutiBesar {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}riwayat_cuti_besar/:cutiId`}
+                render={(props) =>
+                  role === "user" ? (
+                    <DetailCuti {...props} />
                   ) : (
                       <div>Halaman Tidak Ditemukan</div>
                     )}
@@ -163,10 +187,32 @@ const Main = ({ role, match }) => {
 
               <Route
                 exact
+                path={`${match.path}riwayat_cuti_sakit/:cutiId`}
+                render={(props) =>
+                  role === "user" ? (
+                    <DetailCuti {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
                 path={`${match.path}riwayat_cuti_bersalin`}
                 render={(props) =>
                   role === "user" ? (
                     <RiwayatCutiBersalin {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}riwayat_cuti_bersalin/:cutiId`}
+                render={(props) =>
+                  role === "user" ? (
+                    <DetailCuti {...props} />
                   ) : (
                       <div>Halaman Tidak Ditemukan</div>
                     )}
@@ -185,10 +231,32 @@ const Main = ({ role, match }) => {
 
               <Route
                 exact
+                path={`${match.path}riwayat_cuti_alasan_penting/:cutiId`}
+                render={(props) =>
+                  role === "user" ? (
+                    <DetailCuti {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
                 path={`${match.path}riwayat_cltn`}
                 render={(props) =>
                   role === "user" ? (
                     <RiwayatCLTN {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}riwayat_cltn/:cutiId`}
+                render={(props) =>
+                  role === "user" ? (
+                    <DetailCuti {...props} />
                   ) : (
                       <div>Halaman Tidak Ditemukan</div>
                     )}
@@ -244,7 +312,7 @@ const Main = ({ role, match }) => {
                 path={`${match.path}beranda/:cutiId`}
                 render={(props) =>
                   role === "admin" ? (
-                    <Aproval {...props} />
+                    <DetailCuti {...props} />
                   ) : (
                       <div>Halaman Tidak Ditemukan</div>
                     )}

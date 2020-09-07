@@ -50,11 +50,17 @@ const BreadcrumbMap = ({ role }) => {
               breadcrumbNameMap['/pengajuan_cuti_alasan_penting'] = role === "user" ? "Pengajuan Cuti Alasan Penting" : "404";
               breadcrumbNameMap['/pengajuan_cltn'] = role === "user" ? "Pengajuan CLTN" : "404";
               breadcrumbNameMap['/riwayat_cuti_tahunan'] = role === "user" ? "Riwayat Cuti Tahunan" : "404";
+              breadcrumbNameMap[`/riwayat_cuti_tahunan${params}`] = role === "user" ? "Detail Cuti" : "404";
               breadcrumbNameMap['/riwayat_cuti_besar'] = role === "user" ? "Riwayat Cuti Besar" : "404";
+              breadcrumbNameMap[`/riwayat_cuti_besar${params}`] = role === "user" ? "Detail Cuti" : "404";
               breadcrumbNameMap['/riwayat_cuti_sakit'] = role === "user" ? "Riwayat Cuti Sakit" : "404";
+              breadcrumbNameMap[`/riwayat_cuti_sakit${params}`] = role === "user" ? "Detail Cuti" : "404";
               breadcrumbNameMap['/riwayat_cuti_bersalin'] = role === "user" ? "Riwayat Cuti Bersalin" : "404";
+              breadcrumbNameMap[`/riwayat_cuti_bersalin${params}`] = role === "user" ? "Detail Cuti" : "404";
               breadcrumbNameMap['/riwayat_cuti_alasan_penting'] = role === "user" ? "Riwayat Cuti Alasan Penting" : "404";
+              breadcrumbNameMap[`/riwayat_cuti_alasan_penting${params}`] = role === "user" ? "Detail Cuti" : "404";
               breadcrumbNameMap['/riwayat_cltn'] = role === "user" ? "Riwayat CLTN" : "404";
+              breadcrumbNameMap[`/riwayat_cltn${params}`] = role === "user" ? "Detail Cuti" : "404";
 
               return last ? (
                 <Typography color="textPrimary" key={to}>

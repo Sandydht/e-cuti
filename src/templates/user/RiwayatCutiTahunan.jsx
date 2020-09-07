@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Axios from "axios";
 
 // React router dom
 import { NavLink } from "react-router-dom";
@@ -13,41 +13,78 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 // Atoms
 import DataTable from "../../atoms/DataTable";
 
-const data = [
-  ["04-09-2020", "3 hari", "05-09-2020", "07-09-2020"]
-];
-
 class RiwayatCutiTahunan extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      data: []
+    };
+
+    this.__subscribe = false;
+  }
+
+  riwayatCuti = (data) => {
+    this.setState({
+      isLoading: false,
+      data
+    });
+  };
+
+  componentDidMount() {
+    this.__subscribe = true;
+    Axios.get("/riwayatCutiTahunan")
+      .then(res => {
+        if (this.__subscribe) {
+          this.riwayatCuti(res.data);
+        }
+      })
+      .catch(() => this.setState({
+        isLoading: false
+      }));
+  }
+
+  componentWillUnmount() {
+    this.__subscribe = false;
+  }
+
   render() {
     const { match } = this.props;
+    const { isLoading, data } = this.state;
+
     return (
       <DataTable
         title="Riwayat Cuti Tahunan"
+        isLoading={isLoading}
         data={data}
         columns={[
           {
-            name: "Tanggal Pengajuan",
+            name: "tglPengajuan",
+            label: "Tanggal Pengajuan",
             options: {
               filter: true,
               sort: false
             }
           },
           {
-            name: "Lama Cuti",
+            name: "lamaCuti",
+            label: "Lama Cuti",
             options: {
               filter: true,
               sort: false
             }
           },
           {
-            name: "Tanggal Mulai",
+            name: "tglMulai",
+            label: "Tanggal Mulai",
             options: {
               filter: true,
               sort: false
             }
           },
           {
-            name: "s/d Tanggal",
+            name: "tglSelesai",
+            label: "s/d Tanggal",
             options: {
               filter: true,
               sort: false
@@ -66,7 +103,7 @@ class RiwayatCutiTahunan extends Component {
                     size="small"
                     startIcon={<FindInPageIcon />}
                     component={NavLink}
-                    to={`${match.url}/${dataIndex}`}
+                    to={`${match.url}/${data[dataIndex].cutiId}`}
                   >Detail</Button>
                 );
               }
