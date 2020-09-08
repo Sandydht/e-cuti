@@ -33,6 +33,7 @@ const DetailCuti = lazy(() => import("../templates/DetailCuti"));
 
 // Admin templates
 const DataPNS = lazy(() => import("../templates/admin/DataPNS"));
+const Aproval = lazy(() => import("../templates/admin/Aproval"));
 const DetailPNS = lazy(() => import("../templates/admin/DetailPNS"));
 const EditDataPNS = lazy(() => import("../templates/admin/EditDataPNS"));
 const TambahDataPNS = lazy(() => import("../templates/admin/TambahDataPNS"));
@@ -269,6 +270,17 @@ const Main = ({ role, match }) => {
               />
 
               {/* Admin templates */}
+              <Route
+                exact
+                path={`${match.path}beranda/:cutiId/aproval`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <Aproval {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
               <Route
                 exact
                 path={`${match.path}data_cltn`}

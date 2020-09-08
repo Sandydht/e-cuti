@@ -117,6 +117,7 @@ class FormPengajuanCuti extends Component {
                     let mm = today.getMonth() + 1;
                     let dd = today.getDate();
                     if (mm < 10) mm = `0${mm}`;
+                    if (dd < 10) dd = `0${dd}`;
                     today = `${yyyy}-${mm}-${dd}`;
 
                     Axios.post("/pengajuanCuti", {
