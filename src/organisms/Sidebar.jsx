@@ -144,22 +144,22 @@ class Sidebar extends Component {
                       {openDataCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                     </ListItem>
                     <Collapse in={openDataCuti} timeout="auto" unmountOnExit>
-                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_tahunan`} activeClassName={classes.activeLink}>
+                      <ListItem button onClick={onClick} className={classes.nested} component={NavLink} to={`${match.url}data_cuti_tahunan`} activeClassName={classes.activeLink}>
                         <ListItemText primary="Cuti Tahunan" />
                       </ListItem>
-                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_besar`} activeClassName={classes.activeLink}>
+                      <ListItem button onClick={onClick} className={classes.nested} component={NavLink} to={`${match.url}data_cuti_besar`} activeClassName={classes.activeLink}>
                         <ListItemText primary="Cuti Besar" />
                       </ListItem>
-                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_sakit`} activeClassName={classes.activeLink}>
+                      <ListItem button onClick={onClick} className={classes.nested} component={NavLink} to={`${match.url}data_cuti_sakit`} activeClassName={classes.activeLink}>
                         <ListItemText primary="Cuti Sakit" />
                       </ListItem>
-                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_bersalin`} activeClassName={classes.activeLink}>
+                      <ListItem button onClick={onClick} className={classes.nested} component={NavLink} to={`${match.url}data_cuti_bersalin`} activeClassName={classes.activeLink}>
                         <ListItemText primary="Cuti Bersalin" />
                       </ListItem>
-                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_alasan_penting`} activeClassName={classes.activeLink}>
+                      <ListItem button onClick={onClick} className={classes.nested} component={NavLink} to={`${match.url}data_cuti_alasan_penting`} activeClassName={classes.activeLink}>
                         <ListItemText primary="Cuti Alasan Penting" />
                       </ListItem>
-                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cltn`} activeClassName={classes.activeLink}>
+                      <ListItem button onClick={onClick} className={classes.nested} component={NavLink} to={`${match.url}data_cltn`} activeClassName={classes.activeLink}>
                         <ListItemText primary="CLTN" />
                       </ListItem>
                     </Collapse>
