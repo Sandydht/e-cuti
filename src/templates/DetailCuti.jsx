@@ -10,16 +10,13 @@ import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Button from "@material-ui/core/Button";
-
-// Icons
-import EditIcon from '@material-ui/icons/Edit';
 
 // Redux
 import { connect } from "react-redux";
 
-// React router dom
-import { NavLink } from "react-router-dom";
+// Templates
+import Aproval from "./admin/Aproval";
+import ProgressPengajuanCuti from "./user/ProgressPengajuanCuti";
 
 class DetailCuti extends Component {
   constructor(props) {
@@ -56,10 +53,38 @@ class DetailCuti extends Component {
 
   render() {
     const { isLoading, data } = this.state;
-    const { match, role } = this.props;
+    const { role } = this.props;
     return (
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
+      <Grid
+        container
+        spacing={2}
+        direction={role === "admin" ? "row" : "row-reverse"}
+      >
+        {
+          role === "user" &&
+          <Grid item xs={12} md={4}>
+            <Card>
+              <CardHeader title="Progress Pengajuan Cuti" />
+              <Divider />
+              <CardContent>
+                {
+                  isLoading ? (
+                    <Box p={10}>
+                      <Grid container justify="center">
+                        <Grid item>
+                          <CircularProgress />
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  ) : (
+                      <ProgressPengajuanCuti />
+                    )
+                }
+              </CardContent>
+            </Card>
+          </Grid>
+        }
+        <Grid item xs={12} md={8}>
           <Card>
             <CardHeader title="Detail Cuti" />
             <Divider />
@@ -81,6 +106,7 @@ class DetailCuti extends Component {
                         margin="normal"
                         label="NIP"
                         value={data.nip}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
@@ -91,6 +117,7 @@ class DetailCuti extends Component {
                         margin="normal"
                         label="Nama"
                         value={data.nama}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
@@ -101,6 +128,7 @@ class DetailCuti extends Component {
                         margin="normal"
                         label="Golongan"
                         value={data.golongan}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
@@ -111,6 +139,7 @@ class DetailCuti extends Component {
                         margin="normal"
                         label="Unit Kerja"
                         value={data.unitKerja}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
@@ -121,6 +150,7 @@ class DetailCuti extends Component {
                         margin="normal"
                         label="Nomor Telepon"
                         value={data.noTelp}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
@@ -131,6 +161,7 @@ class DetailCuti extends Component {
                         margin="normal"
                         label="Jenis Cuti"
                         value={data.jenisCuti}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
@@ -141,6 +172,7 @@ class DetailCuti extends Component {
                         margin="normal"
                         label="Alasan Cuti"
                         value={data.alasanCuti}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
@@ -151,6 +183,7 @@ class DetailCuti extends Component {
                         margin="normal"
                         label="Tanggal Pengajuan"
                         value={data.tglPengajuan}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
@@ -163,6 +196,7 @@ class DetailCuti extends Component {
                               variant="outlined"
                               fullWidth
                               value={data.tglMulai}
+                              disabled
                               InputProps={{
                                 readOnly: true,
                               }}
@@ -174,6 +208,7 @@ class DetailCuti extends Component {
                               variant="outlined"
                               fullWidth
                               value={data.tglSelesai}
+                              disabled
                               InputProps={{
                                 readOnly: true,
                               }}
@@ -187,6 +222,7 @@ class DetailCuti extends Component {
                         margin="normal"
                         label="Lama Cuti"
                         value={data.lamaCuti}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
@@ -199,27 +235,11 @@ class DetailCuti extends Component {
                         rows={4}
                         margin="normal"
                         value={data.alamatSelamaCuti}
+                        disabled
                         InputProps={{
                           readOnly: true,
                         }}
                       />
-
-                      {
-                        role === "admin" &&
-                        <Box mt={2}>
-                          <Grid container justify="flex-end">
-                            <Grid item>
-                              <Button
-                                color="primary"
-                                variant="contained"
-                                startIcon={<EditIcon />}
-                                component={NavLink}
-                                to={`${match.url}/aproval`}
-                              >Aproval</Button>
-                            </Grid>
-                          </Grid>
-                        </Box>
-                      }
                     </Fragment>
                   )
               }
@@ -227,13 +247,25 @@ class DetailCuti extends Component {
           </Card>
         </Grid>
         {
-          role === "user" &&
-          <Grid item xs={12} md={12}>
+          role === "admin" &&
+          <Grid item xs={12} md={4}>
             <Card>
-              <CardHeader title="Progress Pengajuan Cuti" />
+              <CardHeader title="Aproval" />
               <Divider />
               <CardContent>
-                Konten
+                {
+                  isLoading ? (
+                    <Box p={10}>
+                      <Grid container justify="center">
+                        <Grid item>
+                          <CircularProgress />
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  ) : (
+                      <Aproval />
+                    )
+                }
               </CardContent>
             </Card>
           </Grid>

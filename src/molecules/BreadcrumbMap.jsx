@@ -37,7 +37,6 @@ const BreadcrumbMap = ({ role }) => {
 
               // Admin
               breadcrumbNameMap[`/beranda${params}`] = role === "admin" ? "Detail Cuti" : "404";
-              breadcrumbNameMap[`/beranda${params}/aproval`] = role === "admin" ? "Aproval" : "404";
               breadcrumbNameMap["/data_pns"] = role === "admin" ? "Data PNS" : "404";
               breadcrumbNameMap[`/tambah_data_pns`] = role === "admin" ? "Tambah Data PNS" : "404";
               breadcrumbNameMap[`/data_pns${params}`] = role === "admin" ? "Detail PNS" : "404";

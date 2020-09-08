@@ -164,6 +164,7 @@ class FormPengajuanCuti extends Component {
                           value={values.nip}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          disabled
                           InputProps={{
                             readOnly: true,
                           }}
@@ -178,6 +179,7 @@ class FormPengajuanCuti extends Component {
                           value={values.nama}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          disabled
                           InputProps={{
                             readOnly: true,
                           }}
@@ -192,6 +194,7 @@ class FormPengajuanCuti extends Component {
                           value={values.noTelp}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          disabled
                           InputProps={{
                             readOnly: true,
                           }}
@@ -206,6 +209,7 @@ class FormPengajuanCuti extends Component {
                           value={values.golongan}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          disabled
                           InputProps={{
                             readOnly: true,
                           }}
@@ -220,6 +224,7 @@ class FormPengajuanCuti extends Component {
                           value={values.unitKerja}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          disabled
                           InputProps={{
                             readOnly: true,
                           }}
@@ -234,6 +239,7 @@ class FormPengajuanCuti extends Component {
                           value={values.jenisCuti}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          disabled
                           InputProps={{
                             readOnly: true,
                           }}

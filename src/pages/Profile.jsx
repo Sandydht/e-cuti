@@ -73,6 +73,7 @@ class Profile extends Component {
                     margin="normal"
                     label="NIP"
                     value={data.nip}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -83,6 +84,7 @@ class Profile extends Component {
                     margin="normal"
                     label="NIK"
                     value={data.nik}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -93,6 +95,7 @@ class Profile extends Component {
                     margin="normal"
                     label="Nama"
                     value={data.nama}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -103,6 +106,7 @@ class Profile extends Component {
                     margin="normal"
                     label="Golongan"
                     value={data.golongan}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -113,6 +117,7 @@ class Profile extends Component {
                     margin="normal"
                     label="Unit Kerja"
                     value={data.unitKerja}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -123,6 +128,7 @@ class Profile extends Component {
                     margin="normal"
                     label="Nomor Telepon"
                     value={data.noTelp}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
