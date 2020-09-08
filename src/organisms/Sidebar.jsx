@@ -24,6 +24,7 @@ import HistoryIcon from '@material-ui/icons/History';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import CloseIcon from '@material-ui/icons/Close';
 
 // React router dom
@@ -65,19 +66,26 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      openRiwayatCuti: false,
+      openDataCuti: false
     };
   }
 
-  handleClick = () => {
+  handleOpenRiwayatCuti = () => {
     this.setState((state) => ({
-      open: !state.open
+      openRiwayatCuti: !state.openRiwayatCuti
+    }));
+  };
+
+  handleOpenDataCuti = () => {
+    this.setState((state) => ({
+      openDataCuti: !state.openDataCuti
     }));
   };
 
   render() {
     const { onClick, window, classes, mobileOpen, match, role } = this.props;
-    const { open } = this.state;
+    const { openRiwayatCuti, openDataCuti } = this.state;
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
@@ -130,15 +138,40 @@ class Sidebar extends Component {
                       <ListItemIcon><AssignmentIndIcon /></ListItemIcon>
                       <ListItemText primary="Data PNS" />
                     </ListItem>
+                    <ListItem button onClick={this.handleOpenDataCuti}>
+                      <ListItemIcon><AssignmentIcon /></ListItemIcon>
+                      <ListItemText primary="Data Cuti" />
+                      {openDataCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                    </ListItem>
+                    <Collapse in={openDataCuti} timeout="auto" unmountOnExit>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_tahunan`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Tahunan" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_besar`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Besar" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_sakit`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Sakit" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_bersalin`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Bersalin" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_alasan_penting`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Alasan Penting" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cltn`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="CLTN" />
+                      </ListItem>
+                    </Collapse>
                   </Fragment>
                 ) : (
                     <Fragment>
-                      <ListItem button onClick={this.handleClick}>
+                      <ListItem button onClick={this.handleOpenRiwayatCuti}>
                         <ListItemIcon><HistoryIcon /></ListItemIcon>
                         <ListItemText primary="Riwayat Cuti" />
-                        {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                        {openRiwayatCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                       </ListItem>
-                      <Collapse in={open} timeout="auto" unmountOnExit>
+                      <Collapse in={openRiwayatCuti} timeout="auto" unmountOnExit>
                         <ListItem button onClick={onClick} className={classes.nested} component={NavLink} to={`${match.url}riwayat_cuti_tahunan`} activeClassName={classes.activeLink}>
                           <ListItemText primary="Cuti Tahunan" />
                         </ListItem>
@@ -201,15 +234,40 @@ class Sidebar extends Component {
                       <ListItemIcon><AssignmentIndIcon /></ListItemIcon>
                       <ListItemText primary="Data PNS" />
                     </ListItem>
+                    <ListItem button onClick={this.handleOpenDataCuti}>
+                      <ListItemIcon><AssignmentIcon /></ListItemIcon>
+                      <ListItemText primary="Data Cuti" />
+                      {openDataCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                    </ListItem>
+                    <Collapse in={openDataCuti} timeout="auto" unmountOnExit>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_tahunan`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Tahunan" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_besar`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Besar" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_sakit`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Sakit" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_bersalin`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Bersalin" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cuti_alasan_penting`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="Cuti Alasan Penting" />
+                      </ListItem>
+                      <ListItem button className={classes.nested} component={NavLink} to={`${match.url}data_cltn`} activeClassName={classes.activeLink}>
+                        <ListItemText primary="CLTN" />
+                      </ListItem>
+                    </Collapse>
                   </Fragment>
                 ) : (
                     <Fragment>
-                      <ListItem button onClick={this.handleClick}>
+                      <ListItem button onClick={this.handleOpenRiwayatCuti}>
                         <ListItemIcon><HistoryIcon /></ListItemIcon>
                         <ListItemText primary="Riwayat Cuti" />
-                        {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                        {openRiwayatCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                       </ListItem>
-                      <Collapse in={open} timeout="auto" unmountOnExit>
+                      <Collapse in={openRiwayatCuti} timeout="auto" unmountOnExit>
                         <ListItem button className={classes.nested} component={NavLink} to={`${match.url}riwayat_cuti_tahunan`} activeClassName={classes.activeLink}>
                           <ListItemText primary="Cuti Tahunan" />
                         </ListItem>

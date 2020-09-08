@@ -36,6 +36,12 @@ const DataPNS = lazy(() => import("../templates/admin/DataPNS"));
 const DetailPNS = lazy(() => import("../templates/admin/DetailPNS"));
 const EditDataPNS = lazy(() => import("../templates/admin/EditDataPNS"));
 const TambahDataPNS = lazy(() => import("../templates/admin/TambahDataPNS"));
+const DataCutiTahunan = lazy(() => import("../templates/admin/DataCutiTahunan"));
+const DataCutiBesar = lazy(() => import("../templates/admin/DataCutiBesar"));
+const DataCutiSakit = lazy(() => import("../templates/admin/DataCutiSakit"));
+const DataCutiBersalin = lazy(() => import("../templates/admin/DataCutiBersalin"));
+const DataCutiAlasanPenting = lazy(() => import("../templates/admin/DataCutiAlasanPenting"));
+const DataCLTN = lazy(() => import("../templates/admin/DataCLTN"));
 
 // User templates
 const PengajuanCutiTahunan = lazy(() => import("../templates/user/PengajuanCutiTahunan"));
@@ -263,6 +269,72 @@ const Main = ({ role, match }) => {
               />
 
               {/* Admin templates */}
+              <Route
+                exact
+                path={`${match.path}data_cltn`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <DataCLTN {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}data_cuti_alasan_penting`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <DataCutiAlasanPenting {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}data_cuti_bersalin`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <DataCutiBersalin {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}data_cuti_sakit`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <DataCutiSakit {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}data_cuti_besar`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <DataCutiBesar {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
+              <Route
+                exact
+                path={`${match.path}data_cuti_tahunan`}
+                render={(props) =>
+                  role === "admin" ? (
+                    <DataCutiTahunan {...props} />
+                  ) : (
+                      <div>Halaman Tidak Ditemukan</div>
+                    )}
+              />
+
               <Route
                 exact
                 path={`${match.path}tambah_data_pns`}
