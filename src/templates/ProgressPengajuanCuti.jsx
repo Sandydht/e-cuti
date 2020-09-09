@@ -95,7 +95,12 @@ class ProgressPengajuanCuti extends Component {
                                 checked
                                 color="default"
                               />}
-                        label={data.pertimbangan === "Disetujui" ? "Disetujui" : data.pertimbangan === "Tidak Disetujui" ? "Tidak Disetujui" : "Menunggu"} />
+
+                        label={data.pertimbangan === "Disetujui"
+                          ? "Disetujui"
+                          : data.pertimbangan === "Tidak Disetujui"
+                            ? "Tidak Disetujui"
+                            : "Menunggu"} />
                     </RadioGroup>
                   </FormControl>
                   <TextField
@@ -106,6 +111,17 @@ class ProgressPengajuanCuti extends Component {
                     rows={4}
                     margin="normal"
                     value={data.keterangan ? data.keterangan : "Menunggu"}
+                    disabled
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                  <TextField
+                    label="Tanggal Aproval"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={data.tglAproval ? data.tglAproval : "-"}
                     disabled
                     InputProps={{
                       readOnly: true,
