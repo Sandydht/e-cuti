@@ -83,19 +83,19 @@ class AdminHome extends Component {
                 }
               },
               {
-                name: "golongan",
-                label: "Golongan",
+                name: "jenisCuti",
+                label: "Jenis Cuti",
                 options: {
                   filter: true,
                   sort: false
                 }
               },
               {
-                name: "jenisCuti",
-                label: "Jenis Cuti",
+                name: "tglPengajuan",
+                label: "Tanggal Pengajuan",
                 options: {
                   filter: true,
-                  sort: false
+                  sort: false,
                 }
               },
               {

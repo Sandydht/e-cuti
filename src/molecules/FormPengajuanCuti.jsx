@@ -113,13 +113,13 @@ class FormPengajuanCuti extends Component {
                       const lamaCuti = `${lamaHari - (parseInt(lamaHari / 7) * 2)} hari`;
 
                       // Mencari tgl pengajuan
-                      let today = new Date();
-                      let yyyy = today.getFullYear();
-                      let mm = today.getMonth() + 1;
-                      let dd = today.getDate();
-                      if (mm < 10) mm = `0${mm}`;
-                      if (dd < 10) dd = `0${dd}`;
-                      today = `${yyyy}-${mm}-${dd}`;
+                      // let today = new Date();
+                      // let yyyy = today.getFullYear();
+                      // let mm = today.getMonth() + 1;
+                      // let dd = today.getDate();
+                      // if (mm < 10) mm = `0${mm}`;
+                      // if (dd < 10) dd = `0${dd}`;
+                      // today = `${yyyy}-${mm}-${dd}`;
 
                       Axios.post("/pengajuanCuti", {
                         nip,
@@ -132,8 +132,7 @@ class FormPengajuanCuti extends Component {
                         tglMulai,
                         tglSelesai,
                         alamatSelamaCuti,
-                        lamaCuti,
-                        tglPengajuan: today
+                        lamaCuti
                       })
                         .then(() => {
                           setSubmitting(false);

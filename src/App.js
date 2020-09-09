@@ -31,13 +31,14 @@ import { logout } from './redux/actions';
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 
 const theme = createMuiTheme({
   overrides: {
     MuiTableCell: {
       head: {
         backgroundColor: 'black',
-        color: "white"
+        color: "#FFFF"
       }
     }
   }
@@ -83,6 +84,11 @@ const App = ({ checked, authenticated }) => {
             checked &&
             <Suspense fallback={<LinearProgress />}>
               <Switch>
+                <Route
+                  path="/lupa_kata_sandi"
+                  component={ForgotPassword}
+                />
+
                 <Route
                   path="/register"
                   component={Signup}

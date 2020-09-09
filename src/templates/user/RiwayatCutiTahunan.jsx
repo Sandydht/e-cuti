@@ -63,7 +63,7 @@ class RiwayatCutiTahunan extends Component {
             label: "Tanggal Pengajuan",
             options: {
               filter: true,
-              sort: false
+              sort: false,
             }
           },
           {
@@ -106,6 +106,10 @@ class RiwayatCutiTahunan extends Component {
                     to={`${match.url}/${data[dataIndex].cutiId}`}
                   >Detail</Button>
                 );
+              },
+              sortOrder: {
+                name: 'tglPengajuan',
+                direction: 'desc'
               }
             }
           },
