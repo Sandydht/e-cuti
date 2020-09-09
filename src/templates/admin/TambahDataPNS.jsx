@@ -26,9 +26,11 @@ import * as Yup from "yup";
 // Validation schema
 const validationSchema = Yup.object().shape({
   nip: Yup.string()
-    .required("Harap isi form nip"),
+    .required("Harap isi form nip")
+    .matches(/^([0-9]{18})$/, "NIP setidaknya 18 digit angka"),
   nik: Yup.string()
-    .required("Harap isi form nik"),
+    .required("Harap isi form nik")
+    .matches(/^([0-9]{16})$/, "NIK setidaknya 16 digit angka"),
   nama: Yup.string()
     .required("Harap isi form nama"),
   golongan: Yup.string()

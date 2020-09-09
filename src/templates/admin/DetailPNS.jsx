@@ -17,8 +17,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Icons
 import EditIcon from '@material-ui/icons/Edit';
-
 import HapusDataPNS from "./HapusDataPNS";
+
+import SendEmailResetPassword from "./SendEmailResetPassword";
 
 class DetailPNS extends Component {
   constructor(props) {
@@ -139,6 +140,17 @@ class DetailPNS extends Component {
                   fullWidth
                   variant="outlined"
                   margin="normal"
+                  label="Email"
+                  value={data.email ? data.email : "-"}
+                  disabled
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
                   label="Status Registrasi"
                   value={data.register ? "Teregistrasi" : "Belum Teregistrasi"}
                   disabled
@@ -159,22 +171,26 @@ class DetailPNS extends Component {
                 />
 
                 <Box mt={2}>
-                  <Grid container spacing={2} justify="flex-end">
-                    <Grid item>
+                  <Grid container spacing={2} justify="flex-end" direction="row-reverse">
+                    <Grid item xs={12} md={4}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={<EditIcon />}
+                        component={NavLink}
+                        fullWidth
+                        to={`${match.url}/edit`}
+                      >Edit</Button>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
                       <HapusDataPNS
                         disabled={data.register}
                         id={this.props.match.params.pnsId}
                         {...rest}
                       />
                     </Grid>
-                    <Grid item>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<EditIcon />}
-                        component={NavLink}
-                        to={`${match.url}/edit`}
-                      >Edit</Button>
+                    <Grid item xs={12} md={4}>
+                      <SendEmailResetPassword email={data.email} />
                     </Grid>
                   </Grid>
                 </Box>

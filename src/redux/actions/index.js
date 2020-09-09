@@ -30,7 +30,7 @@ export const register = (newUser) => (dispatch) => {
       .then(res => {
         const FBIdToken = `Bearer ${res.data.token}`;
         Axios.defaults.headers.common['Authorization'] = FBIdToken;
-        sessionService.saveSession({ FBIdToken })
+        sessionService.saveSession(FBIdToken)
           .then(() => {
             Axios.get("/dataUser")
               .then(res => {

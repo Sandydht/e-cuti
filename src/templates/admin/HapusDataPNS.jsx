@@ -58,6 +58,7 @@ class HapusDataPNS extends Component {
           startIcon={<DeleteIcon />}
           onClick={this.handleOpen}
           disabled={this.props.disabled}
+          fullWidth
         >Hapus</Button>
 
         <Dialog

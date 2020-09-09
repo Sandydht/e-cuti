@@ -126,8 +126,8 @@ class Profile extends Component {
                     fullWidth
                     variant="outlined"
                     margin="normal"
-                    label="Nomor Telepon"
-                    value={data.noTelp}
+                    label="Email"
+                    value={data.email}
                     disabled
                     InputProps={{
                       readOnly: true,
