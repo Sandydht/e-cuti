@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 
 // Templates
 import Aproval from "./admin/Aproval";
-import ProgressPengajuanCuti from "./user/ProgressPengajuanCuti";
+import ProgressPengajuanCuti from "./ProgressPengajuanCuti";
 
 class DetailCuti extends Component {
   constructor(props) {
@@ -53,7 +53,8 @@ class DetailCuti extends Component {
 
   render() {
     const { isLoading, data } = this.state;
-    const { role } = this.props;
+    const { role, ...rest } = this.props;
+
     return (
       <Grid
         container
@@ -63,33 +64,12 @@ class DetailCuti extends Component {
         {
           role === "user" && (
             <Grid item xs={12} md={4}>
-              <Card>
-                {
-                  isLoading ? (
-                    <Box p={10}>
-                      <Grid container justify="center">
-                        <Grid item>
-                          <CircularProgress />
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  ) : (
-                      <Fragment>
-                        <CardHeader title="Progress Pengajuan Cuti" />
-                        <Divider />
-                        <CardContent>
-                          <ProgressPengajuanCuti />
-                        </CardContent>
-                      </Fragment>
-                    )
-                }
-              </Card>
+              <ProgressPengajuanCuti {...rest} />
             </Grid>
           )
         }
         <Grid item xs={12} md={8}>
           <Card>
-
             {
               isLoading ? (
                 <Box p={10}>
@@ -253,33 +233,13 @@ class DetailCuti extends Component {
         {
           role === "admin" && (
             <Grid item xs={12} md={4}>
-              <Card>
-                {
-                  isLoading ? (
-                    <Box p={10}>
-                      <Grid container justify="center">
-                        <Grid item>
-                          <CircularProgress />
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  ) : (
-                      <Fragment>
-                        <CardHeader title={data.aproval ? "Pertimbangan" : "Aproval"} />
-                        <Divider />
-                        <CardContent>
-                          {
-                            data.aproval ? (
-                              <ProgressPengajuanCuti />
-                            ) : (
-                                <Aproval />
-                              )
-                          }
-                        </CardContent>
-                      </Fragment>
-                    )
-                }
-              </Card>
+              {
+                data.aproval ? (
+                  <ProgressPengajuanCuti {...rest} />
+                ) : (
+                    <Aproval isLoading={isLoading} {...rest} />
+                  )
+              }
             </Grid>
           )
         }
