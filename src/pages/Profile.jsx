@@ -53,20 +53,20 @@ class Profile extends Component {
 
     return (
       <Card>
-        <CardHeader title="Profil" />
-        <Divider />
-        <CardContent>
-          {
-            isLoading ? (
-              <Box p={10}>
-                <Grid container justify="center">
-                  <Grid item>
-                    <CircularProgress />
-                  </Grid>
+        {
+          isLoading ? (
+            <Box p={10}>
+              <Grid container justify="center">
+                <Grid item>
+                  <CircularProgress />
                 </Grid>
-              </Box>
-            ) : (
-                <Fragment>
+              </Grid>
+            </Box>
+          ) : (
+              <Fragment>
+                <CardHeader title="Profil" />
+                <Divider />
+                <CardContent>
                   <TextField
                     fullWidth
                     variant="outlined"
@@ -133,10 +133,10 @@ class Profile extends Component {
                       readOnly: true,
                     }}
                   />
-                </Fragment>
-              )
-          }
-        </CardContent>
+                </CardContent>
+              </Fragment>
+            )
+        }
       </Card>
     );
   }

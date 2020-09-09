@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Axios from "axios";
 
+// React router dom
+import { NavLink } from "react-router-dom";
+
 // Material UI
 import Button from "@material-ui/core/Button";
 
@@ -10,37 +13,37 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 // Atoms
 import DataTable from "../../atoms/DataTable";
 
-// React router dom
-import { NavLink } from "react-router-dom";
-
-class DataCutiTahunan extends Component {
+class RiwayatCutiTahunanPNS extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
-      isLoading: true
+      isLoading: true,
+      data: []
     };
+
     this.__subscribe = false;
   }
 
-  dataPNS = (data) => {
+  riwayatCuti = (data) => {
     this.setState({
-      data,
-      isLoading: false
+      isLoading: false,
+      data
     });
   };
 
   componentDidMount() {
     this.__subscribe = true;
-    Axios.get("/dataPNS")
+
+    Axios.get(`/riwayatCutiTahunanPNS/${this.props.match.params.nip}`)
       .then(res => {
         if (this.__subscribe) {
-          this.dataPNS(res.data);
+          this.riwayatCuti(res.data);
         }
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(() => this.setState({
+        isLoading: false,
+        data: []
+      }));
   }
 
   componentWillUnmount() {
@@ -50,46 +53,47 @@ class DataCutiTahunan extends Component {
   render() {
     const { match } = this.props;
     const { data, isLoading } = this.state;
+
     return (
       <DataTable
-        title="Data PNS"
+        title={`Riwayat Cuti Tahunan : ${this.props.match.params.nip}`}
         isLoading={isLoading}
         data={data}
         columns={[
           {
-            name: "nip",
-            label: "NIP",
+            name: "tglPengajuan",
+            label: "Tanggal Pengajuan",
             options: {
               filter: true,
               sort: false
             }
           },
           {
-            name: "nik",
-            label: "NIK",
+            name: "lamaCuti",
+            label: "Lama Cuti",
             options: {
               filter: true,
               sort: false
             }
           },
           {
-            name: "nama",
-            label: "Nama",
+            name: "tglMulai",
+            label: "Tanggal Mulai",
             options: {
               filter: true,
               sort: false
             }
           },
           {
-            name: "golongan",
-            label: "Golongan",
+            name: "tglSelesai",
+            label: "s/d Tanggal",
             options: {
               filter: true,
               sort: false
             }
           },
           {
-            name: "Riwayat Cuti",
+            name: "Detail",
             options: {
               filter: true,
               sort: false,
@@ -101,8 +105,8 @@ class DataCutiTahunan extends Component {
                     size="small"
                     startIcon={<FindInPageIcon />}
                     component={NavLink}
-                    to={`${match.url}/${data[dataIndex].nip}`}
-                  >Riwayat</Button>
+                    to={`${match.url}/${data[dataIndex].cutiId}`}
+                  >Detail</Button>
                 );
               }
             }
@@ -113,4 +117,4 @@ class DataCutiTahunan extends Component {
   }
 }
 
-export default DataCutiTahunan;
+export default RiwayatCutiTahunanPNS;

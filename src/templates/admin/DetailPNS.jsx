@@ -56,19 +56,19 @@ class DetailPNS extends Component {
     const { data, isLoading } = this.state;
     return (
       <Card>
-        <CardHeader title="Detail PNS" />
-        <Divider />
-        <CardContent>
-          {isLoading ? (
-            <Box p={10}>
-              <Grid container justify="center">
-                <Grid item>
-                  <CircularProgress />
-                </Grid>
+        {isLoading ? (
+          <Box p={10}>
+            <Grid container justify="center">
+              <Grid item>
+                <CircularProgress />
               </Grid>
-            </Box>
-          ) : (
-              <Fragment>
+            </Grid>
+          </Box>
+        ) : (
+            <Fragment>
+              <CardHeader title="Detail PNS" />
+              <Divider />
+              <CardContent>
                 <TextField
                   fullWidth
                   variant="outlined"
@@ -167,9 +167,9 @@ class DetailPNS extends Component {
                     </Grid>
                   </Grid>
                 </Box>
-              </Fragment>
-            )}
-        </CardContent>
+              </CardContent>
+            </Fragment>
+          )}
       </Card>
     );
   }

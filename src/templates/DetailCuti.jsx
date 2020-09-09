@@ -61,12 +61,9 @@ class DetailCuti extends Component {
         direction={role === "admin" ? "row" : "row-reverse"}
       >
         {
-          role === "user" &&
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardHeader title="Progress Pengajuan Cuti" />
-              <Divider />
-              <CardContent>
+          role === "user" && (
+            <Grid item xs={12} md={4}>
+              <Card>
                 {
                   isLoading ? (
                     <Box p={10}>
@@ -77,29 +74,36 @@ class DetailCuti extends Component {
                       </Grid>
                     </Box>
                   ) : (
-                      <ProgressPengajuanCuti />
+                      <Fragment>
+                        <CardHeader title="Progress Pengajuan Cuti" />
+                        <Divider />
+                        <CardContent>
+                          <ProgressPengajuanCuti />
+                        </CardContent>
+                      </Fragment>
                     )
                 }
-              </CardContent>
-            </Card>
-          </Grid>
+              </Card>
+            </Grid>
+          )
         }
         <Grid item xs={12} md={8}>
           <Card>
-            <CardHeader title="Detail Cuti" />
-            <Divider />
-            <CardContent>
-              {
-                isLoading ? (
-                  <Box p={10}>
-                    <Grid container justify="center">
-                      <Grid item>
-                        <CircularProgress />
-                      </Grid>
+
+            {
+              isLoading ? (
+                <Box p={10}>
+                  <Grid container justify="center">
+                    <Grid item>
+                      <CircularProgress />
                     </Grid>
-                  </Box>
-                ) : (
-                    <Fragment>
+                  </Grid>
+                </Box>
+              ) : (
+                  <Fragment>
+                    <CardHeader title="Detail Cuti" />
+                    <Divider />
+                    <CardContent>
                       <TextField
                         fullWidth
                         variant="outlined"
@@ -240,19 +244,16 @@ class DetailCuti extends Component {
                           readOnly: true,
                         }}
                       />
-                    </Fragment>
-                  )
-              }
-            </CardContent>
+                    </CardContent>
+                  </Fragment>
+                )
+            }
           </Card>
         </Grid>
         {
-          role === "admin" &&
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardHeader title="Aproval" />
-              <Divider />
-              <CardContent>
+          role === "admin" && (
+            <Grid item xs={12} md={4}>
+              <Card>
                 {
                   isLoading ? (
                     <Box p={10}>
@@ -263,12 +264,24 @@ class DetailCuti extends Component {
                       </Grid>
                     </Box>
                   ) : (
-                      <Aproval />
+                      <Fragment>
+                        <CardHeader title={data.aproval ? "Pertimbangan" : "Aproval"} />
+                        <Divider />
+                        <CardContent>
+                          {
+                            data.aproval ? (
+                              <ProgressPengajuanCuti />
+                            ) : (
+                                <Aproval />
+                              )
+                          }
+                        </CardContent>
+                      </Fragment>
                     )
                 }
-              </CardContent>
-            </Card>
-          </Grid>
+              </Card>
+            </Grid>
+          )
         }
       </Grid>
     );

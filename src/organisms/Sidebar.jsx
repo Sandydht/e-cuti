@@ -140,7 +140,7 @@ class Sidebar extends Component {
                     </ListItem>
                     <ListItem button onClick={this.handleOpenDataCuti}>
                       <ListItemIcon><AssignmentIcon /></ListItemIcon>
-                      <ListItemText primary="Data Cuti" />
+                      <ListItemText primary="Data Cuti PNS" />
                       {openDataCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                     </ListItem>
                     <Collapse in={openDataCuti} timeout="auto" unmountOnExit>
@@ -236,7 +236,7 @@ class Sidebar extends Component {
                     </ListItem>
                     <ListItem button onClick={this.handleOpenDataCuti}>
                       <ListItemIcon><AssignmentIcon /></ListItemIcon>
-                      <ListItemText primary="Data Cuti" />
+                      <ListItemText primary="Data Cuti PNS" />
                       {openDataCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                     </ListItem>
                     <Collapse in={openDataCuti} timeout="auto" unmountOnExit>
