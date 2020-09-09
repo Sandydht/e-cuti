@@ -113,10 +113,9 @@ class Signup extends Component {
             onSubmit={(values, { setSubmitting }) => {
               this.props.register(values)
                 .then(() => {
-                  const { from } = this.props.location.state || { from: { pathname: "/" } };
                   setSubmitting(false);
                   this.props.enqueueSnackbar("Registrasi akun berhasil", { variant: "success", preventDuplicate: true });
-                  this.props.history.replace(from);
+                  this.props.history.replace("/");
                 })
                 .catch(() => {
                   setSubmitting(false);

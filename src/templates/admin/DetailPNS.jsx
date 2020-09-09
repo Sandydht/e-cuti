@@ -146,6 +146,17 @@ class DetailPNS extends Component {
                     readOnly: true,
                   }}
                 />
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  margin="normal"
+                  label="Tanggal Registrasi"
+                  value={data.tglRegistrasi ? data.tglRegistrasi : "-"}
+                  disabled
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
 
                 <Box mt={2}>
                   <Grid container spacing={2} justify="flex-end">
