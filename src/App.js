@@ -44,7 +44,7 @@ const theme = createMuiTheme({
   }
 });
 
-Axios.defaults.baseURL = "http://localhost:5000/e-cuti-5a43b/us-central1/api";
+Axios.defaults.baseURL = "https://us-central1-e-cuti-5a43b.cloudfunctions.net/api";
 const token = localStorage.getItem("redux-react-session/USER-SESSION");
 if (token) {
   const decodedToken = jwtDecode(token);
