@@ -45,6 +45,12 @@ class DetailPNS extends Component {
         if (this.__subscribe) {
           this.dataPNS(res.data);
         }
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+          data: {}
+        });
       });
   }
 

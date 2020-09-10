@@ -40,8 +40,11 @@ class DataPNS extends Component {
           this.dataPNS(res.data);
         }
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+          data: []
+        });
       });
   }
 

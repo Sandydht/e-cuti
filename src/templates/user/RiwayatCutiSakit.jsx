@@ -39,9 +39,12 @@ class RiwayatCutiSakit extends Component {
           this.riwayatCuti(res.data);
         }
       })
-      .catch(() => this.setState({
-        isLoading: false
-      }));
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+          data: []
+        });
+      });
   }
 
   componentWillUnmount() {

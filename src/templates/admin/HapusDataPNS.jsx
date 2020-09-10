@@ -43,6 +43,7 @@ class HapusDataPNS extends Component {
         this.props.enqueueSnackbar("Data terhapus", { variant: "success", preventDuplicate: true });
       })
       .catch(() => {
+        this.setState({ isLoading: false });
         this.props.enqueueSnackbar("Data gagal dihapus", { variant: "error", preventDuplicate: true });
       });
   };
