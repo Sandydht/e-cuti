@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from "../images/logo-prov-jateng.png";
+import Axios from "axios";
 
 // React router dom
 import { Link as RouteLink } from "react-router-dom";
@@ -19,10 +20,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // Formik & Yup
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-
-// Redux
-import { connect } from "react-redux";
-import { login } from "../redux/actions";
 
 // Organisms
 import Footer from "../organisms/Footer";
@@ -69,7 +66,7 @@ class ForgotPassword extends Component {
           <Avatar className={classes.avatar} src={logo} alt="logo-prov-jateng" />
 
           <Typography component="h1" variant="h5">
-            Temukan Akun E-Cuti Anda
+            Kirim Email Reset Kata Sandi
           </Typography>
 
           <Formik
@@ -77,8 +74,17 @@ class ForgotPassword extends Component {
               email: ""
             }}
             validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              console.log(values);
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              Axios.post("/sendEmailResetPassword", values)
+                .then(() => {
+                  setSubmitting();
+                  resetForm();
+                  this.props.enqueueSnackbar("Email terkirim", { variant: "success", preventDuplicate: true });
+                })
+                .catch(() => {
+                  setSubmitting();
+                  this.props.enqueueSnackbar("Periksa kembali email anda", { variant: "error", preventDuplicate: true });
+                });
             }}
           >
             {({
@@ -112,7 +118,7 @@ class ForgotPassword extends Component {
                     color="primary"
                     className={classes.submit}
                     disabled={isSubmitting}
-                  >{isSubmitting ? <CircularProgress size={25} /> : "Cari"}</Button>
+                  >{isSubmitting ? <CircularProgress size={25} /> : "Kirim Email"}</Button>
                 </Form>
               )}
           </Formik>
@@ -132,8 +138,4 @@ class ForgotPassword extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  login: (user, history) => dispatch(login(user, history))
-});
-
-export default connect(null, mapDispatchToProps)(withStyles(styles)(withSnackbar(ForgotPassword)));
+export default withStyles(styles)(withSnackbar(ForgotPassword));
