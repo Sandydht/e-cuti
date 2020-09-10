@@ -59,12 +59,10 @@ class DetailCuti extends Component {
       <Grid
         container
         spacing={2}
-        direction={
-          role === "admin" ? "row" : "row-reverse"
-        }
+        direction={!data.aproval ? "row" : "row-reverse"}
       >
         {
-          role === "user" &&
+          data.aproval &&
           <Grid item xs={12} md={4}>
             <ProgressPengajuanCuti {...rest} />
           </Grid>
@@ -233,15 +231,9 @@ class DetailCuti extends Component {
         </Grid>
         {
           role === "admin" &&
-            data.aproval ? (
-              <Grid item xs={12} md={4}>
-                <ProgressPengajuanCuti {...rest} />
-              </Grid>
-            ) : (
-              <Grid item xs={12} md={4}>
-                <Aproval isLoading={isLoading} {...rest} />
-              </Grid>
-            )
+          <Grid item xs={12} md={4}>
+            {!data.aproval && <Aproval isLoading={isLoading} {...rest} />}
+          </Grid>
         }
       </Grid>
     );
