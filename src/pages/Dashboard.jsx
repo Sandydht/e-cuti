@@ -64,7 +64,7 @@ class Dashboard extends Component {
         {/* Topbar */}
         <Topbar onClick={this.handleDrawerToggle} {...rest}>
           {
-            role === "admin" ? <NotifikasiPengajuan /> : <NotifikasiAproval />
+            role === "admin" ? <NotifikasiPengajuan {...rest} /> : <NotifikasiAproval />
           }
           <Account {...rest} />
         </Topbar>

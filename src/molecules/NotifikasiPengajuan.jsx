@@ -7,21 +7,22 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ListItemText from '@material-ui/core/ListItemText';
 
 // Icons
 import NotificationsIcon from '@material-ui/icons/Notifications';
-
-// React router dom
-import { NavLink } from "react-router-dom";
+import { Typography } from '@material-ui/core';
 
 class NotifikasiPengajuan extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
       anchorEl: null,
-      data: [],
-      isLoading: true
+      data: []
     };
 
     this.__subscribe = false;
@@ -31,6 +32,28 @@ class NotifikasiPengajuan extends Component {
     this.setState({
       anchorEl: event.currentTarget
     });
+
+    let unreadNotifikasiId = this.state.data
+      .filter(notifikasi => !notifikasi.read)
+      .map(notifikasi => notifikasi.notifikasiId);
+
+    Axios.post('/readNotifikasiPengajuan', unreadNotifikasiId)
+      .then(res => {
+        this.__subscribe = true;
+        Axios.get("/getNotifikasiPengajuan")
+          .then((res) => {
+            if (this.__subscribe) {
+              this.notifikasiPengajuan(res.data);
+            }
+          })
+          .catch(() => {
+            this.setState({
+              isLoading: false,
+              data: []
+            });
+          });
+      })
+      .catch(err => console.error(err));
   };
 
   handleClose = () => {
@@ -56,7 +79,8 @@ class NotifikasiPengajuan extends Component {
       })
       .catch(() => {
         this.setState({
-          isLoading: false
+          isLoading: false,
+          data: []
         });
       });
   }
@@ -66,7 +90,7 @@ class NotifikasiPengajuan extends Component {
   }
 
   render() {
-    const { anchorEl, data } = this.state;
+    const { anchorEl, data, isLoading } = this.state;
     const open = Boolean(anchorEl);
 
     return (
@@ -78,7 +102,11 @@ class NotifikasiPengajuan extends Component {
             color="inherit"
             onClick={this.handleOpen}
           >
-            <Badge badgeContent={data.length} color="secondary">
+            <Badge badgeContent={
+              data.filter(notifikasi => notifikasi.read === false).length
+            }
+              color="secondary"
+            >
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -100,19 +128,42 @@ class NotifikasiPengajuan extends Component {
           }}
         >
           {
-            data.map((value, index) => (
-              <Fragment>
-                <MenuItem
-                  onClick={this.handleClose}
-                  key={index}
-                  component={NavLink}
-                  to={`/beranda/${value.cutiId}`}
-                >
-                  {value.cutiId}
-                </MenuItem>
-                <Divider />
-              </Fragment>
-            ))
+            isLoading ? (
+              <Box p={10}>
+                <Grid container justify="center">
+                  <Grid item>
+                    <CircularProgress size={30} />
+                  </Grid>
+                </Grid>
+              </Box>
+            ) : (
+                data.map((value, index) =>
+                  value.aproval ? (
+                    <MenuItem
+                      key={index}
+                      onClick={this.handleClose}
+                    >
+                      Tidak ada notifikasi
+                    </MenuItem>
+                  ) : (
+                      <div key={index}>
+                        <MenuItem
+                          onClick={() => {
+                            this.handleClose();
+                            window.location.replace(`/beranda/${value.cutiId}`);
+                          }}
+                        >
+                          <ListItemText
+                            primary={<Typography noWrap>
+                              NIP : {value.pengirim}, mengajukan {value.jenisCuti}
+                            </Typography>}
+                            secondary={value.createdAt}
+                          />
+                        </MenuItem>
+                      </div>
+                    )
+                )
+              )
           }
         </Menu>
       </Fragment>
