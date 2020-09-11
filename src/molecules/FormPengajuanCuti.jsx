@@ -54,7 +54,7 @@ class FormPengajuanCuti extends Component {
 
   componentDidMount() {
     this.__subscribe = true;
-    Axios.get("/dataUser")
+    Axios.get("/dataProfil")
       .then(res => {
         if (this.__subscribe) {
           this.dataUser(res.data);
