@@ -24,15 +24,16 @@ class DataCutiTahunan extends Component {
   }
 
   dataPNS = (data) => {
+    const user = data.filter(data => data.register).filter(data => data.role === 'user');
     this.setState({
-      data,
-      isLoading: false
+      isLoading: false,
+      data: user
     });
   };
 
   componentDidMount() {
     this.__subscribe = true;
-    Axios.get("/dataPNSRegister")
+    Axios.get("/dataPNS")
       .then(res => {
         if (this.__subscribe) {
           this.dataPNS(res.data);

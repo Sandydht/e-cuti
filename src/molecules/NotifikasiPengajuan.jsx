@@ -10,11 +10,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
 
 // Icons
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
-class Notifikasi extends Component {
+class NotifikasiPengajuan extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,7 +70,9 @@ class Notifikasi extends Component {
             color="inherit"
             onClick={this.handleOpen}
           >
-            <Badge badgeContent={data.filter(data => !data.read).length}
+            <Badge badgeContent={
+              data.filter(data => !data.read).length
+            }
               color="secondary"
             >
               <NotificationsIcon />
@@ -101,22 +105,53 @@ class Notifikasi extends Component {
                 </Grid>
               </Box>
             ) : (
-                data
-                  .filter(data => !data.aproval)
-                  .map((value, index) => (
+                data.length > 0 ? (
+                  data.filter(data => !data.aproval).length > 0 ? (
+                    data
+                      .filter(data => !data.aproval)
+                      .map((value, index) => (
+                        <MenuItem
+                          key={index}
+                          onClick={() => {
+                            this.handleClose();
+                            window.location.replace(`/beranda/${value.cutiId}`);
+                          }}
+                        >
+                          <ListItemText
+                            primary={
+                              <Typography noWrap>
+                                NIP : {value.pengirim}, mengajukan {value.jenisCuti}
+                              </Typography>
+                            }
+                            secondary={
+                              <Typography variant='caption' noWrap>
+                                {value.createdAt}
+                              </Typography>
+                            }
+                          />
+                        </MenuItem>
+                      ))
+
+                  ) : (
+                      <MenuItem
+                        onClick={this.handleClose}
+                      >
+                        Tidak ada notifikasi
+                      </MenuItem>
+                    )
+                ) : (
                     <MenuItem
-                      key={index}
                       onClick={this.handleClose}
                     >
-                      {value.jenisCuti}
+                      Tidak ada notifikasi
                     </MenuItem>
-                  ))
+                  )
               )
           }
         </Menu>
-      </Fragment>
+      </Fragment >
     );
   }
 }
 
-export default Notifikasi;
+export default NotifikasiPengajuan;
