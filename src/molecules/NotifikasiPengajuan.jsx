@@ -20,7 +20,7 @@ class NotifikasiPengajuan extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true,
+      isLoading: false,
       anchorEl: null,
       data: []
     };
@@ -29,6 +29,7 @@ class NotifikasiPengajuan extends Component {
   }
 
   handleOpen = (event) => {
+    this.__subscribe = true;
     this.setState({
       anchorEl: event.currentTarget,
       isLoading: true
@@ -39,22 +40,21 @@ class NotifikasiPengajuan extends Component {
       .map(data => data.notifikasiId);
 
     Axios.post('/readNotifikasiPengajuan', unreadNotifikasiId)
-      .then(res => {
-        this.__subscribe = true;
-        Axios.get("/getNotifikasiPengajuan")
-          .then((res) => {
-            if (this.__subscribe) {
-              this.notifikasiPengajuan(res.data);
-            }
-          })
-          .catch(() => {
-            this.setState({
-              isLoading: false,
-              data: []
-            });
-          });
+      .then(() => this.setState({ isLoading: false }))
+      .catch(() => this.setState({ isLoading: false }));
+
+    Axios.get("/getNotifikasiPengajuan")
+      .then((res) => {
+        if (this.__subscribe) {
+          this.notifikasiPengajuan(res.data);
+        }
       })
-      .catch(err => console.error(err));
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+          data: []
+        });
+      });
   };
 
   handleClose = () => {
