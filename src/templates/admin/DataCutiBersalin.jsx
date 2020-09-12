@@ -32,7 +32,7 @@ class DataCutiBersalin extends Component {
 
   componentDidMount() {
     this.__subscribe = true;
-    Axios.get("/dataUser")
+    Axios.get("/dataPNSRegister")
       .then(res => {
         if (this.__subscribe) {
           this.dataPNS(res.data);

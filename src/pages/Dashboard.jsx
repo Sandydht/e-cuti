@@ -15,8 +15,7 @@ import Footer from "../organisms/Footer";
 
 // Molecules
 import Account from "../molecules/Account";
-import NotifikasiAproval from "../molecules/NotifikasiAproval";
-import NotifikasiPengajuan from "../molecules/NotifikasiPengajuan";
+import Notifikasi from "../molecules/Notifikasi";
 
 // Styles
 const styles = (theme) => ({
@@ -63,9 +62,8 @@ class Dashboard extends Component {
       <div className={classes.root}>
         {/* Topbar */}
         <Topbar onClick={this.handleDrawerToggle} {...rest}>
-          {
-            role === "admin" ? <NotifikasiPengajuan {...rest} /> : <NotifikasiAproval />
-          }
+          <Notifikasi {...rest} />
+
           <Account {...rest} />
         </Topbar>
 

@@ -27,14 +27,14 @@ class RiwayatCutiBersalinPNS extends Component {
   riwayatCuti = (data) => {
     this.setState({
       isLoading: false,
-      data
+      data: data.filter(data => data.jenisCuti === 'Cuti Bersalin')
     });
   };
 
   componentDidMount() {
     this.__subscribe = true;
 
-    Axios.get(`/riwayatCutiBersalinPNS/${this.props.match.params.nip}`)
+    Axios.get(`/riwayatCutiPNS/${this.props.match.params.nip}`)
       .then(res => {
         if (this.__subscribe) {
           this.riwayatCuti(res.data);

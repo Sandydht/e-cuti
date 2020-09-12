@@ -27,16 +27,16 @@ class RiwayatCutiTahunan extends Component {
   riwayatCuti = (data) => {
     this.setState({
       isLoading: false,
-      data
+      data: data.filter(data => data.jenisCuti === 'Cuti Tahunan')
     });
   };
 
   componentDidMount() {
     this.__subscribe = true;
-    Axios.get("/riwayatCutiTahunan")
+    Axios.get('/dataUser')
       .then(res => {
         if (this.__subscribe) {
-          this.riwayatCuti(res.data);
+          this.riwayatCuti(res.data.cuti);
         }
       })
       .catch(() => {

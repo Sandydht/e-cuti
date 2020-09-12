@@ -31,10 +31,10 @@ class Profile extends Component {
 
   componentDidMount() {
     this.__subscribe = true;
-    Axios.get("/dataProfil")
+    Axios.get("/dataUser")
       .then((res) => {
         if (this.__subscribe) {
-          this.dataProfile(res.data);
+          this.dataProfile(res.data.profil);
         }
       })
       .catch(() => {
