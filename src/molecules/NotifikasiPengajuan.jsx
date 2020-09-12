@@ -30,12 +30,13 @@ class NotifikasiPengajuan extends Component {
 
   handleOpen = (event) => {
     this.setState({
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
+      isLoading: true
     });
 
     let unreadNotifikasiId = this.state.data
-      .filter(notifikasi => !notifikasi.read)
-      .map(notifikasi => notifikasi.notifikasiId);
+      .filter(data => !data.read)
+      .map(data => data.notifikasiId);
 
     Axios.post('/readNotifikasiPengajuan', unreadNotifikasiId)
       .then(res => {
@@ -92,6 +93,7 @@ class NotifikasiPengajuan extends Component {
   render() {
     const { anchorEl, data, isLoading } = this.state;
     const open = Boolean(anchorEl);
+    const needAproval = data.filter(data => !data.aproval);
 
     return (
       <Fragment>
@@ -103,7 +105,7 @@ class NotifikasiPengajuan extends Component {
             onClick={this.handleOpen}
           >
             <Badge badgeContent={
-              data.filter(notifikasi => notifikasi.read === false).length
+              data.filter(notifikasi => !notifikasi.read).length
             }
               color="secondary"
             >
@@ -137,34 +139,82 @@ class NotifikasiPengajuan extends Component {
                 </Grid>
               </Box>
             ) : (
-                data.map((value, index) =>
-                  value.aproval ? (
-                    <MenuItem
-                      key={index}
-                      onClick={this.handleClose}
-                    >
+                data.length > 0 ? (
+                  needAproval.length > 0 ? (
+                    needAproval.map((value, index) => (
+                      <MenuItem
+                        key={index}
+                        onClick={() => {
+                          this.handleClose();
+                          window.location.replace(`/beranda/${value.cutiId}`);
+                        }}
+                      >
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1" noWrap>
+                              NIP : {value.pengirim}, mengajukan {value.jenisCuti}
+                            </Typography>
+                          }
+                          secondary={
+                            <Typography variant="caption" noWrap>
+                              {value.createdAt}
+                            </Typography>
+                          }
+                        />
+                      </MenuItem>
+                    ))
+                  ) : (
+                      <MenuItem onClick={this.handleClose}>
+                        Tidak ada notifikasi
+                      </MenuItem>
+                    )
+                ) : (
+                    <MenuItem onClick={this.handleClose}>
                       Tidak ada notifikasi
                     </MenuItem>
-                  ) : (
-                      <div key={index}>
-                        <MenuItem
-                          onClick={() => {
-                            this.handleClose();
-                            window.location.replace(`/beranda/${value.cutiId}`);
-                          }}
-                        >
-                          <ListItemText
-                            primary={<Typography noWrap>
-                              NIP : {value.pengirim}, mengajukan {value.jenisCuti}
-                            </Typography>}
-                            secondary={value.createdAt}
-                          />
-                        </MenuItem>
-                      </div>
-                    )
-                )
-              )
+                  ))
           }
+          {/* {
+            isLoading ? (
+              <Box p={10}>
+                <Grid container justify="center">
+                  <Grid item>
+                    <CircularProgress size={30} />
+                  </Grid>
+                </Grid>
+              </Box>
+            ) : (
+                data.length > 0 ? (
+                  data
+                    .filter(data => !data.aproval)
+                    .map((value, index) => (
+                      <MenuItem
+                        key={index}
+                        onClick={() => {
+                          this.handleClose();
+                          window.location.replace(`/beranda/${value.cutiId}`);
+                        }}
+                      >
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1" noWrap>
+                              NIP : {value.pengirim}, mengajukan {value.jenisCuti}
+                            </Typography>
+                          }
+                          secondary={
+                            <Typography variant="caption" noWrap>
+                              {value.createdAt}
+                            </Typography>
+                          }
+                        />
+                      </MenuItem>
+                    ))
+
+                ) : (
+                    <div>Tidak ada notifikasi</div>
+                  )
+              )
+          } */}
         </Menu>
       </Fragment>
     );

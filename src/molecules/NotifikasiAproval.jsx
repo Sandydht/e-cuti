@@ -43,7 +43,7 @@ class NotifikasiAproval extends Component {
             color="inherit"
             onClick={this.handleOpen}
           >
-            <Badge badgeContent={1} color="secondary">
+            <Badge badgeContent={0} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>

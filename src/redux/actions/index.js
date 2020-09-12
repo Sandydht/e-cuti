@@ -11,9 +11,7 @@ export const login = (user) => (dispatch) => {
           .then(() => {
             Axios.get("/dataProfil")
               .then(res => {
-                sessionService.saveUser({
-                  role: res.data.role
-                })
+                sessionService.saveUser(res.data)
                   .then(() => {
                     return resolve(true);
                   });
