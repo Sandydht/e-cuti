@@ -19,6 +19,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import EditIcon from '@material-ui/icons/Edit';
 import HapusDataPNS from "./HapusDataPNS";
 
+// Moment js
+import * as moment from 'moment';
+import 'moment/locale/id';
+
 import SendEmailResetPassword from "./SendEmailResetPassword";
 
 class DetailPNS extends Component {
@@ -61,6 +65,7 @@ class DetailPNS extends Component {
   render() {
     const { match, ...rest } = this.props;
     const { data, isLoading } = this.state;
+    moment.locale('id');
     return (
       <Card>
         {isLoading ? (
@@ -169,7 +174,7 @@ class DetailPNS extends Component {
                   variant="outlined"
                   margin="normal"
                   label="Tanggal Registrasi"
-                  value={data.tglRegistrasi ? data.tglRegistrasi : "-"}
+                  value={data.tglRegistrasi ? moment(data.tglRegistrasi).format('L, h:mm') : "-"}
                   disabled
                   InputProps={{
                     readOnly: true,

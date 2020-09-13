@@ -32,7 +32,7 @@ export const register = (newUser) => (dispatch) => {
         Axios.defaults.headers.common['Authorization'] = FBIdToken;
         sessionService.saveSession(FBIdToken)
           .then(() => {
-            Axios.get("/dataProfil")
+            Axios.get("/dataUser")
               .then(res => {
                 sessionService.saveUser({
                   role: res.data.profil.role

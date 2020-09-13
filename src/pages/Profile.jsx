@@ -126,6 +126,17 @@ class Profile extends Component {
                     fullWidth
                     variant="outlined"
                     margin="normal"
+                    label="Unit Kerja"
+                    value={data.noTelp}
+                    disabled
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
                     label="Email"
                     value={data.email}
                     disabled

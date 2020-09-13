@@ -112,15 +112,6 @@ class FormPengajuanCuti extends Component {
                       const lamaHari = (((date2 - date1) / (1000 * 3600 * 24) + 1));
                       const lamaCuti = `${lamaHari - (parseInt(lamaHari / 7) * 2)} hari`;
 
-                      // Mencari tgl pengajuan
-                      // let today = new Date();
-                      // let yyyy = today.getFullYear();
-                      // let mm = today.getMonth() + 1;
-                      // let dd = today.getDate();
-                      // if (mm < 10) mm = `0${mm}`;
-                      // if (dd < 10) dd = `0${dd}`;
-                      // today = `${yyyy}-${mm}-${dd}`;
-
                       Axios.post("/pengajuanCuti", {
                         nip,
                         nama,
@@ -185,21 +176,6 @@ class FormPengajuanCuti extends Component {
                             }}
                           />
                           <TextField
-                            id="noTelp"
-                            name="noTelp"
-                            label="Nomor Telepon"
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            value={values.noTelp}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            disabled
-                            InputProps={{
-                              readOnly: true,
-                            }}
-                          />
-                          <TextField
                             id="golongan"
                             name="golongan"
                             label="Golongan"
@@ -222,6 +198,21 @@ class FormPengajuanCuti extends Component {
                             fullWidth
                             margin="normal"
                             value={values.unitKerja}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            disabled
+                            InputProps={{
+                              readOnly: true,
+                            }}
+                          />
+                          <TextField
+                            id="noTelp"
+                            name="noTelp"
+                            label="Nomor Telepon"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={values.noTelp}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             disabled

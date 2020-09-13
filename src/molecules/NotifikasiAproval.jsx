@@ -28,7 +28,8 @@ class NotifikasiAproval extends Component {
 
   handleOpen = (event) => {
     this.setState({
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
+      isLoading: true
     });
   };
 
@@ -38,15 +39,31 @@ class NotifikasiAproval extends Component {
     });
   };
 
+  openNotifikasi = () => {
+    this.__subscribe = true;
+    const notifikasiId = this.state.data.filter(data => !data.open).map(data => data.notifikasiId);
+    Axios.post('/openNotifikasi', notifikasiId);
+    Axios.get('/dataUser')
+      .then(res => {
+        if (this.__subscribe) {
+          this.dataNotifikasi(res.data.notifikasi);
+        }
+      });
+  };
+
+  dataNotifikasi = (data) => {
+    this.setState({
+      isLoading: false,
+      data
+    });
+  };
+
   componentDidMount() {
     this.__subscribe = true;
     Axios.get('/dataUser')
       .then(res => {
         if (this.__subscribe) {
-          this.setState({
-            isLoading: false,
-            data: res.data.notifikasi
-          });
+          this.dataNotifikasi(res.data.notifikasi);
         }
       });
   }
@@ -69,7 +86,7 @@ class NotifikasiAproval extends Component {
             onClick={this.handleOpen}
           >
             <Badge badgeContent={
-              data.filter(data => !data.read).length
+              data.filter(data => !data.open).length
             }
               color="secondary"
             >
@@ -84,6 +101,7 @@ class NotifikasiAproval extends Component {
           getContentAnchorEl={null}
           keepMounted
           onClose={this.handleClose}
+          onEntered={this.openNotifikasi}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
