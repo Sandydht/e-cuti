@@ -14,6 +14,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 // Redux
 import { connect } from "react-redux";
 
+// Moment js
+import * as moment from 'moment';
+import 'moment/locale/id';
+
 // Templates
 import Aproval from "./admin/Aproval";
 import ProgressPengajuanCuti from "./ProgressPengajuanCuti";
@@ -47,6 +51,20 @@ class DetailCuti extends Component {
       .catch(() => this.setState({ isLoading: false, data: [] }));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.match.params.cutiId !== prevProps.match.params.cutiId) {
+      this.setState({ isLoading: true });
+      this.__subscribe = true;
+      Axios.get(`/detailCuti/${this.props.match.params.cutiId}`)
+        .then(res => {
+          if (this.__subscribe) {
+            this.detailCuti(res.data);
+          }
+        })
+        .catch(() => this.setState({ isLoading: false, data: [] }));
+    }
+  }
+
   componentWillUnmount() {
     this.__subscribe = false;
   }
@@ -54,6 +72,8 @@ class DetailCuti extends Component {
   render() {
     const { isLoading, data } = this.state;
     const { role, ...rest } = this.props;
+
+    moment.locale('id');
 
     return (
       <Grid
@@ -158,7 +178,7 @@ class DetailCuti extends Component {
                         variant="outlined"
                         margin="normal"
                         label="Tanggal Pengajuan"
-                        value={data.tglPengajuan}
+                        value={moment(data.tglPengajuan).format('L, h:mm')}
                         disabled
                         InputProps={{
                           readOnly: true,
@@ -171,7 +191,7 @@ class DetailCuti extends Component {
                               label="Tanggal Mulai"
                               variant="outlined"
                               fullWidth
-                              value={data.tglMulai}
+                              value={moment(data.tglMulai).format('L')}
                               disabled
                               InputProps={{
                                 readOnly: true,
@@ -183,7 +203,7 @@ class DetailCuti extends Component {
                               label="s/d Tanggal"
                               variant="outlined"
                               fullWidth
-                              value={data.tglSelesai}
+                              value={moment(data.tglSelesai).format('L')}
                               disabled
                               InputProps={{
                                 readOnly: true,

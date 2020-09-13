@@ -58,18 +58,14 @@ class DataPNS extends Component {
     return (
       <Grid container spacing={2}>
         <Grid item md={12} xs={12}>
-          <Grid container>
-            <Grid item md={4} xs={12}>
-              <Button
-                color="primary"
-                variant="contained"
-                startIcon={<PersonAddIcon />}
-                component={NavLink}
-                to="/tambah_data_pns"
-                fullWidth
-              >Tambah Data PNS</Button>
-            </Grid>
-          </Grid>
+          <Button
+            color="primary"
+            variant="contained"
+            startIcon={<PersonAddIcon />}
+            component={NavLink}
+            to="/tambah_data_pns"
+            fullWidth
+          >Tambah Data PNS</Button>
         </Grid>
         <Grid item md={12} xs={12}>
           <DataTable

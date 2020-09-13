@@ -34,8 +34,7 @@ class NotifikasiPengajuan extends Component {
 
   handleOpen = (event) => {
     this.setState({
-      anchorEl: event.currentTarget,
-      isLoading: true
+      anchorEl: event.currentTarget
     });
   };
 
@@ -46,40 +45,14 @@ class NotifikasiPengajuan extends Component {
   };
 
   openNotifikasi = () => {
-    this.__subscribe = true;
     const notifikasiId = this.state.data.filter(data => !data.open).map(data => data.notifikasiId);
     Axios.post('/openNotifikasi', notifikasiId);
-    Axios.get('/dataUser')
-      .then(res => {
-        if (this.__subscribe) {
-          this.dataNotifikasi(res.data.notifikasi);
-        }
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false,
-          data: []
-        });
-      });
   };
 
-  readNotifikasi = async (data) => {
-    this.__subscribe = true;
+  readNotifikasi = (data) => {
     const notifikasiId = data.notifikasiId;
-    await Axios.post('/readNotifikasi', { notifikasiId })
-      .then(() => window.location.replace(`/beranda/${data.cutiId}`));
-    await Axios.get('/dataUser')
-      .then(res => {
-        if (this.__subscribe) {
-          this.dataNotifikasi(res.data.notifikasi);
-        }
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false,
-          data: []
-        });
-      });
+    Axios.post('/readNotifikasi', { notifikasiId })
+      .then(() => this.props.history.push(`/beranda/${data.cutiId}`));
   };
 
   dataNotifikasi = (data) => {
@@ -103,6 +76,27 @@ class NotifikasiPengajuan extends Component {
           data: []
         });
       });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.data === prevState.data) {
+      if (this.state.isLoading === false) {
+        this.__subscribe = true;
+        this.setState({ isLoading: true });
+        Axios.get('/dataUser')
+          .then(res => {
+            if (this.__subscribe) {
+              this.dataNotifikasi(res.data.notifikasi);
+            }
+          })
+          .catch(() => {
+            this.setState({
+              isLoading: false,
+              data: []
+            });
+          });
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -159,48 +153,56 @@ class NotifikasiPengajuan extends Component {
               </Box>
             ) : (
                 data.length > 0 ? (
-                  data.filter(data => !data.aproval).length > 0 ? (
-                    data
-                      .filter(data => !data.aproval)
-                      .map((value) => (
-                        <MenuItem
-                          key={value.notifikasiId}
-                          onClick={() => {
-                            this.handleClose();
-                            this.readNotifikasi(value);
-                          }}
-                        >
-                          <Badge
-                            color="secondary"
-                            variant='dot'
-                            badgeContent={value.read ? 0 : 1}
+                  data.filter(data => data.type === 'pengajuan').length > 0 ? (
+                    data.filter(data => !data.aproval).length > 0 ? (
+                      data
+                        .filter(data => !data.aproval)
+                        .map((value) => (
+                          <MenuItem
+                            key={value.notifikasiId}
+                            onClick={() => {
+                              this.handleClose();
+                              this.readNotifikasi(value);
+                            }}
                           >
-                            <ListItemText
-                              primary={
-                                <Fragment>
-                                  <Typography noWrap>
-                                    NIP : {value.pengirim}
-                                  </Typography>
+                            <Badge
+                              color="secondary"
+                              variant='dot'
+                              badgeContent={value.read ? 0 : 1}
+                            >
+                              <ListItemText
+                                primary={
+                                  <Fragment>
+                                    <Typography noWrap>
+                                      NIP : {value.pengirim}
+                                    </Typography>
+                                    <Typography
+                                      noWrap
+                                    >
+                                      Mengajukan {value.jenisCuti}
+                                    </Typography>
+                                  </Fragment>
+                                }
+                                secondary={
                                   <Typography
+                                    component='span'
+                                    variant="body2"
                                     noWrap
                                   >
-                                    Mengajukan {value.jenisCuti}
+                                    {moment(value.createdAt).fromNow()}
                                   </Typography>
-                                </Fragment>
-                              }
-                              secondary={
-                                <Typography
-                                  component='span'
-                                  variant="body2"
-                                  noWrap
-                                >
-                                  {moment(value.createdAt).fromNow()}
-                                </Typography>
-                              }
-                            />
-                          </Badge>
+                                }
+                              />
+                            </Badge>
+                          </MenuItem>
+                        ))
+                    ) : (
+                        <MenuItem
+                          onClick={this.handleClose}
+                        >
+                          Tidak ada notifikasi
                         </MenuItem>
-                      ))
+                      )
                   ) : (
                       <MenuItem
                         onClick={this.handleClose}

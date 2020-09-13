@@ -10,9 +10,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
+import ListItemText from '@material-ui/core/ListItemText';
 
 // Icons
 import NotificationsIcon from '@material-ui/icons/Notifications';
+
+// Moment js
+import * as moment from 'moment';
+import 'moment/locale/id';
 
 class NotifikasiAproval extends Component {
   constructor(props) {
@@ -28,8 +34,7 @@ class NotifikasiAproval extends Component {
 
   handleOpen = (event) => {
     this.setState({
-      anchorEl: event.currentTarget,
-      isLoading: true
+      anchorEl: event.currentTarget
     });
   };
 
@@ -40,13 +45,26 @@ class NotifikasiAproval extends Component {
   };
 
   openNotifikasi = () => {
-    this.__subscribe = true;
     const notifikasiId = this.state.data.filter(data => !data.open).map(data => data.notifikasiId);
     Axios.post('/openNotifikasi', notifikasiId);
-    Axios.get('/dataUser')
-      .then(res => {
-        if (this.__subscribe) {
-          this.dataNotifikasi(res.data.notifikasi);
+  };
+
+  readNotifikasi = (data) => {
+    const notifikasiId = data.notifikasiId;
+    Axios.post('/readNotifikasi', { notifikasiId })
+      .then(() => {
+        if (data.jenisCuti === 'Cuti Tahunan') {
+          this.props.history.push(`/riwayat_cuti_tahunan/${data.cutiId}`);
+        } else if (data.jenisCuti === 'Cuti Besar') {
+          this.props.history.push(`/riwayat_cuti_besar/${data.cutiId}`);
+        } else if (data.jenisCuti === 'Cuti Sakit') {
+          this.props.history.push(`/riwayat_cuti_sakit/${data.cutiId}`);
+        } else if (data.jenisCuti === 'Cuti Bersalin') {
+          this.props.history.push(`/riwayat_cuti_bersalin/${data.cutiId}`);
+        } else if (data.jenisCuti === 'Cuti Alasan Penting') {
+          this.props.history.push(`/riwayat_cuti_alasan_penting/${data.cutiId}`);
+        } else if (data.jenisCuti === 'Cuti Luar Tanggungan Negara') {
+          this.props.history.push(`/riwayat_cltn/${data.cutiId}`);
         }
       });
   };
@@ -68,6 +86,27 @@ class NotifikasiAproval extends Component {
       });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.data === prevState.data) {
+      if (this.state.isLoading === false) {
+        this.__subscribe = true;
+        this.setState({ isLoading: true });
+        Axios.get('/dataUser')
+          .then(res => {
+            if (this.__subscribe) {
+              this.dataNotifikasi(res.data.notifikasi);
+            }
+          })
+          .catch(() => {
+            this.setState({
+              isLoading: false,
+              data: []
+            });
+          });
+      }
+    }
+  }
+
   componentWillUnmount() {
     this.__subscribe = false;
   }
@@ -75,6 +114,8 @@ class NotifikasiAproval extends Component {
   render() {
     const { anchorEl, isLoading, data } = this.state;
     const open = Boolean(anchorEl);
+
+    moment.locale('id');
 
     return (
       <Fragment>
@@ -121,49 +162,78 @@ class NotifikasiAproval extends Component {
                 </Grid>
               </Box>
             ) : (
-                data.length === 0 ? (
-                  <MenuItem
-                    onClick={this.handleClose}
-                  >
-                    Tidak ada notifikasi
-                  </MenuItem>
-                ) : (
-                    data
-                      .map((value, index) =>
-                        value.aproval ? (
-                          <MenuItem
-                            key={index}
-                            onClick={() => {
-                              this.handleClose();
-                              if (value.jenisCuti === 'Cuti Tahunan') {
-                                window.location.replace(`/riwayat_cuti_tahunan/${value.cutiId}`);
-                              } else if (value.jenisCuti === 'Cuti Besar') {
-                                window.location.replace(`/riwayat_cuti_besar/${value.cutiId}`);
-                              } else if (value.jenisCuti === 'Cuti Sakit') {
-                                window.location.replace(`/riwayat_cuti_sakit/${value.cutiId}`);
-                              } else if (value.jenisCuti === 'Cuti Bersalin') {
-                                window.location.replace(`/riwayat_cuti_bersalin/${value.cutiId}`);
-                              } else if (value.jenisCuti === 'Cuti Alasan Penting') {
-                                window.location.replace(`/riwayat_cuti_alasan_penting/${value.cutiId}`);
-                              } else if (value.jenisCuti === 'Cuti Luar Tanggungan Negara') {
-                                window.location.replace(`/riwayat_cltn/${value.cutiId}`);
-                              }
-                            }}
-                          >
-                            {value.jenisCuti}
-                          </MenuItem>
-                        ) : (
+                data.length > 0 ? (
+                  data.filter(data => data.type === 'aproval').length > 0 ? (
+                    data.filter(data => data.aproval).length > 0 ? (
+                      data.filter(data => !data.read).length > 0 ? (
+                        data
+                          .filter(data => !data.read)
+                          .map(value => (
                             <MenuItem
-                              onClick={this.handleClose}
+                              key={value.notifikasiId}
+                              onClick={() => {
+                                this.handleClose();
+                                this.readNotifikasi(value);
+                              }}
                             >
-                              Tidak ada notifikasi
+                              <Badge
+                                color="secondary"
+                                variant='dot'
+                                badgeContent={value.read ? 0 : 1}
+                              >
+                                <ListItemText
+                                  primary={
+                                    <Fragment>
+                                      <Typography noWrap>
+                                        Aproval Pengajuan {value.jenisCuti} Anda
+                                    </Typography>
+                                    </Fragment>
+                                  }
+                                  secondary={
+                                    <Typography
+                                      component='span'
+                                      variant="body2"
+                                      noWrap
+                                    >
+                                      {moment(value.createdAt).fromNow()}
+                                    </Typography>
+                                  }
+                                />
+                              </Badge>
                             </MenuItem>
                           ))
+                      ) : (
+                          <MenuItem
+                            onClick={this.handleClose}
+                          >
+                            Tidak ada notifikasi
+                          </MenuItem>
+                        )
+                    ) : (
+                        <MenuItem
+                          onClick={this.handleClose}
+                        >
+                          Tidak ada notifikasi
+                        </MenuItem>
+                      )
+                  ) : (
+                      <MenuItem
+                        onClick={this.handleClose}
+                      >
+                        Tidak ada notifikasi
+                      </MenuItem>
+                    )
+                ) : (
+                    <MenuItem
+                      onClick={this.handleClose}
+                    >
+                      Tidak ada notifikasi
+                    </MenuItem>
                   )
               )
           }
         </Menu>
-      </Fragment>
+      </Fragment >
     );
   }
 }

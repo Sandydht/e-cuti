@@ -18,6 +18,10 @@ import FormControl from '@material-ui/core/FormControl';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 
+// Moment js
+import * as moment from 'moment';
+import 'moment/locale/id';
+
 // Styles
 const GreenRadio = withStyles({
   root: {
@@ -57,12 +61,26 @@ class ProgressPengajuanCuti extends Component {
       .catch(() => this.setState({ isLoading: false, data: {} }));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.match.params.cutiId !== prevProps.match.params.cutiId) {
+      this.__subscribe = true;
+      this.setState({ isLoading: true });
+      Axios.get(`/progressPengajuanCuti/${this.props.match.params.cutiId}`)
+        .then(res => {
+          if (this.__subscribe) this.aproval(res.data);
+        })
+        .catch(() => this.setState({ isLoading: false, data: {} }));
+    }
+  }
+
   componentWillUnmount() {
     this.__subscribe = false;
   }
 
   render() {
     const { isLoading, data } = this.state;
+    moment.locale('id');
+
     return (
       <Card>
         {
@@ -121,7 +139,7 @@ class ProgressPengajuanCuti extends Component {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    value={data.tglAproval ? data.tglAproval : "-"}
+                    value={data.tglAproval ? moment(data.tglAproval).format('L, h:mm') : "-"}
                     disabled
                     InputProps={{
                       readOnly: true,
