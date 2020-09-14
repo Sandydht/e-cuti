@@ -45,6 +45,20 @@ export const register = (newUser) => (dispatch) => {
   });
 };
 
+export const resetPassword = (newPassword) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    Axios.post('/resetPassword', newPassword)
+      .then(() => {
+        console.log('Update kata sandi berhasil');
+        return resolve();
+      })
+      .catch(() => {
+        console.log('Update kata sandi gagal');
+        return reject();
+      });
+  });
+};
+
 export const logout = () => (dispatch) => {
   delete Axios.defaults.headers.common['Authorization'];
   sessionService.deleteSession();

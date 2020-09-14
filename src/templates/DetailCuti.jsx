@@ -93,7 +93,7 @@ class DetailCuti extends Component {
                 </Box>
               ) : (
                   <Fragment>
-                    <CardHeader title="Detail Cuti" />
+                    <CardHeader title={`Detail ${data.jenisCuti}`} />
                     <Divider />
                     <CardContent>
                       <TextField

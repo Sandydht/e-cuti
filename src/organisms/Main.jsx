@@ -299,7 +299,7 @@ const Main = ({ role, match }) => {
 
               <Route
                 exact
-                path={`${match.path}data_cltn/:nip/:cutiid`}
+                path={`${match.path}data_cltn/:nip/:cutiId`}
                 render={(props) =>
                   role === "admin" ? (
                     <DetailCuti {...props} />

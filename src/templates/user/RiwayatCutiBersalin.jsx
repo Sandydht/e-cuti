@@ -7,6 +7,9 @@ import Button from "@material-ui/core/Button";
 // Icons
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 
+// React router dom
+import { NavLink } from 'react-router-dom';
+
 // Atoms
 import DataTable from "../../atoms/DataTable";
 
@@ -15,8 +18,7 @@ class RiwayatCutiBersalin extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      data: [],
-      notifikasiId: ''
+      data: []
     };
 
     this.__subscribe = false;
@@ -35,7 +37,6 @@ class RiwayatCutiBersalin extends Component {
       .then(res => {
         if (this.__subscribe) {
           this.riwayatCuti(res.data.cuti);
-          this.setState({ notifikasiId: res.data.notifikasi.map(data => data.notifikasiId)[0] });
         }
       })
       .catch(() => {
@@ -51,7 +52,7 @@ class RiwayatCutiBersalin extends Component {
   }
 
   render() {
-    const { isLoading, data, notifikasiId } = this.state;
+    const { isLoading, data } = this.state;
 
     return (
       <DataTable
@@ -103,9 +104,8 @@ class RiwayatCutiBersalin extends Component {
                     variant="contained"
                     size="small"
                     startIcon={<FindInPageIcon />}
-                    onClick={() => {
-                      Axios.post('/readNotifikasi', { notifikasiId }).then(() => this.props.history.push(`/riwayat_cuti_bersalin/${data[dataIndex].cutiId}`));
-                    }}
+                    component={NavLink}
+                    to={`/riwayat_cuti_bersalin/${data[dataIndex].cutiId}`}
                   >Detail</Button>
                 );
               }
