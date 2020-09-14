@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Axios from "axios";
 
-// React router dom
-import { NavLink } from "react-router-dom";
-
 // Material UI
 import Button from "@material-ui/core/Button";
 
@@ -18,7 +15,8 @@ class RiwayatCutiAlasanPenting extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      data: []
+      data: [],
+      notifikasiId: ''
     };
 
     this.__subscribe = false;
@@ -37,6 +35,7 @@ class RiwayatCutiAlasanPenting extends Component {
       .then(res => {
         if (this.__subscribe) {
           this.riwayatCuti(res.data.cuti);
+          this.setState({ notifikasiId: res.data.notifikasi.map(data => data.notifikasiId)[0] });
         }
       })
       .catch(() => {
@@ -52,8 +51,7 @@ class RiwayatCutiAlasanPenting extends Component {
   }
 
   render() {
-    const { match } = this.props;
-    const { isLoading, data } = this.state;
+    const { isLoading, data, notifikasiId } = this.state;
 
     return (
       <DataTable
@@ -105,8 +103,9 @@ class RiwayatCutiAlasanPenting extends Component {
                     variant="contained"
                     size="small"
                     startIcon={<FindInPageIcon />}
-                    component={NavLink}
-                    to={`${match.url}/${data[dataIndex].cutiId}`}
+                    onClick={() => {
+                      Axios.post('/readNotifikasi', { notifikasiId }).then(() => this.props.history.push(`/riwayat_cuti_alasan_penting/${data[dataIndex].cutiId}`));
+                    }}
                   >Detail</Button>
                 );
               }

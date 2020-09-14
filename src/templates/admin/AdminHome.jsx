@@ -14,9 +14,6 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 // Atoms
 import DataTable from "../../atoms/DataTable";
 
-// React router dom
-import { NavLink } from "react-router-dom";
-
 class AdminHome extends Component {
   constructor(props) {
     super(props);
@@ -126,8 +123,10 @@ class AdminHome extends Component {
                         variant="contained"
                         size="small"
                         startIcon={<FindInPageIcon />}
-                        component={NavLink}
-                        to={`/beranda/${data[dataIndex].cutiId}`}
+                        onClick={() => {
+                          const notifikasiId = data[dataIndex].cutiId;
+                          Axios.post('/readNotifikasi', { notifikasiId }).then(() => this.props.history.push(`/beranda/${notifikasiId}`));
+                        }}
                       >Detail</Button>
                     );
                   }

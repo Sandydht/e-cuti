@@ -33,9 +33,23 @@ class NotifikasiPengajuan extends Component {
   }
 
   handleOpen = (event) => {
+    this.__subscribe = true;
     this.setState({
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
+      isLoading: true
     });
+    Axios.get('/dataUser')
+      .then(res => {
+        if (this.__subscribe) {
+          this.dataNotifikasi(res.data.notifikasi);
+        }
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+          data: []
+        });
+      });
   };
 
   handleClose = () => {
@@ -78,27 +92,6 @@ class NotifikasiPengajuan extends Component {
       });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.data === prevState.data) {
-      if (this.state.isLoading === false) {
-        this.__subscribe = true;
-        this.setState({ isLoading: true });
-        Axios.get('/dataUser')
-          .then(res => {
-            if (this.__subscribe) {
-              this.dataNotifikasi(res.data.notifikasi);
-            }
-          })
-          .catch(() => {
-            this.setState({
-              isLoading: false,
-              data: []
-            });
-          });
-      }
-    }
-  }
-
   componentWillUnmount() {
     this.__subscribe = false;
   }
@@ -118,7 +111,9 @@ class NotifikasiPengajuan extends Component {
             color="inherit"
             onClick={this.handleOpen}
           >
-            <Badge badgeContent={data.filter(data => data.open === false).length}
+            <Badge badgeContent={
+              data.filter(data => !data.open).length
+            }
               color="secondary"
             >
               <NotificationsIcon />

@@ -33,9 +33,23 @@ class NotifikasiAproval extends Component {
   }
 
   handleOpen = (event) => {
+    this.__subscribe = true;
     this.setState({
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
+      isLoading: true
     });
+    Axios.get('/dataUser')
+      .then(res => {
+        if (this.__subscribe) {
+          this.dataNotifikasi(res.data.notifikasi);
+        }
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+          data: []
+        });
+      });
   };
 
   handleClose = () => {
@@ -83,28 +97,13 @@ class NotifikasiAproval extends Component {
         if (this.__subscribe) {
           this.dataNotifikasi(res.data.notifikasi);
         }
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+          data: []
+        });
       });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.data === prevState.data) {
-      if (this.state.isLoading === false) {
-        this.__subscribe = true;
-        this.setState({ isLoading: true });
-        Axios.get('/dataUser')
-          .then(res => {
-            if (this.__subscribe) {
-              this.dataNotifikasi(res.data.notifikasi);
-            }
-          })
-          .catch(() => {
-            this.setState({
-              isLoading: false,
-              data: []
-            });
-          });
-      }
-    }
   }
 
   componentWillUnmount() {
