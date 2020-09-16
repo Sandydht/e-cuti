@@ -19,7 +19,13 @@ export const login = (data) => (dispatch) => {
               .get()
               .then(querySnapshot => {
                 let data = {};
-                querySnapshot.forEach(doc => data = doc.data());
+                querySnapshot.forEach(doc => {
+                  data = {
+                    nip: doc.data().nip,
+                    uid: doc.data().uid,
+                    role: doc.data().role
+                  };
+                });
                 sessionService.saveUser(data)
                   .then(() => {
                     return resolve();
@@ -98,7 +104,11 @@ export const register = (data) => (dispatch) => {
                             uid: uid
                           })
                             .then(() => {
-                              sessionService.saveUser(doc.data())
+                              sessionService.saveUser({
+                                nip: doc.data().nip,
+                                uid: doc.data().uid,
+                                role: doc.data().role
+                              })
                                 .then(() => resolve());
                             });
                         }

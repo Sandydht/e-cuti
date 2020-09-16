@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 
-// Material UI
-import Button from '@material-ui/core/Button';
-
-// Material icons
-import FindInPageIcon from '@material-ui/icons/FindInPage';
-
 // Atoms
 import DataTable from '../../atoms/DataTable';
 
 // Firebase
 import firebase from '../../config/firebase';
 
-// React router dom
-import { NavLink } from 'react-router-dom';
+// Templates
+import DetailCuti from '../DetailCuti';
 
 // Redux
 import { connect } from 'react-redux';
@@ -131,14 +125,7 @@ class RiwayatCutiSakit extends Component {
               empty: true,
               customBodyRenderLite: (dataIndex) => {
                 return (
-                  <Button
-                    color='primary'
-                    variant='contained'
-                    size='small'
-                    startIcon={<FindInPageIcon />}
-                    component={NavLink}
-                    to={`/riwayat_cuti_sakit/${data[dataIndex].cutiId}`}
-                  >Detail</Button>
+                  <DetailCuti cutiId={data[dataIndex].cutiId} />
                 );
               }
             }

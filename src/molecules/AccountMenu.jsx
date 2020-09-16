@@ -10,6 +10,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Material icons
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -36,7 +37,8 @@ class AccountMenu extends Component {
     super(props);
     this.state = {
       anchorEl: null,
-      openDialog: false
+      openDialog: false,
+      buttonLoading: false
     };
   }
 
@@ -65,17 +67,22 @@ class AccountMenu extends Component {
   };
 
   handleLogout = () => {
+    this.setState({ buttonLoading: true });
     this.props.logout()
       .then(() => {
+        this.setState({ buttonLoading: false });
         this.props.history.push('/');
         this.props.enqueueSnackbar('Anda telah logout', { variant: 'success', preventDuplicate: true, });
       })
-      .catch(() => this.props.enqueueSnackbar('Logout gagal', { variant: 'error', preventDuplicate: true, }));
+      .catch(() => {
+        this.setState({ buttonLoading: false });
+        this.props.enqueueSnackbar('Logout gagal', { variant: 'error', preventDuplicate: true, });
+      });
   };
 
   render() {
     const { classes } = this.props;
-    const { anchorEl, openDialog } = this.state;
+    const { anchorEl, openDialog, buttonLoading } = this.state;
     const open = Boolean(anchorEl);
 
     return (
@@ -129,7 +136,8 @@ class AccountMenu extends Component {
               color='primary'
               variant='contained'
               onClick={this.handleLogout}
-            >Keluar</Button>
+              disabled={buttonLoading}
+            >{buttonLoading ? <CircularProgress size={25} /> : 'Keluar'}</Button>
           </DialogActions>
         </Dialog>
       </Fragment>

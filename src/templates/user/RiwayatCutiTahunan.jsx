@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
 
-// Material UI
-import Button from '@material-ui/core/Button';
-
-// Material icons
-import FindInPageIcon from '@material-ui/icons/FindInPage';
-
 // Atoms
 import DataTable from '../../atoms/DataTable';
 
 // Firebase
 import firebase from '../../config/firebase';
-
-// React router dom
-import { NavLink } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
@@ -21,6 +12,9 @@ import { connect } from 'react-redux';
 // Moment
 import moment from 'moment';
 import 'moment/locale/id';
+
+// Templates
+import DetailCuti from '../DetailCuti';
 
 class RiwayatCutiTahunan extends Component {
   constructor(props) {
@@ -76,6 +70,7 @@ class RiwayatCutiTahunan extends Component {
 
   render() {
     const { isLoading, data } = this.state;
+
     moment().locale('id');
     return (
       <DataTable
@@ -131,14 +126,7 @@ class RiwayatCutiTahunan extends Component {
               empty: true,
               customBodyRenderLite: (dataIndex) => {
                 return (
-                  <Button
-                    color='primary'
-                    variant='contained'
-                    size='small'
-                    startIcon={<FindInPageIcon />}
-                    component={NavLink}
-                    to={`/riwayat_cuti_tahunan/${data[dataIndex].cutiId}`}
-                  >Detail</Button>
+                  <DetailCuti cutiId={data[dataIndex].cutiId} />
                 );
               }
             }
