@@ -3,8 +3,19 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// Redux
+import { Provider } from 'react-redux';
+import store from './config/redux';
+
+// Notistack
+import { SnackbarProvider } from 'notistack';
+
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <SnackbarProvider>
+      <App />
+    </SnackbarProvider>
+  </Provider>,
   document.getElementById('root')
 );
 
