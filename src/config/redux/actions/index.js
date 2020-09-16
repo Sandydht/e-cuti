@@ -1,11 +1,6 @@
 import { sessionService } from 'redux-react-session';
 import firebase from '../../firebase';
 
-import {
-  SET_LOADING,
-  SET_USER
-} from '../type';
-
 export const login = (data) => (dispatch) => {
   return new Promise((resolve, reject) => {
     let token, uid;
@@ -25,7 +20,6 @@ export const login = (data) => (dispatch) => {
                 querySnapshot.forEach(doc => role = doc.data().role);
                 sessionService.saveUser({ role })
                   .then(() => {
-                    dispatch(getUserData(uid));
                     return resolve();
                   });
               });
@@ -108,16 +102,6 @@ export const register = (data) => (dispatch) => {
         }
       });
   });
-};
-
-export const getUserData = (uid) => (dispatch) => {
-  dispatch({ type: SET_LOADING });
-  let userData = {};
-  return firebase.firestore().collection('pns').where('uid', '==', uid).get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach(doc => userData.credentials = doc.data());
-      dispatch({ type: SET_USER, payload: userData });
-    });
 };
 
 export const logout = () => (dispatch) => {

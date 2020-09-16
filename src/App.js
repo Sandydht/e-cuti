@@ -14,7 +14,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Redux
 import { connect } from 'react-redux';
-import { getUserData, logout } from './config/redux/actions/userAction';
+import { logout } from './config/redux/actions';
 import store from './config/redux';
 
 // Pages
@@ -29,8 +29,6 @@ if (token) {
   if (decodedToken.exp * 1000 < Date.now()) {
     window.location.href = "/login";
     store.dispatch(logout());
-  } else {
-    store.dispatch(getUserData(decodedToken.user_id));
   }
 }
 

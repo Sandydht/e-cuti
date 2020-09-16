@@ -35,7 +35,7 @@ import * as Yup from 'yup';
 
 // Redux
 import { connect } from 'react-redux';
-import { login } from '../config/redux/actions/userAction';
+import { login } from '../config/redux/actions';
 
 // Organisms
 import Footer from '../organisms/Footer';

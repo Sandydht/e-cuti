@@ -1,9 +1,21 @@
 import React from 'react';
+import logo from '../images/logo-prov-jateng.png';
 
 // Material UI
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+
+// Material icons
+import CloseIcon from '@material-ui/icons/Close';
+
+// Molecules
+import DrawerList from '../molecules/DrawerList';
 
 // Styles
 const drawerWidth = 240;
@@ -16,6 +28,16 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+  },
+  toolbar: theme.mixins.toolbar,
+  closeButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  avatar: {
+    marginRight: theme.spacing(2)
   },
 }));
 
@@ -38,7 +60,21 @@ const Sidebar = ({ window, open, onClose, drawer }) => {
             keepMounted: true,
           }}
         >
-          {drawer}
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="close drawer"
+              edge="start"
+              onClick={onClose}
+              className={classes.closeButton}
+            >
+              <CloseIcon />
+            </IconButton>
+            <Avatar className={classes.avatar} src={logo} />
+            <Typography variant="h6" noWrap>E-Cuti</Typography>
+          </Toolbar>
+          <Divider />
+          <DrawerList onClick={onClose} />
         </Drawer>
       </Hidden>
       <Hidden xsDown implementation="css">
@@ -49,7 +85,9 @@ const Sidebar = ({ window, open, onClose, drawer }) => {
           variant="permanent"
           open
         >
-          {drawer}
+          <div className={classes.toolbar} />
+          <Divider />
+          <DrawerList />
         </Drawer>
       </Hidden>
     </nav>
