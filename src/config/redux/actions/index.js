@@ -14,11 +14,13 @@ export const login = (data) => (dispatch) => {
         token = idToken;
         sessionService.saveSession(token)
           .then(() => {
-            return firebase.firestore().collection('pns').where('uid', '==', uid).get()
-              .then((querySnapshot) => {
-                let role;
-                querySnapshot.forEach(doc => role = doc.data().role);
-                sessionService.saveUser({ role })
+            return firebase.firestore().collection('pns')
+              .where('uid', '==', uid)
+              .get()
+              .then(querySnapshot => {
+                let data = {};
+                querySnapshot.forEach(doc => data = doc.data());
+                sessionService.saveUser(data)
                   .then(() => {
                     return resolve();
                   });
@@ -43,7 +45,8 @@ export const register = (data) => (dispatch) => {
     };
     let uid, token;
 
-    return firebase.firestore().collection('pns').get()
+    return firebase.firestore().collection('pns')
+      .get()
       .then((querySnapshot) => {
         let data = [];
         querySnapshot.forEach(doc => data.push({
@@ -53,7 +56,9 @@ export const register = (data) => (dispatch) => {
           register: doc.data().register
         }));
 
-        if ((data.filter(not => not.nip === newUser.nip).length && data.filter(not => not.nik === newUser.nik).length) === 0) {
+        if ((
+          data.filter(not => not.nip === newUser.nip).length &&
+          data.filter(not => not.nik === newUser.nik).length) === 0) {
           return reject();
         } else {
           let register;
@@ -78,7 +83,10 @@ export const register = (data) => (dispatch) => {
                 token = idToken;
                 sessionService.saveSession(token)
                   .then(() => {
-                    return firebase.firestore().collection('pns').doc(pnsId).get()
+                    return firebase.firestore()
+                      .collection('pns')
+                      .doc(pnsId)
+                      .get()
                       .then(doc => {
                         if (doc.exists) {
                           return firebase.firestore().collection('pns').doc(pnsId).update({
@@ -90,7 +98,7 @@ export const register = (data) => (dispatch) => {
                             uid: uid
                           })
                             .then(() => {
-                              sessionService.saveUser({ role: newUser.role })
+                              sessionService.saveUser(doc.data())
                                 .then(() => resolve());
                             });
                         }

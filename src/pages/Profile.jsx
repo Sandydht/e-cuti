@@ -13,6 +13,9 @@ import Divider from '@material-ui/core/Divider';
 // Firebase
 import firebase from '../config/firebase';
 
+// Redux
+import { connect } from 'react-redux';
+
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -33,18 +36,14 @@ class Profile extends Component {
 
   componentDidMount() {
     this.subscribe = true;
-    return firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        return firebase.firestore().collection('pns').where('uid', '==', user.uid)
-          .onSnapshot((querySnapshot) => {
-            let data = {};
-            querySnapshot.forEach(doc => data = doc.data());
-            if (this.subscribe) {
-              this.userData(data);
-            }
-          });
-      }
-    });
+    return firebase.firestore().collection('pns').where('uid', '==', this.props.uid)
+      .onSnapshot((querySnapshot) => {
+        let data = {};
+        querySnapshot.forEach(doc => data = doc.data());
+        if (this.subscribe) {
+          this.userData(data);
+        }
+      });
   }
 
   componentWillUnmount() {
@@ -149,4 +148,8 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = ({ session }) => ({
+  uid: session.user.uid
+});
+
+export default connect(mapStateToProps)(Profile);

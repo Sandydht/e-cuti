@@ -7,12 +7,24 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Topbar from '../organisms/Topbar';
 import Sidebar from '../organisms/Sidebar';
 import Main from '../organisms/Main';
+import Footer from '../organisms/Footer';
 
 // Styles
 const styles = (theme) => ({
   root: {
     display: 'flex',
-  }
+  },
+  main: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    overflow: 'auto'
+  },
+  footer: {
+    padding: theme.spacing(3, 2),
+    marginTop: 'auto'
+  },
 });
 
 class Dashboard extends Component {
@@ -37,7 +49,12 @@ class Dashboard extends Component {
       <div className={classes.root}>
         <Topbar onClick={this.handleDrawerToggle} {...rest} />
         <Sidebar open={mobileOpen} onClose={this.handleDrawerToggle} />
-        <Main />
+        <div className={classes.main}>
+          <Main />
+          <footer className={classes.footer}>
+            <Footer />
+          </footer>
+        </div>
       </div>
     );
   }

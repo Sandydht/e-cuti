@@ -14,6 +14,9 @@ import Button from '@material-ui/core/Button';
 // Material icons
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+// Notistack
+import { withSnackbar } from 'notistack';
+
 // React router dom
 import { NavLink } from 'react-router-dom';
 
@@ -63,7 +66,11 @@ class AccountMenu extends Component {
 
   handleLogout = () => {
     this.props.logout()
-      .then(() => this.props.history.push('/'));
+      .then(() => {
+        this.props.history.push('/');
+        this.props.enqueueSnackbar('Anda telah logout', { variant: 'success', preventDuplicate: true, });
+      })
+      .catch(() => this.props.enqueueSnackbar('Logout gagal', { variant: 'error', preventDuplicate: true, }));
   };
 
   render() {
@@ -134,4 +141,4 @@ const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(logout())
 });
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(AccountMenu));
+export default connect(null, mapDispatchToProps)(withStyles(styles)(withSnackbar(AccountMenu)));

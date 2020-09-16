@@ -1,5 +1,4 @@
 import React, { lazy, Suspense } from 'react';
-import JwtDecode from 'jwt-decode';
 
 // React router dom
 import {
@@ -14,23 +13,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Redux
 import { connect } from 'react-redux';
-import { logout } from './config/redux/actions';
-import store from './config/redux';
 
 // Pages
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
-
-const token = localStorage.getItem("redux-react-session/USER-SESSION");
-if (token) {
-  const decodedToken = JwtDecode(token);
-  if (decodedToken.exp * 1000 < Date.now()) {
-    window.location.href = "/login";
-    store.dispatch(logout());
-  }
-}
 
 const App = ({ checked, authenticated }) => {
   return (
