@@ -22,7 +22,6 @@ export const login = (data) => (dispatch) => {
                 querySnapshot.forEach(doc => {
                   data = {
                     nip: doc.data().nip,
-                    uid: doc.data().uid,
                     role: doc.data().role
                   };
                 });
@@ -106,7 +105,6 @@ export const register = (data) => (dispatch) => {
                             .then(() => {
                               sessionService.saveUser({
                                 nip: doc.data().nip,
-                                uid: doc.data().uid,
                                 role: doc.data().role
                               })
                                 .then(() => resolve());

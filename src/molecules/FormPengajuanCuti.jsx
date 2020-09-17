@@ -29,7 +29,27 @@ import { connect } from 'react-redux';
 
 // Validation schema
 const validationSchema = Yup.object().shape({
-
+  nip: Yup.string()
+    .required("Harap isi form nip")
+    .matches(/^([0-9]{18})$/, "NIP setidaknya 18 digit angka"),
+  nama: Yup.string()
+    .required('Harap isi form nama'),
+  golongan: Yup.string()
+    .required('Harap isi form golongan'),
+  unitKerja: Yup.string()
+    .required('Harap isi form unit kerja'),
+  noTelp: Yup.string()
+    .required("Harap isi form nomor telepon"),
+  jenisCuti: Yup.string()
+    .required('Harap isi form jenis cuti'),
+  alamatSelamaCuti: Yup.string()
+    .required('Harap isi form alamat selama menjalankan cuti'),
+  alasanCuti: Yup.string()
+    .required('Harap isi form alasan cuti'),
+  tglmulai: Yup.string()
+    .required('Harap isi form tanggal mulai cuti'),
+  tglSelesai: Yup.string()
+    .required('Harap isi form tanggal selesai cuti'),
 });
 
 class FormPengajuanCuti extends Component {
@@ -59,7 +79,6 @@ class FormPengajuanCuti extends Component {
         return firebase.firestore().collection('notifikasi').doc(data.id).set({
           pengirim: data.pengirim,
           penerima,
-          cutiId: data.id,
           jenisCuti: data.jenisCuti,
           createdAt: data.tglPengajuan,
           aproval: data.aproval,
@@ -72,7 +91,7 @@ class FormPengajuanCuti extends Component {
 
   componentDidMount() {
     this.subscribe = true;
-    return firebase.firestore().collection('pns').where('uid', '==', this.props.uid)
+    return firebase.firestore().collection('pns').where('nip', '==', this.props.nip)
       .onSnapshot((querySnapshot) => {
         let data = {};
         querySnapshot.forEach(doc => data = doc.data());
@@ -128,7 +147,6 @@ class FormPengajuanCuti extends Component {
                     }}
                     validationSchema={validationSchema}
                     onSubmit={({ nip, nama, golongan, unitKerja, noTelp, jenisCuti, alasanCuti, tglMulai, tglSelesai, alamatSelamaCuti, tglPengajuan, aproval }, { setSubmitting, resetForm }) => {
-                      // Mencari lama cuti
                       const date1 = Date.parse(tglMulai);
                       const date2 = Date.parse(tglSelesai);
                       const lamaHari = (((date2 - date1) / (1000 * 3600 * 24) + 1));
@@ -160,7 +178,6 @@ class FormPengajuanCuti extends Component {
                             this.createNotifications({
                               id: res.id,
                               pengirim: nip,
-                              cutiId: res.id,
                               jenisCuti,
                               tglPengajuan,
                               aproval
@@ -190,6 +207,10 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.nip}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={Boolean(touched.nip && errors.nip)}
+                            helperText={touched.nip && errors.nip ? errors.nip : null}
                             InputProps={{
                               readOnly: true,
                             }}
@@ -202,6 +223,10 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.nama}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={Boolean(touched.nama && errors.nama)}
+                            helperText={touched.nama && errors.nama ? errors.nama : null}
                             InputProps={{
                               readOnly: true,
                             }}
@@ -214,6 +239,10 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.golongan}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={Boolean(touched.golongan && errors.golongan)}
+                            helperText={touched.golongan && errors.golongan ? errors.golongan : null}
                             InputProps={{
                               readOnly: true,
                             }}
@@ -226,6 +255,10 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.unitKerja}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={Boolean(touched.unitKerja && errors.unitKerja)}
+                            helperText={touched.unitKerja && errors.unitKerja ? errors.unitKerja : null}
                             InputProps={{
                               readOnly: true,
                             }}
@@ -238,6 +271,10 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.noTelp}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={Boolean(touched.noTelp && errors.noTelp)}
+                            helperText={touched.noTelp && errors.noTelp ? errors.noTelp : null}
                             InputProps={{
                               readOnly: true,
                             }}
@@ -250,6 +287,10 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.jenisCuti}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={Boolean(touched.jenisCuti && errors.jenisCuti)}
+                            helperText={touched.jenisCuti && errors.jenisCuti ? errors.jenisCuti : null}
                             InputProps={{
                               readOnly: true,
                             }}
@@ -353,7 +394,7 @@ class FormPengajuanCuti extends Component {
 }
 
 const mapStateToProps = ({ session }) => ({
-  uid: session.user.uid
+  nip: session.user.nip
 });
 
 export default connect(mapStateToProps)(withSnackbar(FormPengajuanCuti));

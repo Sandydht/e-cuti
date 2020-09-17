@@ -63,22 +63,19 @@ const styles = (theme) => ({
 
 // Validation schema
 const validationSchema = Yup.object().shape({
-  nip: Yup
-    .string()
-    .required('Harap isi form nip'),
-  nik: Yup
-    .string()
-    .required('Harap isi form nik'),
-  noTelp: Yup
-    .string()
-    .required('Harap isi form nomor telepon'),
-  email: Yup
-    .string()
-    .required('Harap isi form email')
-    .email('Email tidak valid'),
-  password: Yup
-    .string()
-    .required('Harap isi form kata sandi')
+  nip: Yup.string()
+    .required("Harap isi form nip")
+    .matches(/^([0-9]{18})$/, "NIP setidaknya 18 digit angka"),
+  nik: Yup.string()
+    .required("Harap isi form nik")
+    .matches(/^([0-9]{16})$/, "NIK setidaknya 16 digit angka"),
+  noTelp: Yup.string()
+    .required("Harap isi form nomor telepon"),
+  email: Yup.string()
+    .email("Email tidak valid")
+    .required("Harap isi form email"),
+  password: Yup.string()
+    .required("Harap isi form kata sandi")
 });
 
 class Register extends Component {
