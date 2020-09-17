@@ -6,16 +6,17 @@ import { connect } from 'react-redux';
 // Molecules
 import TabelRiwayatCuti from '../../molecules/TabelRiwayatCuti';
 
-const RiwayatCutiBesar = ({ nip }) => {
+const RiwayatCutiBesar = ({ uid }) => {
   return <TabelRiwayatCuti
-    nip={nip}
+    uid={uid}
     jenisCuti='Cuti Besar'
     title='Riwayat Cuti Besar'
+    to='/riwayat_cuti_besar'
   />;
 };
 
 const mapStateToProps = ({ session }) => ({
-  nip: session.user.nip
+  uid: session.user.uid
 });
 
 export default connect(mapStateToProps)(RiwayatCutiBesar);

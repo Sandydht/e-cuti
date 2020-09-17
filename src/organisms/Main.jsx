@@ -30,6 +30,7 @@ const AdminHome = lazy(() => import('../templates/admin/AdminHome'));
 const UserHome = lazy(() => import('../templates/user/UserHome'));
 const Profile = lazy(() => import('../pages/Profile'));
 const Setting = lazy(() => import('../pages/Setting'));
+const DetailCuti = lazy(() => import('../pages/DetailCuti'));
 
 // User templates
 const PengajuanCutiTahunan = lazy(() => import('../templates/user/PengajuanCutiTahunan'));
@@ -45,6 +46,15 @@ const RiwayatCutiBersalin = lazy(() => import('../templates/user/RiwayatCutiBers
 const RiwayatCAP = lazy(() => import('../templates/user/RiwayatCAP'));
 const RiwayatCLTN = lazy(() => import('../templates/user/RiwayatCLTN'));
 
+// Admin templates
+const DataPNS = lazy(() => import('../templates/admin/DataPNS'));
+const DataCutiTahunan = lazy(() => import('../templates/admin/DataCutiTahunan'));
+const DataCutiBesar = lazy(() => import('../templates/admin/DataCutiBesar'));
+const DataCutiSakit = lazy(() => import('../templates/admin/DataCutiSakit'));
+const DataCutiBersalin = lazy(() => import('../templates/admin/DataCutiBersalin'));
+const DataCAP = lazy(() => import('../templates/admin/DataCAP'));
+const DataCLTN = lazy(() => import('../templates/admin/DataCLTN'));
+
 const Main = ({ role }) => {
   const classes = useStyles();
 
@@ -58,6 +68,88 @@ const Main = ({ role }) => {
           </Grid>
           <Grid item xs={12} md={12}>
             <Switch>
+              {/* Admin templates */}
+              <Route
+                exact
+                path='/beranda/:cutiId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DetailCuti {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_pns'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DataPNS {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_tahunan'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DataCutiTahunan {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_besar'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DataCutiBesar {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_sakit'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DataCutiSakit {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_bersalin'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DataCutiBersalin {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cap'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DataCAP {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cltn'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DataCLTN {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+
               {/* User templates */}
               <Route
                 exact

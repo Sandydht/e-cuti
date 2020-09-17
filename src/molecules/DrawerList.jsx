@@ -15,6 +15,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import HistoryIcon from '@material-ui/icons/History';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 // Redux
 import { connect } from 'react-redux';
@@ -36,9 +38,16 @@ class DrawerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openRiwayatCuti: false
+      openRiwayatCuti: false,
+      openDataCuti: false
     };
   }
+
+  handleClickDataCuti = () => {
+    this.setState((state) => ({
+      openDataCuti: !state.openDataCuti
+    }));
+  };
 
   handleClickRiwayatCuti = () => {
     this.setState((state) => ({
@@ -48,7 +57,7 @@ class DrawerList extends Component {
 
   render() {
     const { classes, onClick, role } = this.props;
-    const { openRiwayatCuti } = this.state;
+    const { openRiwayatCuti, openDataCuti } = this.state;
 
     return (
       <List
@@ -68,7 +77,39 @@ class DrawerList extends Component {
         </ListItem>
         {
           role === 'admin' ? (
-            <div>Admin menu</div>
+            <Fragment>
+              <ListItem button component={NavLink} to='/data_pns' onClick={onClick} activeClassName={classes.activeLink}>
+                <ListItemIcon><AssignmentIndIcon /> </ListItemIcon>
+                <ListItemText primary='Data PNS' />
+              </ListItem>
+              <ListItem button onClick={this.handleClickDataCuti}>
+                <ListItemIcon><AssignmentIcon /> </ListItemIcon>
+                <ListItemText primary='Data Cuti' />
+                {openDataCuti ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </ListItem>
+              <Collapse in={openDataCuti} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem button className={classes.nested} component={NavLink} to='/data_cuti_tahunan' onClick={onClick} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Tahunan" />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={NavLink} to='/data_cuti_besar' onClick={onClick} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Besar" />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={NavLink} to='/data_cuti_sakit' onClick={onClick} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Sakit" />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={NavLink} to='/data_cuti_bersalin' onClick={onClick} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Bersalin" />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={NavLink} to='/data_cap' onClick={onClick} activeClassName={classes.activeLink}>
+                    <ListItemText primary="Cuti Alasan Penting" />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={NavLink} to='/data_cltn' onClick={onClick} activeClassName={classes.activeLink}>
+                    <ListItemText primary="CLTN" />
+                  </ListItem>
+                </List>
+              </Collapse>
+            </Fragment>
           ) : (
               <Fragment>
                 <ListItem button onClick={this.handleClickRiwayatCuti}>

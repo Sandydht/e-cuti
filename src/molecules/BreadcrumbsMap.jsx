@@ -30,6 +30,7 @@ const BreadcrumbsMap = ({ role }) => {
             {pathnames.map((value, index) => {
               const last = index === pathnames.length - 1;
               const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+              const params1 = `/${pathnames.slice(1, 2).join('/')}`;
 
               const breadcrumbNameMap = {
                 '/beranda': 'Beranda',
@@ -47,7 +48,16 @@ const BreadcrumbsMap = ({ role }) => {
                 '/riwayat_cuti_bersalin': role === 'user' ? 'Riwayat Cuti Bersalin' : '404',
                 '/riwayat_cap': role === 'user' ? 'Riwayat Cuti Alasan Penting' : '404',
                 '/riwayat_cltn': role === 'user' ? 'Riwayat CLTN' : '404',
+                '/data_pns': role === 'admin' ? 'Data PNS' : '404',
+                '/data_cuti_tahunan': role === 'admin' ? 'Data Cuti Tahunan' : '404',
+                '/data_cuti_besar': role === 'admin' ? 'Data Cuti Besar' : '404',
+                '/data_cuti_sakit': role === 'admin' ? 'Data Cuti Sakit' : '404',
+                '/data_cuti_bersalin': role === 'admin' ? 'Data Cuti Bersalin' : '404',
+                '/data_cap': role === 'admin' ? 'Data Cuti Alasan Penting' : '404',
+                '/data_cltn': role === 'admin' ? 'Data CLTN' : '404',
               };
+
+              breadcrumbNameMap[`/beranda${params1}`] = role === 'admin' ? 'Detail Cuti' : '404';
 
               return last ? (
                 <Typography color='textPrimary' key={to}>{breadcrumbNameMap[to]}</Typography>

@@ -36,7 +36,7 @@ class Profile extends Component {
 
   componentDidMount() {
     this.subscribe = true;
-    return firebase.firestore().collection('pns').where('nip', '==', this.props.nip)
+    return firebase.firestore().collection('pns').where('uid', '==', this.props.uid)
       .onSnapshot((querySnapshot) => {
         let data = {};
         querySnapshot.forEach(doc => data = doc.data());
@@ -149,7 +149,7 @@ class Profile extends Component {
 }
 
 const mapStateToProps = ({ session }) => ({
-  nip: session.user.nip
+  uid: session.user.uid
 });
 
 export default connect(mapStateToProps)(Profile);

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 
+// Material UI
+import Button from '@material-ui/core/Button';
+
+// Material icons
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+
 // Atoms
 import DataTable from '../atoms/DataTable';
 
@@ -10,8 +16,8 @@ import firebase from '../config/firebase';
 import moment from 'moment';
 import 'moment/locale/id';
 
-// Templates
-import DetailCuti from '../templates/DetailCuti';
+// React router dom
+import { NavLink } from 'react-router-dom';
 
 class TabelRiwayatCuti extends Component {
   constructor(props) {
@@ -34,7 +40,7 @@ class TabelRiwayatCuti extends Component {
   componentDidMount() {
     this.subscribe = true;
     return firebase.firestore().collection('cuti')
-      .where('nip', '==', this.props.nip)
+      .where('uid', '==', this.props.uid)
       .where('jenisCuti', '==', this.props.jenisCuti)
       .orderBy('tglPengajuan', 'desc')
       .onSnapshot((querySnapshot) => {
@@ -67,8 +73,8 @@ class TabelRiwayatCuti extends Component {
 
   render() {
     const { isLoading, data } = this.state;
-
     moment().locale('id');
+
     return (
       <DataTable
         title={this.props.title}
@@ -123,7 +129,14 @@ class TabelRiwayatCuti extends Component {
               empty: true,
               customBodyRenderLite: (dataIndex) => {
                 return (
-                  <DetailCuti cutiId={data[dataIndex].cutiId} />
+                  <Button
+                    color='primary'
+                    variant='contained'
+                    size='small'
+                    startIcon={<FindInPageIcon />}
+                    component={NavLink}
+                    to={`${this.props.to}/${data[dataIndex].cutiId}`}
+                  >Detail</Button>
                 );
               }
             }
@@ -133,6 +146,5 @@ class TabelRiwayatCuti extends Component {
     );
   }
 }
-
 
 export default TabelRiwayatCuti;

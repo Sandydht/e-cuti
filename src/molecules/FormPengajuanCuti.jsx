@@ -30,8 +30,7 @@ import { connect } from 'react-redux';
 // Validation schema
 const validationSchema = Yup.object().shape({
   nip: Yup.string()
-    .required("Harap isi form nip")
-    .matches(/^([0-9]{18})$/, "NIP setidaknya 18 digit angka"),
+    .required('Harap isi form nip'),
   nama: Yup.string()
     .required('Harap isi form nama'),
   golongan: Yup.string()
@@ -39,17 +38,17 @@ const validationSchema = Yup.object().shape({
   unitKerja: Yup.string()
     .required('Harap isi form unit kerja'),
   noTelp: Yup.string()
-    .required("Harap isi form nomor telepon"),
+    .required('Harap isi form nomor telepon'),
   jenisCuti: Yup.string()
     .required('Harap isi form jenis cuti'),
-  alamatSelamaCuti: Yup.string()
-    .required('Harap isi form alamat selama menjalankan cuti'),
   alasanCuti: Yup.string()
     .required('Harap isi form alasan cuti'),
-  tglmulai: Yup.string()
-    .required('Harap isi form tanggal mulai cuti'),
+  tglMulai: Yup.string()
+    .required('Harap isi form tanggal mulai'),
   tglSelesai: Yup.string()
-    .required('Harap isi form tanggal selesai cuti'),
+    .required('Harap isi form tanggal selesai'),
+  alamatSelamaCuti: Yup.string()
+    .required('Harap isi form alamat selama menjalankan cuti')
 });
 
 class FormPengajuanCuti extends Component {
@@ -74,7 +73,7 @@ class FormPengajuanCuti extends Component {
     return firebase.firestore().collection('pns').where('role', '==', 'admin').get()
       .then((querySnapshot) => {
         let penerima;
-        querySnapshot.forEach(doc => penerima = doc.data().nip);
+        querySnapshot.forEach(doc => penerima = doc.data().uid);
 
         return firebase.firestore().collection('notifikasi').doc(data.id).set({
           pengirim: data.pengirim,
@@ -91,7 +90,7 @@ class FormPengajuanCuti extends Component {
 
   componentDidMount() {
     this.subscribe = true;
-    return firebase.firestore().collection('pns').where('nip', '==', this.props.nip)
+    return firebase.firestore().collection('pns').where('uid', '==', this.props.uid)
       .onSnapshot((querySnapshot) => {
         let data = {};
         querySnapshot.forEach(doc => data = doc.data());
@@ -132,6 +131,7 @@ class FormPengajuanCuti extends Component {
                 <CardContent>
                   <Formik
                     initialValues={{
+                      uid: data.uid,
                       nip: data.nip,
                       nama: data.nama,
                       golongan: data.golongan,
@@ -146,7 +146,7 @@ class FormPengajuanCuti extends Component {
                       aproval: false
                     }}
                     validationSchema={validationSchema}
-                    onSubmit={({ nip, nama, golongan, unitKerja, noTelp, jenisCuti, alasanCuti, tglMulai, tglSelesai, alamatSelamaCuti, tglPengajuan, aproval }, { setSubmitting, resetForm }) => {
+                    onSubmit={({ uid, nip, nama, golongan, unitKerja, noTelp, jenisCuti, alasanCuti, tglMulai, tglSelesai, alamatSelamaCuti, tglPengajuan, aproval }, { setSubmitting, resetForm }) => {
                       const date1 = Date.parse(tglMulai);
                       const date2 = Date.parse(tglSelesai);
                       const lamaHari = (((date2 - date1) / (1000 * 3600 * 24) + 1));
@@ -157,6 +157,7 @@ class FormPengajuanCuti extends Component {
                         this.props.enqueueSnackbar('Periksa kembali tanggal pengajuan anda', { variant: 'error', preventDuplicate: true, });
                       } else {
                         return firebase.firestore().collection('cuti').add({
+                          uid,
                           nip,
                           nama,
                           golongan,
@@ -177,7 +178,7 @@ class FormPengajuanCuti extends Component {
                             this.props.enqueueSnackbar('Cuti telah diajukan', { variant: 'success', preventDuplicate: true, });
                             this.createNotifications({
                               id: res.id,
-                              pengirim: nip,
+                              pengirim: uid,
                               jenisCuti,
                               tglPengajuan,
                               aproval
@@ -394,7 +395,7 @@ class FormPengajuanCuti extends Component {
 }
 
 const mapStateToProps = ({ session }) => ({
-  nip: session.user.nip
+  uid: session.user.uid
 });
 
 export default connect(mapStateToProps)(withSnackbar(FormPengajuanCuti));
