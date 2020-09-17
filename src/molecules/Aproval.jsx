@@ -27,6 +27,9 @@ import { withSnackbar } from "notistack";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
+// Redux 
+import { connect } from 'react-redux';
+
 // Firebase
 import firebase from '../config/firebase';
 
@@ -38,7 +41,22 @@ const validationSchema = Yup.object().shape({
     .required("Harap isi form keterangan")
 });
 
-const Aproval = ({ isLoading }) => {
+const Aproval = ({ isLoading, match, history, enqueueSnackbar, uid }) => {
+  const createNotifications = (data) => {
+    return firebase.firestore().collection('notifikasi').doc(data.id)
+      .set({
+        aproval: true,
+        createdAt: data.createdAt,
+        jenisCuti: data.jenisCuti,
+        cutiId: data.cutiId,
+        open: false,
+        penerima: data.penerima,
+        pengirim: uid,
+        read: false,
+        type: 'aproval'
+      });
+  };
+
   return (
     <Card>
       {
@@ -58,11 +76,53 @@ const Aproval = ({ isLoading }) => {
                 <Formik
                   initialValues={{
                     pertimbangan: "",
-                    keterangan: ""
+                    keterangan: "",
+                    createdAt: new Date().toISOString()
                   }}
                   validationSchema={validationSchema}
-                  onSubmit={(values, { setSubmitting }) => {
-                    console.log(values);
+                  onSubmit={({ pertimbangan, keterangan, createdAt }, { setSubmitting, resetForm }) => {
+                    return firebase
+                      .firestore()
+                      .collection('cuti')
+                      .doc(match.params.cutiId)
+                      .get()
+                      .then(doc => {
+                        if (doc.exists) {
+                          return firebase.firestore().collection('aproval').add({
+                            cutiId: doc.id,
+                            pertimbangan,
+                            keterangan,
+                            createdAt,
+                            jenisCuti: doc.data().jenisCuti,
+                            penerima: doc.data().uid,
+                            pengirim: uid
+                          })
+                            .then((res) => {
+                              return firebase
+                                .firestore()
+                                .collection('cuti')
+                                .doc(match.params.cutiId)
+                                .update({ aproval: true })
+                                .then(() => {
+                                  setSubmitting(false);
+                                  resetForm();
+                                  enqueueSnackbar('Aproval berhasil', { variant: 'success', preventDuplicate: true, });
+                                  history.replace('/');
+                                  createNotifications({
+                                    id: res.id,
+                                    cutiId: doc.id,
+                                    createdAt,
+                                    jenisCuti: doc.data().jenisCuti,
+                                    penerima: doc.data().uid
+                                  });
+                                });
+                            });
+                        }
+                      })
+                      .catch(() => {
+                        setSubmitting(false);
+                        enqueueSnackbar('Aproval gagal', { variant: 'error', preventDuplicate: true, });
+                      });
                   }}
                 >
                   {({
@@ -137,4 +197,8 @@ const Aproval = ({ isLoading }) => {
   );
 };
 
-export default Aproval;
+const mapStateToProps = ({ session }) => ({
+  uid: session.user.uid
+});
+
+export default connect(mapStateToProps)(withSnackbar(Aproval));

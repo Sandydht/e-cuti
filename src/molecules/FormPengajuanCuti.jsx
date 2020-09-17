@@ -78,6 +78,7 @@ class FormPengajuanCuti extends Component {
         return firebase.firestore().collection('notifikasi').doc(data.id).set({
           pengirim: data.pengirim,
           penerima,
+          cutiId: data.id,
           jenisCuti: data.jenisCuti,
           createdAt: data.tglPengajuan,
           aproval: data.aproval,
@@ -178,6 +179,7 @@ class FormPengajuanCuti extends Component {
                             this.props.enqueueSnackbar('Cuti telah diajukan', { variant: 'success', preventDuplicate: true, });
                             this.createNotifications({
                               id: res.id,
+                              cutiId: res.id,
                               pengirim: uid,
                               jenisCuti,
                               tglPengajuan,

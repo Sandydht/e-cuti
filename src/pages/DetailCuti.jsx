@@ -22,6 +22,7 @@ import { connect } from 'react-redux';
 
 // Molecules
 import Aproval from '../molecules/Aproval';
+import ProgressPengajuanCuti from '../molecules/ProgressPengajuanCuti';
 
 class DetailCuti extends Component {
   constructor(props) {
@@ -47,7 +48,8 @@ class DetailCuti extends Component {
       .firestore()
       .collection('cuti')
       .doc(this.props.match.params.cutiId)
-      .onSnapshot(doc => {
+      .get()
+      .then(doc => {
         if (this.subscribe) {
           this.dataCuti({
             cutiId: doc.id,
@@ -66,6 +68,12 @@ class DetailCuti extends Component {
             aproval: doc.data().aproval,
           });
         }
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+          data: {}
+        });
       });
   }
 
@@ -74,174 +82,173 @@ class DetailCuti extends Component {
   }
 
   render() {
-    const { role } = this.props;
+    const { role, ...rest } = this.props;
     const { isLoading, data } = this.state;
     moment().locale('id');
 
     return (
-      <Fragment>
-        {
-          isLoading ? (
-            <Box p={10}>
-              <Grid container justify='center'>
-                <Grid item>
-                  <CircularProgress />
-                </Grid>
-              </Grid>
-            </Box>
-          ) : (
-              <Fragment>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md={8}>
-                    <Card>
-                      <CardHeader title={`Detail ${data.jenisCuti}`} />
-                      <Divider />
-                      <CardContent>
-                        <TextField
-                          label='NIP'
-                          fullWidth
-                          variant='outlined'
-                          margin='normal'
-                          value={data.nip}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                        <TextField
-                          label='Nama'
-                          fullWidth
-                          variant='outlined'
-                          margin='normal'
-                          value={data.nama}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                        <TextField
-                          label='Golongan'
-                          fullWidth
-                          variant='outlined'
-                          margin='normal'
-                          value={data.golongan}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                        <TextField
-                          label='Unit Kerja'
-                          fullWidth
-                          variant='outlined'
-                          margin='normal'
-                          value={data.unitKerja}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                        <TextField
-                          label='Nomor Telepon'
-                          fullWidth
-                          variant='outlined'
-                          margin='normal'
-                          value={data.noTelp}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                        <TextField
-                          label='Jenis Cuti'
-                          fullWidth
-                          variant='outlined'
-                          margin='normal'
-                          value={data.jenisCuti}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                        <TextField
-                          label='Alasan Cuti'
-                          fullWidth
-                          variant='outlined'
-                          margin='normal'
-                          value={data.alasanCuti}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                        <TextField
-                          label='Tanggal Pengajuan'
-                          fullWidth
-                          variant='outlined'
-                          margin='normal'
-                          value={data.tglPengajuan}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                        <Box mt={2} mb={1}>
-                          <Grid container spacing={3}>
-                            <Grid item xs={12} md={6}>
-                              <TextField
-                                label='Tanggal Mulai'
-                                variant='outlined'
-                                fullWidth
-                                value={data.tglMulai}
-                                InputProps={{
-                                  readOnly: true,
-                                }}
-                              />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                              <TextField
-                                label='s.d Tanggal'
-                                variant='outlined'
-                                value={data.tglSelesai}
-                                fullWidth
-                                InputProps={{
-                                  readOnly: true,
-                                }}
-                              />
-                            </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8}>
+          <Card>
+            {
+              isLoading ? (
+                <Box p={10}>
+                  <Grid container justify='center'>
+                    <Grid item>
+                      <CircularProgress />
+                    </Grid>
+                  </Grid>
+                </Box>
+              ) : (
+                  <Fragment>
+                    <CardHeader title={`Detail ${data.jenisCuti}`} />
+                    <Divider />
+                    <CardContent>
+                      <TextField
+                        label='NIP'
+                        fullWidth
+                        variant='outlined'
+                        margin='normal'
+                        value={data.nip}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label='Nama'
+                        fullWidth
+                        variant='outlined'
+                        margin='normal'
+                        value={data.nama}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label='Golongan'
+                        fullWidth
+                        variant='outlined'
+                        margin='normal'
+                        value={data.golongan}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label='Unit Kerja'
+                        fullWidth
+                        variant='outlined'
+                        margin='normal'
+                        value={data.unitKerja}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label='Nomor Telepon'
+                        fullWidth
+                        variant='outlined'
+                        margin='normal'
+                        value={data.noTelp}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label='Jenis Cuti'
+                        fullWidth
+                        variant='outlined'
+                        margin='normal'
+                        value={data.jenisCuti}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label='Alasan Cuti'
+                        fullWidth
+                        variant='outlined'
+                        margin='normal'
+                        value={data.alasanCuti}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label='Tanggal Pengajuan'
+                        fullWidth
+                        variant='outlined'
+                        margin='normal'
+                        value={data.tglPengajuan}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <Box mt={2} mb={1}>
+                        <Grid container spacing={3}>
+                          <Grid item xs={12} md={6}>
+                            <TextField
+                              label='Tanggal Mulai'
+                              variant='outlined'
+                              fullWidth
+                              value={data.tglMulai}
+                              InputProps={{
+                                readOnly: true,
+                              }}
+                            />
                           </Grid>
-                        </Box>
-                        <TextField
-                          label='Lama Cuti'
-                          fullWidth
-                          variant='outlined'
-                          margin='normal'
-                          value={data.lamaCuti}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                        <TextField
-                          label='Alamat Selama Menjalankan Cuti'
-                          fullWidth
-                          multiline
-                          rows={4}
-                          margin='normal'
-                          variant='outlined'
-                          value={data.alamatSelamaCuti}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    {
-                      role === 'admin' ? (
-                        <Aproval />
-                      ) : (
-                          <div>Progress pengajuan cuti</div>
-                        )
-                    }
-                  </Grid>
-                </Grid>
-              </Fragment>
-            )
-        }
-      </Fragment>
+                          <Grid item xs={12} md={6}>
+                            <TextField
+                              label='s.d Tanggal'
+                              variant='outlined'
+                              value={data.tglSelesai}
+                              fullWidth
+                              InputProps={{
+                                readOnly: true,
+                              }}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Box>
+                      <TextField
+                        label='Lama Cuti'
+                        fullWidth
+                        variant='outlined'
+                        margin='normal'
+                        value={data.lamaCuti}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                      <TextField
+                        label='Alamat Selama Menjalankan Cuti'
+                        fullWidth
+                        multiline
+                        rows={4}
+                        margin='normal'
+                        variant='outlined'
+                        value={data.alamatSelamaCuti}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                    </CardContent>
+                  </Fragment>
+                )
+            }
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          {
+            role === 'admin' ? (
+              <Aproval {...rest} isLoading={isLoading} />
+            ) : (
+                <ProgressPengajuanCuti {...rest} />
+              )
+          }
+        </Grid>
+      </Grid>
     );
   }
 }

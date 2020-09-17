@@ -223,10 +223,30 @@ const Main = ({ role }) => {
               />
               <Route
                 exact
+                path='/riwayat_cuti_tahunan/:cutiId'
+                render={(routeProps) =>
+                  role === 'user' ? (
+                    <DetailCuti {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
                 path='/riwayat_cuti_besar'
                 render={(routeProps) =>
                   role === 'user' ? (
                     <RiwayatCutiBesar {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/riwayat_cuti_besar/:cutiId'
+                render={(routeProps) =>
+                  role === 'user' ? (
+                    <DetailCuti {...routeProps} />
                   ) : (
                       <div>Halaman tidak ditemukan</div>
                     )}
@@ -243,10 +263,30 @@ const Main = ({ role }) => {
               />
               <Route
                 exact
+                path='/riwayat_cuti_sakit/:cutiId'
+                render={(routeProps) =>
+                  role === 'user' ? (
+                    <DetailCuti {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
                 path='/riwayat_cuti_bersalin'
                 render={(routeProps) =>
                   role === 'user' ? (
                     <RiwayatCutiBersalin {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/riwayat_cuti_bersalin/:cutiId'
+                render={(routeProps) =>
+                  role === 'user' ? (
+                    <DetailCuti {...routeProps} />
                   ) : (
                       <div>Halaman tidak ditemukan</div>
                     )}
@@ -263,10 +303,30 @@ const Main = ({ role }) => {
               />
               <Route
                 exact
+                path='/riwayat_cap/:cutiId'
+                render={(routeProps) =>
+                  role === 'user' ? (
+                    <DetailCuti {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
                 path='/riwayat_cltn'
                 render={(routeProps) =>
                   role === 'user' ? (
                     <RiwayatCLTN {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/riwayat_cltn/:cutiId'
+                render={(routeProps) =>
+                  role === 'user' ? (
+                    <DetailCuti {...routeProps} />
                   ) : (
                       <div>Halaman tidak ditemukan</div>
                     )}

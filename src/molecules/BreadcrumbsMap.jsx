@@ -59,6 +59,13 @@ const BreadcrumbsMap = ({ role }) => {
 
               breadcrumbNameMap[`/beranda${params1}`] = role === 'admin' ? 'Detail Cuti' : '404';
 
+              breadcrumbNameMap[`/riwayat_cuti_tahunan${params1}`] = role === 'user' ? 'Detail Cuti' : '404';
+              breadcrumbNameMap[`/riwayat_cuti_besar${params1}`] = role === 'user' ? 'Detail Cuti' : '404';
+              breadcrumbNameMap[`/riwayat_cuti_sakit${params1}`] = role === 'user' ? 'Detail Cuti' : '404';
+              breadcrumbNameMap[`/riwayat_cuti_bersalin${params1}`] = role === 'user' ? 'Detail Cuti' : '404';
+              breadcrumbNameMap[`/riwayat_cap${params1}`] = role === 'user' ? 'Detail Cuti' : '404';
+              breadcrumbNameMap[`/riwayat_cltn${params1}`] = role === 'user' ? 'Detail Cuti' : '404';
+
               return last ? (
                 <Typography color='textPrimary' key={to}>{breadcrumbNameMap[to]}</Typography>
               ) : (

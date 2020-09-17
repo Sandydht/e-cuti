@@ -8,14 +8,17 @@ import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import Tooltip from '@material-ui/core/Tooltip';
 
 // Material icons
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 
 // Molecules
 import AccountMenu from '../molecules/AccountMenu';
+import NotifikasiAproval from '../molecules/NotifikasiAproval';
+import NotifikasiPengajuan from '../molecules/NotifikasiPengajuan';
+
+// Redux
+import { connect } from 'react-redux';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Topbar = ({ onClick, ...rest }) => {
+const Topbar = ({ onClick, role, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -54,21 +57,17 @@ const Topbar = ({ onClick, ...rest }) => {
         <Avatar className={classes.avatar} src={logo} />
         <Typography variant="h6" noWrap className={classes.title}>E-Cuti</Typography>
 
-        <Tooltip
-          title='Notifikasi'
-        >
-          <IconButton
-            color="inherit"
-            aria-label="open account"
-          >
-            <NotificationsIcon />
-          </IconButton>
-        </Tooltip>
-
+        {
+          role === 'admin' ? <NotifikasiPengajuan /> : <NotifikasiAproval />
+        }
         <AccountMenu {...rest} />
       </Toolbar>
     </AppBar>
   );
 };
 
-export default Topbar;
+const mapStateToProps = ({ session }) => ({
+  role: session.user.role
+});
+
+export default connect(mapStateToProps)(Topbar);
