@@ -51,6 +51,7 @@ const Aproval = ({ isLoading, match, history, enqueueSnackbar, uid }) => {
         cutiId: data.cutiId,
         open: false,
         penerima: data.penerima,
+        nipPenerima: data.nipPenerima,
         pengirim: uid,
         read: false,
         type: 'aproval'
@@ -108,12 +109,14 @@ const Aproval = ({ isLoading, match, history, enqueueSnackbar, uid }) => {
                                   resetForm();
                                   enqueueSnackbar('Aproval berhasil', { variant: 'success', preventDuplicate: true, });
                                   history.replace('/');
+
                                   createNotifications({
                                     id: res.id,
                                     cutiId: doc.id,
                                     createdAt,
                                     jenisCuti: doc.data().jenisCuti,
-                                    penerima: doc.data().uid
+                                    penerima: doc.data().uid,
+                                    nipPenerima: doc.data().nipPenerima
                                   });
                                 });
                             });

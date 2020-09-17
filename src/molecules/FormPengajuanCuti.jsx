@@ -70,22 +70,31 @@ class FormPengajuanCuti extends Component {
   };
 
   createNotifications = (data) => {
-    return firebase.firestore().collection('pns').where('role', '==', 'admin').get()
+    return firebase
+      .firestore()
+      .collection('pns')
+      .where('role', '==', 'admin')
+      .get()
       .then((querySnapshot) => {
         let penerima;
         querySnapshot.forEach(doc => penerima = doc.data().uid);
 
-        return firebase.firestore().collection('notifikasi').doc(data.id).set({
-          pengirim: data.pengirim,
-          penerima,
-          cutiId: data.id,
-          jenisCuti: data.jenisCuti,
-          createdAt: data.tglPengajuan,
-          aproval: data.aproval,
-          type: 'pengajuan',
-          open: false,
-          read: false
-        });
+        return firebase
+          .firestore()
+          .collection('notifikasi')
+          .doc(data.id)
+          .set({
+            pengirim: data.pengirim,
+            penerima,
+            nipPengirim: data.nipPengirim,
+            cutiId: data.id,
+            jenisCuti: data.jenisCuti,
+            createdAt: data.tglPengajuan,
+            aproval: data.aproval,
+            type: 'pengajuan',
+            open: false,
+            read: false
+          });
       });
   };
 
@@ -177,16 +186,19 @@ class FormPengajuanCuti extends Component {
                             setSubmitting(false);
                             resetForm();
                             this.props.enqueueSnackbar('Cuti telah diajukan', { variant: 'success', preventDuplicate: true, });
+
                             this.createNotifications({
                               id: res.id,
                               cutiId: res.id,
                               pengirim: uid,
+                              nipPengirim: nip,
                               jenisCuti,
                               tglPengajuan,
                               aproval
                             });
                           })
-                          .catch(() => {
+                          .catch((err) => {
+                            console.log(err);
                             setSubmitting(false);
                             this.props.enqueueSnackbar('Cuti gagal diajukan', { variant: 'error', preventDuplicate: true, });
                           });
