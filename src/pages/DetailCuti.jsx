@@ -167,6 +167,16 @@ class DetailCuti extends Component {
                             readOnly: true,
                           }}
                         />
+                        <TextField
+                          label='Tanggal Pengajuan'
+                          fullWidth
+                          variant='outlined'
+                          margin='normal'
+                          value={data.tglPengajuan}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                        />
                         <Box mt={2} mb={1}>
                           <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
@@ -193,6 +203,16 @@ class DetailCuti extends Component {
                             </Grid>
                           </Grid>
                         </Box>
+                        <TextField
+                          label='Lama Cuti'
+                          fullWidth
+                          variant='outlined'
+                          margin='normal'
+                          value={data.lamaCuti}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                        />
                         <TextField
                           label='Alamat Selama Menjalankan Cuti'
                           fullWidth
