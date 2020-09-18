@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
+// Molecules
+import TabelDataUser from '../../molecules/TabelDataUser';
+
 class DataCAP extends Component {
   render() {
     return (
-      <div>
-        Data CAP
-      </div>
+      <TabelDataUser
+        to='/data_cap'
+      />
     );
   }
 }

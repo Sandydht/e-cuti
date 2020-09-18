@@ -51,6 +51,11 @@ class DetailPNS extends Component {
             this.dataPNS(doc.data());
           }
         }
+      }, () => {
+        this.setState({
+          isLoading: false,
+          data: {}
+        });
       });
   }
 

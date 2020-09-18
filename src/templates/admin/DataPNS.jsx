@@ -61,6 +61,11 @@ class DataPNS extends Component {
         if (this.subscribe) {
           this.dataPNS(data);
         }
+      }, () => {
+        this.setState({
+          isLoading: false,
+          data: []
+        });
       });
   }
 

@@ -176,7 +176,6 @@ class NotifikasiAproval extends Component {
                             key={value.notifikasiId}
                             onClick={() => {
                               this.handleClose();
-                              console.log(value.cutiId);
                               this.markReadNotifications(value.notifikasiId);
                               if (value.jenisCuti === 'Cuti Tahunan') {
                                 this.props.history.push(`/riwayat_cuti_tahunan/${value.cutiId}`);

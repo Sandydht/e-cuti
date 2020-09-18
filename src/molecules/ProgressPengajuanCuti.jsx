@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 // Material UI
 import withStyles from "@material-ui/core/styles/withStyles";
-import { green } from '@material-ui/core/colors';
+import { green, red } from '@material-ui/core/colors';
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -30,6 +30,17 @@ const GreenRadio = withStyles({
     color: green[400],
     '&$checked': {
       color: green[600],
+    },
+  },
+  checked: {},
+})((props) => <Radio color="default" {...props} />);
+
+// Styles
+const RedRadio = withStyles({
+  root: {
+    color: red[400],
+    '&$checked': {
+      color: red[600],
     },
   },
   checked: {},
@@ -72,6 +83,7 @@ class ProgressPengajuanCuti extends Component {
             createdAt: doc.data().createdAt
           };
         });
+
         if (this.subscribe) {
           this.aproval(data);
         }
@@ -81,6 +93,39 @@ class ProgressPengajuanCuti extends Component {
           data: {}
         });
       });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.cutiId !== prevProps.match.params.cutiId) {
+      this.subscribe = true;
+      return firebase
+        .firestore()
+        .collection('aproval')
+        .where('cutiId', '==', this.props.match.params.cutiId)
+        .limit(1)
+        .onSnapshot((querySnapshot) => {
+          let data = {};
+          querySnapshot.forEach(doc => {
+            data = {
+              aprovalId: doc.id,
+              cutiId: doc.data().cutiId,
+              nipAtasan: doc.data().nipAtasan,
+              pertimbangan: doc.data().pertimbangan,
+              keterangan: doc.data().keterangan,
+              createdAt: doc.data().createdAt
+            };
+          });
+
+          if (this.subscribe) {
+            this.aproval(data);
+          }
+        }, () => {
+          this.setState({
+            isLoading: false,
+            data: {}
+          });
+        });
+    }
   }
 
   componentWillUnmount() {
@@ -116,9 +161,7 @@ class ProgressPengajuanCuti extends Component {
                           data.pertimbangan === "Disetujui"
                             ? <GreenRadio />
                             : data.pertimbangan === "Tidak Disetujui"
-                              ? <Radio
-                                checked
-                              />
+                              ? <RedRadio />
                               : <Radio
                                 checked
                                 color="default"

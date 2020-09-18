@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
+// Molecules
+import TabelDataUser from '../../molecules/TabelDataUser';
+
 class DataCLTN extends Component {
   render() {
     return (
-      <div>
-        Data CLTN
-      </div>
+      <TabelDataUser
+        to='/data_cltn'
+      />
     );
   }
 }

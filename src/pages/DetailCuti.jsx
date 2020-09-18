@@ -288,7 +288,11 @@ class DetailCuti extends Component {
         <Grid item xs={12} md={4}>
           {
             role === 'admin' ? (
-              <Aproval {...rest} isLoading={isLoading} />
+              data.aproval ? (
+                <ProgressPengajuanCuti {...rest} />
+              ) : (
+                  <Aproval {...rest} isLoading={isLoading} />
+                )
             ) : (
                 <ProgressPengajuanCuti {...rest} />
               )

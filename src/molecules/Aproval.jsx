@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 
 // Material UI
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -33,6 +33,10 @@ import { connect } from 'react-redux';
 // Firebase
 import firebase from '../config/firebase';
 
+// Moment
+import moment from 'moment';
+import 'moment/locale/id';
+
 // Validation schema
 const validationSchema = Yup.object().shape({
   pertimbangan: Yup.string()
@@ -41,8 +45,61 @@ const validationSchema = Yup.object().shape({
     .required("Harap isi form keterangan")
 });
 
-const Aproval = ({ isLoading, match, history, enqueueSnackbar, uid }) => {
-  const createNotifications = (data) => {
+class Aproval extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      data: {}
+    };
+
+    this.subscribe = false;
+  }
+
+  dataCuti = (data) => {
+    this.setState({
+      isLoading: false,
+      data
+    });
+  };
+
+  componentDidMount() {
+    this.subscribe = true;
+    return firebase
+      .firestore()
+      .collection('cuti')
+      .doc(this.props.match.params.cutiId)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          if (this.subscribe) {
+            this.dataCuti({
+              cutiId: doc.id,
+              uid: doc.data().uid,
+              nip: doc.data().nip,
+              nama: doc.data().nama,
+              golongan: doc.data().golongan,
+              unitKerja: doc.data().unitKerja,
+              noTelp: doc.data().noTelp,
+              jenisCuti: doc.data().jenisCuti,
+              alasanCuti: doc.data().alasanCuti,
+              tglPengajuan: moment(doc.data().tglPengajuan).format('L, LT'),
+              tglMulai: moment(doc.data().tglMulai).format('L'),
+              tglSelesai: moment(doc.data().tglSelesai).format('L'),
+              lamaCuti: doc.data().lamaCuti,
+              alamatSelamaCuti: doc.data().alamatSelamaCuti,
+              aproval: doc.data().aproval,
+            });
+          }
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    this.subscribe = false;
+  }
+
+  createNotifications = (data) => {
     return firebase.firestore().collection('notifikasi').doc(data.id)
       .set({
         aproval: true,
@@ -52,160 +109,159 @@ const Aproval = ({ isLoading, match, history, enqueueSnackbar, uid }) => {
         open: false,
         penerima: data.penerima,
         nipPenerima: data.nipPenerima,
-        pengirim: uid,
+        pengirim: this.props.uid,
         read: false,
         type: 'aproval'
       });
   };
 
-  return (
-    <Card>
-      {
-        isLoading ? (
-          <Box p={10}>
-            <Grid container justify="center">
-              <Grid item>
-                <CircularProgress />
+  render() {
+    const { history, enqueueSnackbar, uid } = this.props;
+    const { isLoading, data } = this.state;
+    moment().locale('id');
+
+    return (
+      <Card>
+        {
+          isLoading ? (
+            <Box p={10}>
+              <Grid container justify="center">
+                <Grid item>
+                  <CircularProgress />
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
-        ) : (
-            <Fragment>
-              <CardHeader title="Aproval" />
-              <Divider />
-              <CardContent>
-                <Formik
-                  initialValues={{
-                    pertimbangan: "",
-                    keterangan: "",
-                    createdAt: new Date().toISOString()
-                  }}
-                  validationSchema={validationSchema}
-                  onSubmit={({ pertimbangan, keterangan, createdAt }, { setSubmitting, resetForm }) => {
-                    return firebase
-                      .firestore()
-                      .collection('cuti')
-                      .doc(match.params.cutiId)
-                      .get()
-                      .then(doc => {
-                        if (doc.exists) {
-                          return firebase.firestore().collection('aproval').add({
-                            cutiId: doc.id,
-                            pertimbangan,
-                            keterangan,
-                            createdAt,
-                            jenisCuti: doc.data().jenisCuti,
-                            penerima: doc.data().uid,
-                            pengirim: uid
-                          })
-                            .then((res) => {
+            </Box>
+          ) : (
+              <Fragment>
+                <CardHeader title="Aproval" />
+                <Divider />
+                <CardContent>
+                  <Formik
+                    initialValues={{
+                      pertimbangan: "",
+                      keterangan: "",
+                      createdAt: new Date().toISOString()
+                    }}
+                    validationSchema={validationSchema}
+                    onSubmit={({ pertimbangan, keterangan, createdAt }, { setSubmitting, resetForm }) => {
+                      return firebase.firestore().collection('aproval').add({
+                        cutiId: data.cutiId,
+                        pertimbangan,
+                        keterangan,
+                        createdAt,
+                        jenisCuti: data.jenisCuti,
+                        penerima: data.uid,
+                        pengirim: uid
+                      })
+                        .then((res) => {
+                          setSubmitting(false);
+                          resetForm();
+                          enqueueSnackbar('Aproval berhasil', { variant: 'success', preventDuplicate: true, });
+                          setTimeout(() => {
+                            history.replace('/');
+                          }, 100);
+
+                          return firebase
+                            .firestore()
+                            .collection('cuti')
+                            .doc(data.cutiId)
+                            .update({ aproval: true })
+                            .then(() => {
                               return firebase
                                 .firestore()
-                                .collection('cuti')
-                                .doc(doc.id)
+                                .collection('notifikasi')
+                                .doc(data.cutiId)
                                 .update({ aproval: true })
                                 .then(() => {
-                                  return firebase
-                                    .firestore()
-                                    .collection('notifikasi')
-                                    .doc(doc.id)
-                                    .update({ aproval: true })
-                                    .then(() => {
-                                      setSubmitting(false);
-                                      resetForm();
-                                      enqueueSnackbar('Aproval berhasil', { variant: 'success', preventDuplicate: true, });
-                                      history.replace('/');
-
-                                      createNotifications({
-                                        id: res.id,
-                                        cutiId: doc.id,
-                                        createdAt,
-                                        jenisCuti: doc.data().jenisCuti,
-                                        penerima: doc.data().uid,
-                                        nipPenerima: doc.data().nip
-                                      });
-                                    });
+                                  this.createNotifications({
+                                    id: res.id,
+                                    cutiId: data.cutiId,
+                                    createdAt,
+                                    jenisCuti: data.jenisCuti,
+                                    penerima: data.uid,
+                                    nipPenerima: data.nip
+                                  });
                                 });
                             });
-                        }
-                      })
-                      .catch(() => {
-                        setSubmitting(false);
-                        enqueueSnackbar('Aproval gagal', { variant: 'error', preventDuplicate: true, });
-                      });
-                  }}
-                >
-                  {({
-                    errors,
-                    touched,
-                    values,
-                    handleChange,
-                    handleBlur,
-                    isSubmitting
-                  }) => (
-                      <Form>
-                        <FormControl
-                          component="fieldset"
-                          margin="normal"
-                          fullWidth
-                          required
-                          error={Boolean(touched.pertimbangan && errors.pertimbangan)}
-                        >
-                          <FormLabel component="legend">Pertimbangan</FormLabel>
-                          <RadioGroup
-                            aria-label="pertimbangan"
-                            id="pertimbangan"
-                            name="pertimbangan"
-                            value={values.pertimbangan}
+                        })
+                        .catch(() => {
+                          setSubmitting(false);
+                          enqueueSnackbar('Aproval gagal', { variant: 'error', preventDuplicate: true, });
+                        });
+                    }}
+                  >
+                    {({
+                      errors,
+                      touched,
+                      values,
+                      handleChange,
+                      handleBlur,
+                      isSubmitting
+                    }) => (
+                        <Form>
+                          <FormControl
+                            component="fieldset"
+                            margin="normal"
+                            fullWidth
+                            required
+                            error={Boolean(touched.pertimbangan && errors.pertimbangan)}
+                          >
+                            <FormLabel component="legend">Pertimbangan</FormLabel>
+                            <RadioGroup
+                              aria-label="pertimbangan"
+                              id="pertimbangan"
+                              name="pertimbangan"
+                              value={values.pertimbangan}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              <FormControlLabel value="Disetujui" control={<Radio />} label="Disetujui" />
+                              <FormControlLabel value="Tidak Disetujui" control={<Radio />} label="Tidak Disetujui" />
+                            </RadioGroup>
+                            <FormHelperText>{touched.pertimbangan && errors.pertimbangan ? errors.pertimbangan : null}</FormHelperText>
+                          </FormControl>
+
+                          <TextField
+                            id="keterangan"
+                            name="keterangan"
+                            label="Keterangan"
+                            variant="outlined"
+                            fullWidth
+                            multiline
+                            required
+                            rows={4}
+                            margin="normal"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                          >
-                            <FormControlLabel value="Disetujui" control={<Radio />} label="Disetujui" />
-                            <FormControlLabel value="Tidak Disetujui" control={<Radio />} label="Tidak Disetujui" />
-                          </RadioGroup>
-                          <FormHelperText>{touched.pertimbangan && errors.pertimbangan ? errors.pertimbangan : null}</FormHelperText>
-                        </FormControl>
+                            value={values.keterangan}
+                            error={Boolean(touched.keterangan && errors.keterangan)}
+                            helperText={touched.keterangan && errors.keterangan ? errors.keterangan : null}
+                          />
 
-                        <TextField
-                          id="keterangan"
-                          name="keterangan"
-                          label="Keterangan"
-                          variant="outlined"
-                          fullWidth
-                          multiline
-                          required
-                          rows={4}
-                          margin="normal"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.keterangan}
-                          error={Boolean(touched.keterangan && errors.keterangan)}
-                          helperText={touched.keterangan && errors.keterangan ? errors.keterangan : null}
-                        />
-
-                        <Box mt={2}>
-                          <Grid container justify="flex-end">
-                            <Grid item>
-                              <Button
-                                type="submit"
-                                color="primary"
-                                variant="contained"
-                                startIcon={<SaveIcon />}
-                                disabled={isSubmitting}
-                              >{isSubmitting ? <CircularProgress size={25} /> : "Simpan"}</Button>
+                          <Box mt={2}>
+                            <Grid container justify="flex-end">
+                              <Grid item>
+                                <Button
+                                  type="submit"
+                                  color="primary"
+                                  variant="contained"
+                                  startIcon={<SaveIcon />}
+                                  disabled={isSubmitting}
+                                >{isSubmitting ? <CircularProgress size={25} /> : "Simpan"}</Button>
+                              </Grid>
                             </Grid>
-                          </Grid>
-                        </Box>
-                      </Form>
-                    )}
-                </Formik>
-              </CardContent>
-            </Fragment>
-          )
-      }
-    </Card>
-  );
-};
+                          </Box>
+                        </Form>
+                      )}
+                  </Formik>
+                </CardContent>
+              </Fragment>
+            )
+        }
+      </Card>
+    );
+  }
+}
 
 const mapStateToProps = ({ session }) => ({
   uid: session.user.uid

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
+// Molecules
+import TabelDataUser from '../../molecules/TabelDataUser';
+
 class DataCutiBesar extends Component {
   render() {
     return (
-      <div>
-        Data Cuti Besar
-      </div>
+      <TabelDataUser
+        to='/data_cuti_besar'
+      />
     );
   }
 }

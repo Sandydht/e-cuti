@@ -36,13 +36,21 @@ class Profile extends Component {
 
   componentDidMount() {
     this.subscribe = true;
-    return firebase.firestore().collection('pns').where('uid', '==', this.props.uid)
+    return firebase
+      .firestore()
+      .collection('pns')
+      .where('uid', '==', this.props.uid)
       .onSnapshot((querySnapshot) => {
         let data = {};
         querySnapshot.forEach(doc => data = doc.data());
         if (this.subscribe) {
           this.userData(data);
         }
+      }, () => {
+        this.setState({
+          isLoading: false,
+          data: {}
+        });
       });
   }
 

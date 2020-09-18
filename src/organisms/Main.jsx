@@ -55,6 +55,12 @@ const DataCutiSakit = lazy(() => import('../templates/admin/DataCutiSakit'));
 const DataCutiBersalin = lazy(() => import('../templates/admin/DataCutiBersalin'));
 const DataCAP = lazy(() => import('../templates/admin/DataCAP'));
 const DataCLTN = lazy(() => import('../templates/admin/DataCLTN'));
+const RiwayatCutiTahunanPNS = lazy(() => import('../templates/admin/RiwayatCutiTahunanPNS'));
+const RiwayatCutiBesarPNS = lazy(() => import('../templates/admin/RiwayatCutiBesarPNS'));
+const RiwayatCutiSakitPNS = lazy(() => import('../templates/admin/RiwayatCutiSakitPNS'));
+const RiwayatCutiBersalinPNS = lazy(() => import('../templates/admin/RiwayatCutiBersalinPNS'));
+const RiwayatCAPPNS = lazy(() => import('../templates/admin/RiwayatCAPPNS'));
+const RiwayatCLTNPNS = lazy(() => import('../templates/admin/RiwayatCLTNPNS'));
 
 const Main = ({ role }) => {
   const classes = useStyles();
@@ -112,10 +118,50 @@ const Main = ({ role }) => {
               />
               <Route
                 exact
+                path='/data_cuti_tahunan/:pnsId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <RiwayatCutiTahunanPNS {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_tahunan/:pnsId/:cutiId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DetailCuti {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
                 path='/data_cuti_besar'
                 render={(routeProps) =>
                   role === 'admin' ? (
                     <DataCutiBesar {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_besar/:pnsId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <RiwayatCutiBesarPNS {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_besar/:pnsId/:cutiId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DetailCuti {...routeProps} />
                   ) : (
                       <div>Halaman tidak ditemukan</div>
                     )}
@@ -132,10 +178,50 @@ const Main = ({ role }) => {
               />
               <Route
                 exact
+                path='/data_cuti_sakit/:pnsId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <RiwayatCutiSakitPNS {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_sakit/:pnsId/:cutiId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DetailCuti {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
                 path='/data_cuti_bersalin'
                 render={(routeProps) =>
                   role === 'admin' ? (
                     <DataCutiBersalin {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_bersalin/:pnsId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <RiwayatCutiBersalinPNS {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cuti_bersalin/:pnsId/:cutiId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DetailCuti {...routeProps} />
                   ) : (
                       <div>Halaman tidak ditemukan</div>
                     )}
@@ -152,10 +238,50 @@ const Main = ({ role }) => {
               />
               <Route
                 exact
+                path='/data_cap/:pnsId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <RiwayatCAPPNS {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cap/:pnsId/:cutiId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DetailCuti {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
                 path='/data_cltn'
                 render={(routeProps) =>
                   role === 'admin' ? (
                     <DataCLTN {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cltn/:pnsId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <RiwayatCLTNPNS {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_cltn/:pnsId/:cutiId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DetailCuti {...routeProps} />
                   ) : (
                       <div>Halaman tidak ditemukan</div>
                     )}
