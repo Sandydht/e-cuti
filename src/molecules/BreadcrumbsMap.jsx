@@ -58,6 +58,7 @@ const BreadcrumbsMap = ({ role }) => {
               };
 
               breadcrumbNameMap[`/beranda${params1}`] = role === 'admin' ? 'Detail Cuti' : '404';
+              breadcrumbNameMap[`/data_pns${params1}`] = role === 'admin' ? 'Detail PNS' : '404';
 
               breadcrumbNameMap[`/riwayat_cuti_tahunan${params1}`] = role === 'user' ? 'Detail Cuti' : '404';
               breadcrumbNameMap[`/riwayat_cuti_besar${params1}`] = role === 'user' ? 'Detail Cuti' : '404';

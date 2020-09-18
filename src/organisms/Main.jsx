@@ -48,6 +48,7 @@ const RiwayatCLTN = lazy(() => import('../templates/user/RiwayatCLTN'));
 
 // Admin templates
 const DataPNS = lazy(() => import('../templates/admin/DataPNS'));
+const DetailPNS = lazy(() => import('../templates/admin/DetailPNS'));
 const DataCutiTahunan = lazy(() => import('../templates/admin/DataCutiTahunan'));
 const DataCutiBesar = lazy(() => import('../templates/admin/DataCutiBesar'));
 const DataCutiSakit = lazy(() => import('../templates/admin/DataCutiSakit'));
@@ -85,6 +86,16 @@ const Main = ({ role }) => {
                 render={(routeProps) =>
                   role === 'admin' ? (
                     <DataPNS {...routeProps} />
+                  ) : (
+                      <div>Halaman tidak ditemukan</div>
+                    )}
+              />
+              <Route
+                exact
+                path='/data_pns/:pnsId'
+                render={(routeProps) =>
+                  role === 'admin' ? (
+                    <DetailPNS {...routeProps} />
                   ) : (
                       <div>Halaman tidak ditemukan</div>
                     )}
