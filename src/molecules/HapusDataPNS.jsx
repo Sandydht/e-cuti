@@ -82,6 +82,7 @@ class HapusDataPNS extends Component {
               color='primary'
               variant='outlined'
               onClick={this.handleClose}
+              disabled={isLoading}
             >Batal</Button>
             <Button
               color='primary'
