@@ -9,10 +9,6 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-
-// Material icons
-import EditIcon from '@material-ui/icons/Edit';
 
 // Firebase
 import firebase from '../../config/firebase';
@@ -23,6 +19,7 @@ import 'moment/locale/id';
 
 // Molecules
 import HapusDataPNS from '../../molecules/HapusDataPNS';
+import EditDataPNS from '../../molecules/EditDataPNS';
 
 class DetailPNS extends Component {
   constructor(props) {
@@ -187,12 +184,7 @@ class DetailPNS extends Component {
                     <Grid item xs={12} md={12}>
                       <Grid container spacing={2}>
                         <Grid item xs={12} md={6}>
-                          <Button
-                            color='primary'
-                            variant='contained'
-                            fullWidth
-                            startIcon={<EditIcon />}
-                          >Edit</Button>
+                          <EditDataPNS {...rest} />
                         </Grid>
                         <Grid item xs={12} md={6}>
                           <HapusDataPNS disabled={data.register} {...rest} />

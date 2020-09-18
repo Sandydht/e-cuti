@@ -28,7 +28,20 @@ import firebase from '../config/firebase';
 
 // Validation schema
 const validationSchema = Yup.object().shape({
-
+  nip: Yup.string()
+    .required("Harap isi form nip")
+    .matches(/^([0-9]{18})$/, "NIP setidaknya 18 digit angka"),
+  nik: Yup.string()
+    .required("Harap isi form nik")
+    .matches(/^([0-9]{16})$/, "NIK setidaknya 16 digit angka"),
+  nama: Yup.string()
+    .required('Harap isi form nama'),
+  golongan: Yup.string()
+    .required('Harap isi form golongan'),
+  unitKerja: Yup.string()
+    .required('Harap isi form unit kerja'),
+  noTelp: Yup.string()
+    .required("Harap isi form nomor telepon"),
 });
 
 // Golongan
