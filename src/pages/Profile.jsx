@@ -75,6 +75,7 @@ class Profile extends Component {
                     variant='outlined'
                     margin='normal'
                     value={data.nip}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -85,6 +86,7 @@ class Profile extends Component {
                     variant='outlined'
                     margin='normal'
                     value={data.nik}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -95,6 +97,7 @@ class Profile extends Component {
                     variant='outlined'
                     margin='normal'
                     value={data.nama}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -105,6 +108,7 @@ class Profile extends Component {
                     variant='outlined'
                     margin='normal'
                     value={data.golongan}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -115,6 +119,7 @@ class Profile extends Component {
                     variant='outlined'
                     margin='normal'
                     value={data.unitKerja}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -125,6 +130,7 @@ class Profile extends Component {
                     variant='outlined'
                     margin='normal'
                     value={data.noTelp}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}
@@ -135,6 +141,7 @@ class Profile extends Component {
                     variant='outlined'
                     margin='normal'
                     value={data.email}
+                    disabled
                     InputProps={{
                       readOnly: true,
                     }}

@@ -222,6 +222,7 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.nip}
+                            disabled
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={Boolean(touched.nip && errors.nip)}
@@ -238,6 +239,7 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.nama}
+                            disabled
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={Boolean(touched.nama && errors.nama)}
@@ -254,6 +256,7 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.golongan}
+                            disabled
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={Boolean(touched.golongan && errors.golongan)}
@@ -270,6 +273,7 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.unitKerja}
+                            disabled
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={Boolean(touched.unitKerja && errors.unitKerja)}
@@ -286,6 +290,7 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.noTelp}
+                            disabled
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={Boolean(touched.noTelp && errors.noTelp)}
@@ -302,6 +307,7 @@ class FormPengajuanCuti extends Component {
                             margin='normal'
                             variant='outlined'
                             value={values.jenisCuti}
+                            disabled
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={Boolean(touched.jenisCuti && errors.jenisCuti)}

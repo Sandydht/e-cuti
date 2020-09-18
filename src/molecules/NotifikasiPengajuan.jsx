@@ -8,6 +8,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Material icons
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -44,6 +47,14 @@ class NotifikasiPengajuan extends Component {
     batch.commit();
   };
 
+  markReadNotifications = (id) => {
+    return firebase
+      .firestore()
+      .collection('notifikasi')
+      .doc(id)
+      .update({ read: true });
+  };
+
   dataNotifikasi = (data) => {
     this.setState({
       isLoading: false,
@@ -55,8 +66,6 @@ class NotifikasiPengajuan extends Component {
     this.setState({
       anchorEl: event.currentTarget
     });
-
-    this.markOpenNotifications();
   };
 
   handleClose = () => {
@@ -87,12 +96,13 @@ class NotifikasiPengajuan extends Component {
             jenisCuti: doc.data().jenisCuti,
             cutiId: doc.data().cutiId,
             createdAt: doc.data().createdAt,
-            type: doc.data().type
+            type: doc.data().type,
           });
-          if (this.subscribe) {
-            this.dataNotifikasi(data);
-          }
         });
+
+        if (this.subscribe) {
+          this.dataNotifikasi(data);
+        }
       }, () => {
         this.setState({
           isLoading: false,
@@ -131,12 +141,12 @@ class NotifikasiPengajuan extends Component {
           </IconButton>
         </Tooltip>
 
-
         <Menu
           open={open}
           onClose={this.handleClose}
           anchorEl={anchorEl}
           getContentAnchorEl={null}
+          onEntered={this.markOpenNotifications}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
@@ -147,53 +157,66 @@ class NotifikasiPengajuan extends Component {
           }}
         >
           {
-            data.length > 0 ? (
-              data.filter(data => !data.aproval).length > 0 ? (
-                data
-                  .filter(data => !data.aproval)
-                  .map(doc => {
-                    return (
-                      <MenuItem
-                        key={doc.notifikasiId}
-                        onClick={this.handleClose}
-                      >
-                        <Badge
-                          color="secondary"
-                          variant='dot'
-                          badgeContent={doc.read ? 0 : 1}
-                        >
-                          <ListItemText
-                            primary={
-                              <Fragment>
-                                <Typography noWrap>
-                                  NIP : {doc.nipPengirim}
-                                </Typography>
-                                <Typography
-                                  noWrap
-                                >
-                                  Mengajukan {doc.jenisCuti}
-                                </Typography>
-                              </Fragment>
-                            }
-                            secondary={
-                              <Typography
-                                component='span'
-                                variant="body2"
-                                noWrap
-                              >
-                                {moment(doc.createdAt).fromNow()}
-                              </Typography>
-                            }
-                          />
-                        </Badge>
-                      </MenuItem>
-                    );
-                  })
-              ) : (
-                  <MenuItem onClick={this.handleClose}>Tidak ada notifikasi</MenuItem>
-                )
+            isLoading ? (
+              <Box p={10}>
+                <Grid container justify='center'>
+                  <Grid item>
+                    <CircularProgress />
+                  </Grid>
+                </Grid>
+              </Box>
             ) : (
-                <MenuItem onClick={this.handleClose}>Tidak ada notifikasi</MenuItem>
+                data.length > 0 ? (
+                  data.filter(data => !data.aproval).length > 0 ? (
+                    data.filter(data => !data.aproval)
+                      .map(doc => {
+                        return (
+                          <MenuItem
+                            key={doc.notifikasiId}
+                            onClick={() => {
+                              this.handleClose();
+                              this.markReadNotifications(doc.notifikasiId);
+                              this.props.history.push(`/beranda/${doc.cutiId}`);
+                            }}
+                          >
+                            <Badge
+                              color="secondary"
+                              variant='dot'
+                              badgeContent={doc.read ? 0 : 1}
+                            >
+                              <ListItemText
+                                primary={
+                                  <Fragment>
+                                    <Typography noWrap>
+                                      NIP : {doc.nipPengirim}
+                                    </Typography>
+                                    <Typography
+                                      noWrap
+                                    >
+                                      Mengajukan {doc.jenisCuti}
+                                    </Typography>
+                                  </Fragment>
+                                }
+                                secondary={
+                                  <Typography
+                                    component='span'
+                                    variant="body2"
+                                    noWrap
+                                  >
+                                    {moment(doc.createdAt).fromNow()}
+                                  </Typography>
+                                }
+                              />
+                            </Badge>
+                          </MenuItem>
+                        );
+                      })
+                  ) : (
+                      <MenuItem onClick={this.handleClose}>Tidak ada notifikasi</MenuItem>
+                    )
+                ) : (
+                    <MenuItem onClick={this.handleClose}>Tidak ada notifikasi</MenuItem>
+                  )
               )
           }
         </Menu>

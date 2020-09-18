@@ -37,6 +37,14 @@ class AdminHome extends Component {
     });
   };
 
+  markReadNotifications = (id) => {
+    return firebase
+      .firestore()
+      .collection('notifikasi')
+      .doc(id)
+      .update({ read: true });
+  };
+
   componentDidMount() {
     this.subscribe = true;
     return firebase.firestore().collection('cuti').where('aproval', '==', false).orderBy('tglPengajuan', 'desc').onSnapshot(querySnapshot => {
@@ -155,6 +163,9 @@ class AdminHome extends Component {
                     startIcon={<FindInPageIcon />}
                     component={NavLink}
                     to={`/beranda/${data[dataIndex].cutiId}`}
+                    onClick={() => {
+                      this.markReadNotifications(data[dataIndex].cutiId);
+                    }}
                   >Detail</Button>
                 );
               }

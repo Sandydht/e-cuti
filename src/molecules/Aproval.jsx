@@ -102,22 +102,29 @@ const Aproval = ({ isLoading, match, history, enqueueSnackbar, uid }) => {
                               return firebase
                                 .firestore()
                                 .collection('cuti')
-                                .doc(match.params.cutiId)
+                                .doc(doc.id)
                                 .update({ aproval: true })
                                 .then(() => {
-                                  setSubmitting(false);
-                                  resetForm();
-                                  enqueueSnackbar('Aproval berhasil', { variant: 'success', preventDuplicate: true, });
-                                  history.replace('/');
+                                  return firebase
+                                    .firestore()
+                                    .collection('notifikasi')
+                                    .doc(doc.id)
+                                    .update({ aproval: true })
+                                    .then(() => {
+                                      setSubmitting(false);
+                                      resetForm();
+                                      enqueueSnackbar('Aproval berhasil', { variant: 'success', preventDuplicate: true, });
+                                      history.replace('/');
 
-                                  createNotifications({
-                                    id: res.id,
-                                    cutiId: doc.id,
-                                    createdAt,
-                                    jenisCuti: doc.data().jenisCuti,
-                                    penerima: doc.data().uid,
-                                    nipPenerima: doc.data().nipPenerima
-                                  });
+                                      createNotifications({
+                                        id: res.id,
+                                        cutiId: doc.id,
+                                        createdAt,
+                                        jenisCuti: doc.data().jenisCuti,
+                                        penerima: doc.data().uid,
+                                        nipPenerima: doc.data().nip
+                                      });
+                                    });
                                 });
                             });
                         }

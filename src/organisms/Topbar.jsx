@@ -58,7 +58,7 @@ const Topbar = ({ onClick, role, ...rest }) => {
         <Typography variant="h6" noWrap className={classes.title}>E-Cuti</Typography>
 
         {
-          role === 'admin' ? <NotifikasiPengajuan /> : <NotifikasiAproval />
+          role === 'admin' ? <NotifikasiPengajuan {...rest} /> : <NotifikasiAproval {...rest} />
         }
         <AccountMenu {...rest} />
       </Toolbar>

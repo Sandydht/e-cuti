@@ -75,6 +75,11 @@ class ProgressPengajuanCuti extends Component {
         if (this.subscribe) {
           this.aproval(data);
         }
+      }, () => {
+        this.setState({
+          isLoading: false,
+          data: {}
+        });
       });
   }
 
@@ -102,7 +107,7 @@ class ProgressPengajuanCuti extends Component {
                 <CardHeader title="Progress Pengajuan Cuti" />
                 <Divider />
                 <CardContent>
-                  <FormControl component="fieldset">
+                  <FormControl component="fieldset" disabled>
                     <FormLabel component="legend">Pertimbangan</FormLabel>
                     <RadioGroup aria-label="pertimbangan" name="pertimbangan">
                       <FormControlLabel
