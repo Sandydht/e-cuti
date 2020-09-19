@@ -188,7 +188,7 @@ class ProgressPengajuanCuti extends Component {
                     }}
                   />
                   <TextField
-                    label="Tanggal Aproval"
+                    label="Tanggal Diperiksa"
                     variant="outlined"
                     fullWidth
                     margin="normal"

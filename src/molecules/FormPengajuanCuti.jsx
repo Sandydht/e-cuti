@@ -162,7 +162,10 @@ class FormPengajuanCuti extends Component {
                       const lamaHari = (((date2 - date1) / (1000 * 3600 * 24) + 1));
                       const lamaCuti = `${lamaHari - (parseInt(lamaHari / 7) * 2)} hari`;
 
-                      if (date2 < date1) {
+                      if (Date.parse(tglMulai) < new Date()) {
+                        setSubmitting(false);
+                        this.props.enqueueSnackbar('Periksa kembali tanggal pengajuan anda', { variant: 'error', preventDuplicate: true, });
+                      } else if (date2 < date1) {
                         setSubmitting(false);
                         this.props.enqueueSnackbar('Periksa kembali tanggal pengajuan anda', { variant: 'error', preventDuplicate: true, });
                       } else {

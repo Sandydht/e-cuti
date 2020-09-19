@@ -142,10 +142,10 @@ class DrawerList extends Component {
               </Fragment>
             )
         }
-        <ListItem button component={NavLink} to='/pengaturan' onClick={onClick} activeClassName={classes.activeLink}>
+        {/* <ListItem button component={NavLink} to='/pengaturan' onClick={onClick} activeClassName={classes.activeLink}>
           <ListItemIcon><SettingsIcon /> </ListItemIcon>
           <ListItemText primary='Pengaturan' />
-        </ListItem>
+        </ListItem> */}
       </List>
     );
   }

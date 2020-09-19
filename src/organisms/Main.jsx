@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const AdminHome = lazy(() => import('../templates/admin/AdminHome'));
 const UserHome = lazy(() => import('../templates/user/UserHome'));
 const Profile = lazy(() => import('../pages/Profile'));
-const Setting = lazy(() => import('../pages/Setting'));
+// const Setting = lazy(() => import('../pages/Setting'));
 const DetailCuti = lazy(() => import('../pages/DetailCuti'));
 
 // User templates
@@ -487,11 +487,11 @@ const Main = ({ role }) => {
                 component={Profile}
               />
 
-              <Route
+              {/* <Route
                 exact
                 path='/pengaturan'
                 component={Setting}
-              />
+              /> */}
 
               <Redirect
                 from='/'

@@ -94,7 +94,7 @@ class Setting extends Component {
                 }) => (
                     <Form>
                       <FormControl variant="outlined" fullWidth margin='normal' required error={Boolean(touched.newPassword && errors.newPassword)}>
-                        <InputLabel htmlFor="newPassword">Kata Sandi</InputLabel>
+                        <InputLabel htmlFor="newPassword">Kata Sandi Baru</InputLabel>
                         <OutlinedInput
                           id="newPassword"
                           name='newPassword'
