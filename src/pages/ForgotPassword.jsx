@@ -23,6 +23,12 @@ import * as Yup from 'yup';
 // Organisms
 import Footer from '../organisms/Footer';
 
+// Firebase
+import firebase from '../config/firebase';
+
+// Notistack
+import { withSnackbar } from 'notistack';
+
 // Styles
 const styles = (theme) => ({
   paper: {
@@ -66,8 +72,19 @@ class ForgotPassword extends Component {
               email: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
+            onSubmit={({ email }, { setSubmitting, resetForm }) => {
+              return firebase
+                .auth()
+                .sendPasswordResetEmail(email)
+                .then(() => {
+                  setSubmitting(false);
+                  resetForm();
+                  this.props.enqueueSnackbar('Email terkirim', { variant: 'success', preventDuplicate: true, });
+                })
+                .catch(() => {
+                  setSubmitting(false);
+                  this.props.enqueueSnackbar('Email gagal terkirim', { variant: 'error', preventDuplicate: true, });
+                });
             }}
           >
             {({
@@ -120,4 +137,4 @@ class ForgotPassword extends Component {
   }
 }
 
-export default withStyles(styles)(ForgotPassword);
+export default withStyles(styles)(withSnackbar(ForgotPassword));
