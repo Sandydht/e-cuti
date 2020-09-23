@@ -11,7 +11,7 @@ import Collapse from '@material-ui/core/Collapse';
 
 // Material icons
 import HomeIcon from '@material-ui/icons/Home';
-import SettingsIcon from '@material-ui/icons/Settings';
+// import SettingsIcon from '@material-ui/icons/Settings';
 import HistoryIcon from '@material-ui/icons/History';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';

@@ -14,6 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 // Material icons
 import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
 
 // Formik & Yup
 import { Formik, Form } from 'formik';
@@ -360,6 +361,7 @@ class EditDataPNS extends Component {
                                   color='primary'
                                   variant='contained'
                                   disabled={isSubmitting}
+                                  startIcon={<SaveIcon />}
                                 >{isSubmitting ? <CircularProgress size={25} /> : 'Simpan'}</Button>
                               </Grid>
                             </Grid>

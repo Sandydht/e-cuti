@@ -176,7 +176,7 @@ class Login extends Component {
 
                   <Grid container>
                     <Grid item xs>
-                      <Link component={NavLink} to='/lupa_kata_sandi' variant="body2">Lupa kata sandi?</Link>
+                      <Link component={NavLink} to='/lupa_kata_sandi' variant="body2">Lupa kata sandi ?</Link>
                     </Grid>
                     <Grid item>
                       <Link component={NavLink} to='/register' variant="body2">Registrasi akun</Link>
